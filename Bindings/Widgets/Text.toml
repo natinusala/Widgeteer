@@ -16,6 +16,6 @@
 location = "package:flutter/widgets.dart"
 
 [[parameter]]
-label = "_"
+swiftLabel = "_"
 name = "data"
 type = "String"

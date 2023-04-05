@@ -48,8 +48,11 @@ class CodeUnit {
     lines.add(line);
   }
 
-  void appendAll(CodeUnit unit) {
-    lines.addAll(unit.lines);
+  void appendAll(CodeUnit unit, {int indent = 0}) {
+    for (final line in unit.lines) {
+      final indentation = " " * indent;
+      lines.add("$indentation$line");
+    }
   }
 
   Future<void> writeToFile(String path) async {

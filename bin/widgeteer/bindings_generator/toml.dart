@@ -23,13 +23,13 @@ import 'widget.dart';
 
 final types = [BindingType("widget", WidgetBinding.fromTOML)];
 
-Future<Binding> parseTomlFile(String path) async {
+Future<Binding> parseTomlFile(String path, BindingContext context) async {
   final toml = (await TomlDocument.load(path)).toMap();
   final stem = p.basenameWithoutExtension(path);
 
   for (BindingType type in types) {
     if (toml.containsKey(type.name)) {
-      return type.makeBinding(path, stem, toml);
+      return type.makeBinding(path, stem, toml, context);
     }
   }
 
@@ -38,7 +38,7 @@ Future<Binding> parseTomlFile(String path) async {
 
 class BindingType {
   final String name;
-  final Binding Function(String, String, Map) makeBinding;
+  final Binding Function(String, String, Map, BindingContext) makeBinding;
 
   BindingType(this.name, this.makeBinding);
 }

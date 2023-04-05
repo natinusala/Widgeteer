@@ -63,6 +63,15 @@ abstract class DartType {
 
   /// Body of the generated Dart file for this type.
   CodeUnit? get body => null;
+
+  /// Dart code that takes [sourceFfiValue] and turns it into a value
+  /// of the target Dart type inside a variable called `${variableName}Value`.
+  ///
+  /// [sourceFfiValue] is the name of a variable (or a full expression)
+  /// that has the FFI type described in the binding associated C type.
+  ///
+  /// [variableName] is the name of the associated parameter.
+  CodeUnit fromCValue(String sourceFfiValue, String variableName);
 }
 
 /// The C type that acts as intermediate between a Swift type and its
@@ -76,11 +85,23 @@ abstract class CType {
   /// Representation of the type inside FFI.
   /// Should be an FFI type such as `Pointer`.
   String get dartFfiMapping;
+}
 
-  /// A Dart expression that takes [sourceFfiValue] and turns it into a value
-  /// of the target Dart type.
-  ///
-  /// [sourceFfiValue] is the name of a variable (or a full expression)
-  /// that has the FFI type described in [dartFfiMapping].
-  CodeUnit toDartValue(String sourceFfiValue);
+class BindingContext {
+  List<Binding>? bindings;
+
+  Binding resolveBinding(String name) {
+    if (bindings == null) {
+      throw "Binding context used too early; "
+          "please wait for all bindings to be loaded before attempting a resolution.";
+    }
+
+    for (final binding in bindings!) {
+      if (binding.name == name) {
+        return binding;
+      }
+    }
+
+    throw "Binding resolution failed: did not find a binding named '$name'";
+  }
 }

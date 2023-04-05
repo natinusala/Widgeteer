@@ -34,7 +34,9 @@ class ParsedBinding {
 }
 
 /// Parse and gather all bindings from TOML files.
+/// All returned bindings will be bound to the same [BindingContext].
 Future<List<ParsedBinding>> parseBindings(String workingDirectory) async {
+  final context = BindingContext();
   List<ParsedBinding> bindings = [];
 
   // Register all built-in types
@@ -51,12 +53,13 @@ Future<List<ParsedBinding>> parseBindings(String workingDirectory) async {
       throw "Unsupported file type '${entity.path}'";
     }
 
-    final binding = await parseTomlFile(entity.path);
+    final binding = await parseTomlFile(entity.path, context);
     final relativePath = File(p.relative(entity.path)).parent.path;
 
     bindings.add(ParsedBinding(binding, relativePath));
   }
 
+  context.bindings = bindings.map((e) => e.binding).toList();
   return bindings;
 }
 

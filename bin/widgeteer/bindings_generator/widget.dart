@@ -19,51 +19,47 @@ import 'binding.dart';
 import 'package:path/path.dart' as p;
 
 import 'code_unit.dart';
-
-class WidgetParameter {
-  final String name;
-  final String label;
-  final String type;
-
-  WidgetParameter({
-    required this.name,
-    required this.label,
-    required this.type,
-  });
-
-  factory WidgetParameter.fromTOML(Map toml) {
-    return WidgetParameter(
-      name: toml["name"],
-      label: toml["label"] ?? "_",
-      type: toml["type"],
-    );
-  }
-}
+import 'parameter.dart';
 
 class WidgetBinding extends Binding {
+  final BindingContext context;
+
   final String widgetName;
   final String tomlPath;
-  final List<WidgetParameter> parameters;
+  final ParametersList parameters;
 
   /// Dart import to use to make the widget class accessible.
   final String widgetLocation;
 
   WidgetBinding({
+    required this.context,
     required this.widgetName,
     required this.widgetLocation,
     required this.tomlPath,
     required this.parameters,
   });
 
-  factory WidgetBinding.fromTOML(String tomlPath, String fileStem, Map toml) {
-    final List<Map<String, dynamic>> parameters = toml["parameter"] ?? [];
+  factory WidgetBinding.fromTOML(
+      String tomlPath, String fileStem, Map toml, BindingContext context) {
+    final parameters = ParametersList.fromTOML(toml["parameter"], context);
+
+    // Insert the "key" parameter at the beginning of parameters of all widgets
+    parameters.insert(
+        0,
+        Parameter(
+          name: "key",
+          type: "WidgetKey",
+          swiftLabel: null,
+          dartNamed: true,
+        ));
 
     // Widget
     return WidgetBinding(
+      context: context,
       widgetName: fileStem,
       tomlPath: tomlPath,
       widgetLocation: toml["widget"]["location"],
-      parameters: parameters.map((e) => WidgetParameter.fromTOML(e)).toList(),
+      parameters: parameters,
     );
   }
 
@@ -93,8 +89,48 @@ class DartWidget extends DartType {
 
   @override
   CodeUnit? get body {
-    var unit = CodeUnit();
-    return unit;
+    var body = CodeUnit();
+
+    // Imports
+    body.append("import '${binding.widgetLocation}';");
+    body.append("import 'dart:ffi';");
+    body.append("import 'package:ffi/ffi.dart';");
+
+    // "new" outlet implementation
+    body.appendAll(newOutletImpl);
+
+    return body;
+  }
+
+  CodeUnit get newOutletImpl {
+    final functionName = "new$name";
+
+    // Function body
+    var body = CodeUnit();
+
+    // C -> Dart parameters conversion
+    for (final parameter in binding.parameters) {
+      final type = binding.context.resolveBinding(parameter.type);
+      body.appendAll(type.dartType.fromCValue(parameter.name, parameter.name));
+    }
+
+    // Return statement
+    body.append("return $name(${binding.parameters.dartArguments});");
+
+    // Function signature
+    var function = CodeUnit();
+
+    function.append(
+        "Object $functionName(${binding.parameters.dartFFIParameters}) {");
+    function.appendAll(body, indent: 4);
+    function.append("}");
+    return function;
+  }
+
+  @override
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+    return CodeUnit(
+        content: "final ${variableName}Value = $sourceFfiValue as Widget;");
   }
 }
 
@@ -108,7 +144,7 @@ class SwiftWidget extends SwiftType {
 
   @override
   CodeUnit? get body {
-    var unit = CodeUnit();
-    return unit;
+    var body = CodeUnit();
+    return body;
   }
 }

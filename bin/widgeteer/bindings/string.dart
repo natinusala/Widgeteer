@@ -42,6 +42,11 @@ class SwiftString extends SwiftType {
 class DartString extends DartType {
   @override
   String get name => "String";
+
+  @override
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) => CodeUnit(
+      content:
+          "final ${variableName}Value = $sourceFfiValue.cast<Utf8>().toDartString();");
 }
 
 class CString extends CType {
@@ -53,8 +58,4 @@ class CString extends CType {
 
   @override
   String get dartFfiMapping => "Pointer<Char>";
-
-  @override
-  CodeUnit toDartValue(String sourceFfiValue) =>
-      CodeUnit(content: "$sourceFfiValue.cast<Utf8>().toDartString()");
 }
