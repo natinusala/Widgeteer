@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 /*
    Copyright 2023 natinusala
 
@@ -14,22 +16,30 @@
    limitations under the License.
 */
 
-import 'dart:io' as io;
-import 'package:logger/logger.dart';
+import 'dart:core' as core;
 
-final filter = WidgeteerLogFilter();
-final logger = Logger(
-  filter: filter,
-  printer: PrettyPrinter(
-    methodCount: 0,
-    colors: io.stdout.supportsAnsiEscapes,
-    lineLength: io.stdout.terminalColumns,
-  ),
-);
+class Logger {
+  const Logger();
 
-class WidgeteerLogFilter extends LogFilter {
-  @override
-  bool shouldLog(LogEvent event) {
-    return true;
+  /// Used to inform the user that something has happened.
+  void info(core.String message) {
+    core.print("[INFO] $message");
+  }
+
+  /// Used for debugging only messages.
+  void debug(core.String message) {
+    core.print("[DEBUG] $message");
+  }
+
+  /// Prints the message as-is to the terminal.
+  void print(core.String message) {
+    core.print(message);
+  }
+
+  /// Used to notify advance of a task.
+  void log(core.String message) {
+    core.print(message);
   }
 }
+
+const logger = Logger();

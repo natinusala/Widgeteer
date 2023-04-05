@@ -66,7 +66,7 @@ Future<void> generateBindings(String workingDirectory) async {
   final includesRoot = p.join(workingDirectory, generatedIncludesRoot);
 
   // Clear everything before regenerating
-  logger.i("Cleaning up previous generation");
+  logger.debug("Cleaning up previous generation");
   for (final generatedDir in [dartRoot, swiftRoot, includesRoot]) {
     final dir = Directory(generatedDir);
     if (await dir.exists()) {
@@ -82,7 +82,7 @@ Future<void> generateBindings(String workingDirectory) async {
       final dartFile = p.join(
           dartRoot, binding.relativePath, "${binding.binding.name}.dart");
 
-      logger.i("Writing '${binding.binding.name}' Dart code to '$dartFile'");
+      logger.log("Writing '${binding.binding.name}' Dart code to '$dartFile'");
       var fileUnit = CodeUnit(content: generatedHeader, stamp: false)
         ..appendAll(dartBody);
       await fileUnit.writeToFile(dartFile);
@@ -94,7 +94,8 @@ Future<void> generateBindings(String workingDirectory) async {
       final swiftFile = p.join(
           swiftRoot, binding.relativePath, "${binding.binding.name}.swift");
 
-      logger.i("Writing '${binding.binding.name}' Swift code to '$swiftFile'");
+      logger
+          .log("Writing '${binding.binding.name}' Swift code to '$swiftFile'");
       var fileUnit = CodeUnit(content: generatedHeader, stamp: false)
         ..appendAll(swiftBody);
       await fileUnit.writeToFile(swiftFile);

@@ -59,7 +59,7 @@ class ListBindingsCommand extends Command {
   void run() async {
     final list = await parseBindings(Directory.current.path);
 
-    logger.i(
+    logger.print(
         "List of all available bindings:\n${list.map((e) => e.binding).map((e) => "    - ${e.name} (${e.origin})").join("\n")}");
   }
 }
