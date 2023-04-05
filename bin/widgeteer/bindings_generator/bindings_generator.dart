@@ -61,19 +61,13 @@ Future<List<ParsedBinding>> parseBindings(String workingDirectory) async {
 }
 
 Future<void> generateBindings(String workingDirectory) async {
-  final generatedDartRoot = p.join(workingDirectory, "lib", "generated");
-  final generatedSwiftRoot =
-      p.join(workingDirectory, "Flutter", "Sources", "Flutter", "Generated");
-  final generatedIncludesRoot =
-      p.join(workingDirectory, "Include", "generated");
+  final dartRoot = p.join(workingDirectory, generatedDartRoot);
+  final swiftRoot = p.join(workingDirectory, generatedSwiftRoot);
+  final includesRoot = p.join(workingDirectory, generatedIncludesRoot);
 
   // Clear everything before regenerating
   logger.i("Cleaning up previous generation");
-  for (final generatedDir in [
-    generatedDartRoot,
-    generatedSwiftRoot,
-    generatedIncludesRoot
-  ]) {
+  for (final generatedDir in [dartRoot, swiftRoot, includesRoot]) {
     final dir = Directory(generatedDir);
     if (await dir.exists()) {
       await dir.delete(recursive: true);
@@ -85,8 +79,8 @@ Future<void> generateBindings(String workingDirectory) async {
     // Dart file
     final dartBody = binding.binding.dartType.body;
     if (dartBody != null) {
-      final dartFile = p.join(generatedDartRoot, binding.relativePath,
-          "${binding.binding.name}.dart");
+      final dartFile = p.join(
+          dartRoot, binding.relativePath, "${binding.binding.name}.dart");
 
       logger.i("Writing '${binding.binding.name}' Dart code to '$dartFile'");
       var fileUnit = CodeUnit(content: generatedHeader, stamp: false)
@@ -97,8 +91,8 @@ Future<void> generateBindings(String workingDirectory) async {
     // Swift file
     final swiftBody = binding.binding.swiftType.body;
     if (swiftBody != null) {
-      final swiftFile = p.join(generatedSwiftRoot, binding.relativePath,
-          "${binding.binding.name}.swift");
+      final swiftFile = p.join(
+          swiftRoot, binding.relativePath, "${binding.binding.name}.swift");
 
       logger.i("Writing '${binding.binding.name}' Swift code to '$swiftFile'");
       var fileUnit = CodeUnit(content: generatedHeader, stamp: false)
