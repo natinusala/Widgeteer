@@ -44,13 +44,17 @@ class CodeUnit {
     }
   }
 
-  void append(String line) {
+  void appendLine(String line) {
     lines.add(line);
   }
 
-  void appendAll(CodeUnit unit, {int indent = 0}) {
+  void appendLines(List<String> lines) {
+    this.lines.addAll(lines);
+  }
+
+  void appendUnit(CodeUnit unit, {int indentedBy = 0}) {
     for (final line in unit.lines) {
-      final indentation = " " * indent;
+      final indentation = " " * indentedBy;
       lines.add("$indentation$line");
     }
   }

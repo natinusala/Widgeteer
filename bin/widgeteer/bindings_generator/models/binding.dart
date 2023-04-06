@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-import 'code_unit.dart';
+import '../code_unit.dart';
 import 'outlet.dart';
 
 /// Represents a bound type.

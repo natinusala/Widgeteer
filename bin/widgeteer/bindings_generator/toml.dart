@@ -14,12 +14,12 @@
    limitations under the License.
 */
 
-import 'binding.dart';
+import 'models/binding.dart';
 
 import 'package:toml/toml.dart';
 import 'package:path/path.dart' as p;
 
-import 'widget.dart';
+import '../bindings/widget.dart';
 
 final types = [BindingType("widget", WidgetBinding.fromTOML)];
 

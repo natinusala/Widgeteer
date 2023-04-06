@@ -15,12 +15,14 @@
 */
 
 import 'package:path/path.dart' as p;
+import '../bindings/object.dart';
 import '../bindings/string.dart';
 import '../bindings/widget_key.dart';
 
 final builtinBindings = [
   StringBinding(),
   WidgetKeyBinding(),
+  ObjectBinding(),
 ];
 
 const generatedHeader =

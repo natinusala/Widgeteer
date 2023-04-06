@@ -14,48 +14,49 @@
    limitations under the License.
 */
 
-import '../bindings_generator/models/binding.dart';
 import '../bindings_generator/code_unit.dart';
+import '../bindings_generator/models/binding.dart';
 
-class StringBinding extends Binding {
+class ObjectBinding extends Binding {
   @override
-  String get name => "String";
-
-  @override
-  SwiftType get swiftType => SwiftString();
+  CType get cType => CObject();
 
   @override
-  DartType get dartType => DartString();
+  DartType get dartType => DartObject();
 
   @override
-  CType get cType => CString();
+  String get name => "Object";
 
   @override
   String get origin => "built in";
+
+  @override
+  SwiftType get swiftType => SwiftObject();
 }
 
-class SwiftString extends SwiftType {
+class CObject extends CType {
   @override
-  String get name => "String";
+  String get name => "Dart_Handle";
+
+  @override
+  String get cInteropMapping => "Dart_Handle";
+
+  @override
+  String get dartFfiMapping => "Object";
 }
 
-class DartString extends DartType {
+class DartObject extends DartType {
   @override
-  String get name => "String";
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+    // No conversion required
+    return CodeUnit(content: "final ${variableName}Value = sourceFfiValue;");
+  }
 
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) => CodeUnit(
-      content:
-          "final ${variableName}Value = $sourceFfiValue.cast<Utf8>().toDartString();");
+  String get name => "Object";
 }
 
-class CString extends CType {
+class SwiftObject extends SwiftType {
   @override
-  String get name => "char*";
-
-  @override
-  String get cInteropMapping => "UnsafePointer<CChar>?";
-
-  @override
-  String get dartFfiMapping => "Pointer<Char>";
+  String get name => "Dart_Handle";
 }

@@ -16,6 +16,7 @@
 
 import 'dart:collection';
 
+import '../code_unit.dart';
 import 'binding.dart';
 
 /// A parameter of a function call.
@@ -92,6 +93,21 @@ class ParametersList with IterableMixin<Parameter> {
     }
 
     return parameters.join(", ");
+  }
+
+  /// Creates a list of `${parameter.name}Value` Dart declarations
+  /// that takes the parameters in their FFI form and turn them into their
+  /// final Dart values.
+  CodeUnit dartValuesFromFFI(BindingContext context) {
+    var values = CodeUnit();
+
+    for (final parameter in this) {
+      final type = context.resolveBinding(parameter.type);
+      values
+          .appendUnit(type.dartType.fromCValue(parameter.name, parameter.name));
+    }
+
+    return values;
   }
 
   void insert(int index, Parameter element) {

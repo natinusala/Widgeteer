@@ -18,7 +18,7 @@ import 'dart:io';
 import 'package:path/path.dart' as p;
 
 import '../logger.dart';
-import 'binding.dart';
+import 'models/binding.dart';
 import 'code_unit.dart';
 import 'config.dart';
 import 'toml.dart';
@@ -88,7 +88,7 @@ Future<void> generateBindings(String workingDirectory) async {
       logger.log(
           "🖨️  Writing '${binding.binding.name}' Dart code to '$dartFile'");
       var fileUnit = CodeUnit(content: generatedHeader, stamp: false)
-        ..appendAll(dartBody);
+        ..appendUnit(dartBody);
       await fileUnit.writeToFile(dartFile);
     }
 
@@ -101,7 +101,7 @@ Future<void> generateBindings(String workingDirectory) async {
       logger.log(
           "🖨️  Writing '${binding.binding.name}' Swift code to '$swiftFile'");
       var fileUnit = CodeUnit(content: generatedHeader, stamp: false)
-        ..appendAll(swiftBody);
+        ..appendUnit(swiftBody);
       await fileUnit.writeToFile(swiftFile);
     }
   }

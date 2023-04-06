@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-import '../bindings_generator/binding.dart';
+import '../bindings_generator/models/binding.dart';
 import '../bindings_generator/code_unit.dart';
 import 'string.dart';
 

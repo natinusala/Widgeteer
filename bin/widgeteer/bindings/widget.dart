@@ -14,12 +14,14 @@
    limitations under the License.
 */
 
-import 'binding.dart';
+import '../bindings_generator/models/binding.dart';
 
 import 'package:path/path.dart' as p;
 
-import 'code_unit.dart';
-import 'parameter.dart';
+import '../bindings_generator/code_unit.dart';
+import '../bindings_generator/models/dart_function.dart';
+import '../bindings_generator/models/parameter.dart';
+import 'object.dart';
 
 class WidgetBinding extends Binding {
   final BindingContext context;
@@ -63,11 +65,22 @@ class WidgetBinding extends Binding {
     );
   }
 
+  /// Function to create a new instance of the widget.
+  DartFunction get newFunction => DartFunction(
+        context: context,
+        outletName: "new$name",
+        location: widgetLocation,
+        // widget constructor is just a function that has the widget name
+        name: name,
+        parameters: parameters,
+        returnType: 'Object',
+      );
+
   @override
   String get name => widgetName;
 
   @override
-  CType get cType => throw UnimplementedError();
+  CType get cType => CObject();
 
   @override
   DartType get dartType => DartWidget(this);
@@ -91,40 +104,10 @@ class DartWidget extends DartType {
   CodeUnit? get body {
     var body = CodeUnit();
 
-    // Imports
-    body.append("import '${binding.widgetLocation}';");
-    body.append("import 'dart:ffi';");
-    body.append("import 'package:ffi/ffi.dart';");
-
-    // "new" outlet implementation
-    body.appendAll(newOutletImpl);
+    // "new" outlet
+    body.appendUnit(binding.newFunction.outletImplementation);
 
     return body;
-  }
-
-  CodeUnit get newOutletImpl {
-    final functionName = "new$name";
-
-    // Function body
-    var body = CodeUnit();
-
-    // C -> Dart parameters conversion
-    for (final parameter in binding.parameters) {
-      final type = binding.context.resolveBinding(parameter.type);
-      body.appendAll(type.dartType.fromCValue(parameter.name, parameter.name));
-    }
-
-    // Return statement
-    body.append("return $name(${binding.parameters.dartArguments});");
-
-    // Function signature
-    var function = CodeUnit();
-
-    function.append(
-        "Object $functionName(${binding.parameters.dartFFIParameters}) {");
-    function.appendAll(body, indent: 4);
-    function.append("}");
-    return function;
   }
 
   @override
