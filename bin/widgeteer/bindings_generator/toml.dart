@@ -83,6 +83,8 @@ Future<List<ParsedBinding>> parseBindings(String workingDirectory) async {
       types.add(type);
     }
   }
+
+  context.types = types;
   return bindings;
 }
 
