@@ -14,8 +14,11 @@
    limitations under the License.
 */
 
+import 'package:recase/recase.dart';
+
 import '../code_unit.dart';
 import 'binding.dart';
+import 'outlet.dart';
 import 'parameter.dart';
 
 /// A Dart function that can be called from Swift using an outlet.
@@ -75,6 +78,7 @@ class DartFunction {
     body.appendUnit(parameters.dartValuesFromFFI(context));
 
     // Return statement
+    body.appendEmptyLine();
     body.appendLine("return $name(${parameters.dartArguments});");
 
     // Function signature
@@ -86,4 +90,13 @@ class DartFunction {
     function.appendLine("}");
     return function;
   }
+
+  /// An outlet that calls that function.
+  Outlet get callingOutlet => Outlet(
+        context: context,
+        name: outletName.pascalCase,
+        returnType: returnType,
+        implementationName: outletName,
+        parameters: parameters,
+      );
 }

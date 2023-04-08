@@ -17,7 +17,9 @@
 import 'dart:io';
 
 import 'package:path/path.dart' as p;
-import 'package:stack_trace/stack_trace.dart' as stacktrace;
+import 'package:stack_trace/stack_trace.dart';
+
+import 'config.dart';
 
 /// A unit of generated source code in any language,
 /// whether it's a whole file, a class or the body of a function.
@@ -27,7 +29,23 @@ class CodeUnit {
   CodeUnit({String? content, List<String>? initialLines, bool stamp = true}) {
     // Add the breadcrumb
     if (stamp) {
-      final caller = stacktrace.Frame.caller(1);
+      // Find the first caller that's outside of the `CodeUnit` class
+      Frame? caller;
+
+      var level = 1;
+      while (true) {
+        final candidate = Frame.caller(level);
+        final fileName = p.relative(candidate.uri.toFilePath());
+
+        if (fileName.contains("code_unit.dart")) {
+          level += 1;
+          continue;
+        }
+
+        caller = candidate;
+        break;
+      }
+
       final fileName = p.relative(caller.uri.toFilePath());
       final line = caller.line;
 
@@ -44,8 +62,16 @@ class CodeUnit {
     }
   }
 
+  factory CodeUnit.forNewFile() {
+    return CodeUnit(content: generatedHeader);
+  }
+
   void appendLine(String line) {
     lines.add(line);
+  }
+
+  void appendEmptyLine() {
+    lines.add("");
   }
 
   void appendLines(List<String> lines) {

@@ -20,6 +20,7 @@ import 'package:path/path.dart' as p;
 import '../logger.dart';
 import 'code_unit.dart';
 import 'config.dart';
+import 'models/outlet.dart';
 import 'toml.dart';
 
 Future<void> generateBindings(String workingDirectory) async {
@@ -37,7 +38,12 @@ Future<void> generateBindings(String workingDirectory) async {
   }
 
   // Walk through all bindings, generate the code and collect outlets
+  List<EmittedOutlet> outlets = [];
   for (final binding in await parseBindings(workingDirectory)) {
+    // Collect outlets
+    outlets.addAll(
+        binding.binding.outlets.map((e) => EmittedOutlet(binding.binding, e)));
+
     // Dart file
     final dartBody = binding.binding.dartBody;
     if (dartBody != null) {
@@ -46,8 +52,7 @@ Future<void> generateBindings(String workingDirectory) async {
 
       logger.log(
           "🖨️  Writing '${binding.binding.name}' Dart code to '$dartFile'");
-      var fileUnit = CodeUnit(content: generatedHeader, stamp: false)
-        ..appendUnit(dartBody);
+      var fileUnit = CodeUnit.forNewFile()..appendUnit(dartBody);
       await fileUnit.writeToFile(dartFile);
     }
 
@@ -59,9 +64,23 @@ Future<void> generateBindings(String workingDirectory) async {
 
       logger.log(
           "🖨️  Writing '${binding.binding.name}' Swift code to '$swiftFile'");
-      var fileUnit = CodeUnit(content: generatedHeader, stamp: false)
-        ..appendUnit(swiftBody);
+      var fileUnit = CodeUnit.forNewFile()..appendUnit(swiftBody);
       await fileUnit.writeToFile(swiftFile);
     }
   }
+
+  // Generate outlets header file
+  var outletsHeader = CodeUnit.forNewFile();
+  outletsHeader.appendLine('#import "../types.h"');
+  outletsHeader.appendEmptyLine();
+
+  for (final outlet in outlets) {
+    outletsHeader.appendLine("// Outlet emitted by '${outlet.binding.name}'");
+    outletsHeader.appendLine(outlet.outlet.registrationCDeclaration);
+  }
+
+  final outletsHeadersFile = p.join(includesRoot, "generated", "outlets.h");
+  logger.log(
+      "🖨️  Writing outlets registration headers to '$outletsHeadersFile'");
+  await outletsHeader.writeToFile(outletsHeadersFile);
 }

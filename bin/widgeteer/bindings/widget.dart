@@ -20,6 +20,7 @@ import 'package:path/path.dart' as p;
 
 import '../bindings_generator/code_unit.dart';
 import '../bindings_generator/models/dart_function.dart';
+import '../bindings_generator/models/outlet.dart';
 import '../bindings_generator/models/parameter.dart';
 import '../bindings_generator/models/type.dart';
 import 'object.dart';
@@ -73,17 +74,31 @@ class WidgetBinding extends Binding {
   List<BoundType> get types => [widgetType, optionalWidgetType];
 
   @override
+  List<Outlet> get outlets => [newFunction.callingOutlet];
+
+  @override
   String get origin => p.relative(tomlPath);
 
   @override
   String get name => widgetName;
+
+  /// Function to create a new instance of the widget.
+  late DartFunction newFunction = DartFunction(
+    context: context,
+    outletName: "new$name",
+    location: widgetLocation,
+    // widget constructor is just a function that has the widget name
+    name: name,
+    parameters: parameters,
+    returnType: 'Object',
+  );
 
   @override
   CodeUnit? get dartBody {
     var body = CodeUnit();
 
     // Both normal and optional types use the same creation outlet
-    body.appendUnit(widgetType.newFunction.outletImplementation);
+    body.appendUnit(newFunction.outletImplementation);
 
     return body;
   }
@@ -111,17 +126,6 @@ class WidgetType extends BoundType {
 
   @override
   SwiftType get swiftType => SwiftWidget(this);
-
-  /// Function to create a new instance of the widget.
-  DartFunction get newFunction => DartFunction(
-        context: binding.context,
-        outletName: "new$name",
-        location: binding.widgetLocation,
-        // widget constructor is just a function that has the widget name
-        name: name,
-        parameters: binding.parameters,
-        returnType: 'Object',
-      );
 }
 
 class DartWidget extends DartType {

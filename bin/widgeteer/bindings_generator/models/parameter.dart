@@ -110,6 +110,12 @@ class ParametersList with IterableMixin<Parameter> {
     return values;
   }
 
+  /// List of parameters to put in a C function declaration.
+  String get cDeclaration => parameters
+      .map((element) =>
+          "${context.resolveType(element.type).cType.name} ${element.name}")
+      .join(", ");
+
   void insert(int index, Parameter element) {
     parameters.insert(index, element);
   }
