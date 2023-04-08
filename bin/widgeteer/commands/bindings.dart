@@ -19,6 +19,7 @@ import 'dart:io';
 import 'package:args/command_runner.dart';
 
 import '../bindings_generator/bindings_generator.dart';
+import '../bindings_generator/toml.dart';
 import '../logger.dart';
 
 class BindingsCommand extends Command {

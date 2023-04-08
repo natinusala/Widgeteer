@@ -14,12 +14,16 @@
    limitations under the License.
 */
 
+import 'dart:io';
+
+import 'config.dart';
 import 'models/binding.dart';
 
 import 'package:toml/toml.dart';
 import 'package:path/path.dart' as p;
 
 import '../bindings/widget.dart';
+import 'models/type.dart';
 
 final types = [BindingType("widget", WidgetBinding.fromTOML)];
 
@@ -41,4 +45,53 @@ class BindingType {
   final Binding Function(String, String, Map, BindingContext) makeBinding;
 
   BindingType(this.name, this.makeBinding);
+}
+
+/// Parse and gather all bindings from TOML files.
+/// All returned bindings will be bound to the same [BindingContext].
+Future<List<ParsedBinding>> parseBindings(String workingDirectory) async {
+  final context = BindingContext();
+  List<ParsedBinding> bindings = [];
+
+  // Register all built-in types
+  bindings.addAll(builtinBindings.map((e) => ParsedBinding(e, "Builtin")));
+
+  final bindingsRoot = Directory(p.join(workingDirectory, "Bindings"));
+
+  await for (final entity in bindingsRoot.list(recursive: true)) {
+    if (entity is! File) {
+      continue;
+    }
+
+    if (!entity.path.endsWith(".toml")) {
+      throw "Unsupported file type '${entity.path}'";
+    }
+
+    final binding = await parseTomlFile(entity.path, context);
+    final relativePath = File(p.relative(entity.path)).parent.path;
+
+    bindings.add(ParsedBinding(binding, relativePath));
+  }
+
+  List<BoundType> types = [];
+  for (final binding in bindings) {
+    for (final type in binding.binding.types) {
+      if (types.any((element) => element.name == type.name)) {
+        throw "Duplicate type '${type.name}'";
+      }
+
+      types.add(type);
+    }
+  }
+  return bindings;
+}
+
+class ParsedBinding {
+  final Binding binding;
+
+  /// Path to the binding relative to working directory.
+  /// Used so that generated code follows the same hierarchy as TOML files.
+  final String relativePath;
+
+  ParsedBinding(this.binding, this.relativePath);
 }
