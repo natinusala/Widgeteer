@@ -60,7 +60,7 @@ class ParametersList with IterableMixin<Parameter> {
     var parameters = [];
 
     for (final parameter in this.parameters) {
-      final type = context.resolveBinding(parameter.type);
+      final type = context.resolveType(parameter.type);
       parameters.add("${type.name} ${parameter.name}");
     }
 
@@ -72,7 +72,7 @@ class ParametersList with IterableMixin<Parameter> {
     var parameters = [];
 
     for (final parameter in this.parameters) {
-      final type = context.resolveBinding(parameter.type);
+      final type = context.resolveType(parameter.type);
       parameters.add("${type.cType.dartFfiMapping} ${parameter.name}");
     }
 
@@ -102,7 +102,7 @@ class ParametersList with IterableMixin<Parameter> {
     var values = CodeUnit();
 
     for (final parameter in this) {
-      final type = context.resolveBinding(parameter.type);
+      final type = context.resolveType(parameter.type);
       values
           .appendUnit(type.dartType.fromCValue(parameter.name, parameter.name));
     }

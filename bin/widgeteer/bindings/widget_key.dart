@@ -14,14 +14,19 @@
    limitations under the License.
 */
 
-import '../bindings_generator/models/binding.dart';
 import '../bindings_generator/code_unit.dart';
+import '../bindings_generator/models/type.dart';
 import 'string.dart';
 
 class WidgetKeyBinding extends StringBinding {
   @override
   String get name => "WidgetKey";
 
+  @override
+  List<BoundType> get types => [WidgetKeyType()];
+}
+
+class WidgetKeyType extends StringType {
   @override
   DartType get dartType => DartWidgetKey();
 }

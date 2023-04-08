@@ -16,8 +16,20 @@
 
 import '../bindings_generator/models/binding.dart';
 import '../bindings_generator/code_unit.dart';
+import '../bindings_generator/models/type.dart';
 
 class StringBinding extends Binding {
+  @override
+  String get name => "String";
+
+  @override
+  String get origin => "built in";
+
+  @override
+  List<BoundType> get types => [StringType()];
+}
+
+class StringType extends BoundType {
   @override
   String get name => "String";
 
@@ -29,9 +41,6 @@ class StringBinding extends Binding {
 
   @override
   CType get cType => CString();
-
-  @override
-  String get origin => "built in";
 }
 
 class SwiftString extends SwiftType {

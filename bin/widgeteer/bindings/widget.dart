@@ -21,6 +21,7 @@ import 'package:path/path.dart' as p;
 import '../bindings_generator/code_unit.dart';
 import '../bindings_generator/models/dart_function.dart';
 import '../bindings_generator/models/parameter.dart';
+import '../bindings_generator/models/type.dart';
 import 'object.dart';
 
 class WidgetBinding extends Binding {
@@ -65,6 +66,15 @@ class WidgetBinding extends Binding {
     );
   }
 
+  @override
+  List<BoundType> get types => [WidgetType(this)];
+
+  @override
+  String get origin => p.relative(tomlPath);
+
+  @override
+  String get name => widgetName;
+
   /// Function to create a new instance of the widget.
   DartFunction get newFunction => DartFunction(
         context: context,
@@ -77,7 +87,29 @@ class WidgetBinding extends Binding {
       );
 
   @override
-  String get name => widgetName;
+  CodeUnit? get dartBody {
+    var body = CodeUnit();
+
+    // "new" outlet
+    body.appendUnit(newFunction.outletImplementation);
+
+    return body;
+  }
+
+  @override
+  CodeUnit? get swiftBody {
+    var body = CodeUnit();
+    return body;
+  }
+}
+
+class WidgetType extends BoundType {
+  final WidgetBinding binding;
+
+  WidgetType(this.binding);
+
+  @override
+  String get name => binding.widgetName;
 
   @override
   CType get cType => CObject();
@@ -87,28 +119,15 @@ class WidgetBinding extends Binding {
 
   @override
   SwiftType get swiftType => SwiftWidget(this);
-
-  @override
-  String get origin => p.relative(tomlPath);
 }
 
 class DartWidget extends DartType {
-  final WidgetBinding binding;
+  final WidgetType type;
 
-  DartWidget(this.binding);
-
-  @override
-  String get name => binding.name;
+  DartWidget(this.type);
 
   @override
-  CodeUnit? get body {
-    var body = CodeUnit();
-
-    // "new" outlet
-    body.appendUnit(binding.newFunction.outletImplementation);
-
-    return body;
-  }
+  String get name => type.name;
 
   @override
   CodeUnit fromCValue(String sourceFfiValue, String variableName) {
@@ -118,16 +137,10 @@ class DartWidget extends DartType {
 }
 
 class SwiftWidget extends SwiftType {
-  final WidgetBinding binding;
+  final WidgetType type;
 
-  SwiftWidget(this.binding);
-
-  @override
-  String get name => binding.name;
+  SwiftWidget(this.type);
 
   @override
-  CodeUnit? get body {
-    var body = CodeUnit();
-    return body;
-  }
+  String get name => type.name;
 }

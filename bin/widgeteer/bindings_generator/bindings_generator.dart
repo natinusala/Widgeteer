@@ -59,7 +59,7 @@ Future<List<ParsedBinding>> parseBindings(String workingDirectory) async {
     bindings.add(ParsedBinding(binding, relativePath));
   }
 
-  context.bindings = bindings.map((e) => e.binding).toList();
+  context.types = bindings.expand((element) => element.binding.types).toList();
   return bindings;
 }
 
@@ -80,7 +80,7 @@ Future<void> generateBindings(String workingDirectory) async {
   // Walk through all bindings, generate the code and collect outlets
   for (final binding in await parseBindings(workingDirectory)) {
     // Dart file
-    final dartBody = binding.binding.dartType.body;
+    final dartBody = binding.binding.dartBody;
     if (dartBody != null) {
       final dartFile = p.join(
           dartRoot, binding.relativePath, "${binding.binding.name}.dart");
@@ -93,7 +93,7 @@ Future<void> generateBindings(String workingDirectory) async {
     }
 
     // Swift file
-    final swiftBody = binding.binding.swiftType.body;
+    final swiftBody = binding.binding.swiftBody;
     if (swiftBody != null) {
       final swiftFile = p.join(
           swiftRoot, binding.relativePath, "${binding.binding.name}.swift");

@@ -16,8 +16,20 @@
 
 import '../bindings_generator/code_unit.dart';
 import '../bindings_generator/models/binding.dart';
+import '../bindings_generator/models/type.dart';
 
 class ObjectBinding extends Binding {
+  @override
+  String get origin => "built in";
+
+  @override
+  String get name => "Object";
+
+  @override
+  List<BoundType> get types => [ObjectType()];
+}
+
+class ObjectType extends BoundType {
   @override
   CType get cType => CObject();
 
@@ -26,9 +38,6 @@ class ObjectBinding extends Binding {
 
   @override
   String get name => "Object";
-
-  @override
-  String get origin => "built in";
 
   @override
   SwiftType get swiftType => SwiftObject();

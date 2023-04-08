@@ -65,7 +65,7 @@ class DartFunction {
   }
 
   CodeUnit get _outletFunction {
-    final returnType = context.resolveBinding(this.returnType);
+    final returnType = context.resolveType(this.returnType);
     final functionName = outletName;
 
     // Function body
