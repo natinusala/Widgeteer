@@ -15,7 +15,9 @@
 */
 
 import 'dart:io';
+import 'package:ffigen/ffigen.dart' as ffigen;
 import 'package:path/path.dart' as p;
+import 'package:logging/logging.dart' as logging;
 
 import '../logger.dart';
 import 'code_unit.dart';
@@ -80,8 +82,29 @@ Future<void> generateBindings(String workingDirectory) async {
     outletsHeader.appendLine(outlet.outlet.registrationCDeclaration);
   }
 
-  final outletsHeadersFile = p.join(includesRoot, "generated", "outlets.h");
+  final outletsHeadersFile = p.join(includesRoot, "outlets.h");
   logger.log(
       "🖨️  Writing outlets registration headers to '$outletsHeadersFile'");
   await outletsHeader.writeToFile(outletsHeadersFile);
+
+  // Setup the ffigen logger
+  final ffiLogger = logging.Logger("ffigen.ffigen");
+  ffiLogger.onRecord.listen((event) {
+    if (event.level >= logging.Level.SEVERE) {
+      logger.log("❌  ffigen error: ${event.message}");
+    } else if (event.level >= logging.Level.WARNING) {
+      logger.log("⚠️  ffigen warning: ${event.message}");
+    }
+  });
+
+  // Run ffigen
+  for (final nativeLib in nativeLibraries) {
+    final config = nativeLib.config(workingDirectory);
+    final output = File(nativeLib.output(workingDirectory));
+
+    logger.log("🖨️  Writing '${nativeLib.name}' bindings to '${output.path}'");
+    final library = ffigen.parse(config);
+
+    library.generateFile(output);
+  }
 }
