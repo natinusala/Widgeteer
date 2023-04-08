@@ -26,7 +26,7 @@ class ObjectBinding extends Binding {
   String get name => "Object";
 
   @override
-  List<BoundType> get types => [ObjectType()];
+  List<BoundType> get types => [ObjectType(), OptionalObjectType()];
 }
 
 class ObjectType extends BoundType {
@@ -68,6 +68,36 @@ class DartObject extends DartType {
 class SwiftObject extends SwiftType {
   @override
   String get name => "Dart_Handle";
+}
+
+class OptionalObjectType extends BoundType {
+  @override
+  CType get cType => OptionalCObject();
+
+  @override
+  DartType get dartType => OptionalDartObject();
+
+  @override
+  String get name => "Object?";
+
+  @override
+  SwiftType get swiftType => OptionalSwiftObject();
+}
+
+class OptionalDartObject extends DartType {
+  @override
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+    // No conversion required
+    return CodeUnit(content: "final ${variableName}Value = sourceFfiValue;");
+  }
+
+  @override
+  String get name => "Object?";
+}
+
+class OptionalSwiftObject extends SwiftType {
+  @override
+  String get name => "Dart_Handle?";
 }
 
 class OptionalCObject extends CType {
