@@ -31,16 +31,17 @@ Future<void> generateBindings(String workingDirectory) async {
   final includesRoot = p.join(workingDirectory, generatedIncludesRoot);
 
   // Clear everything before regenerating
-  logger.debug("🧹  Cleaning up previous generation");
   for (final generatedDir in [dartRoot, swiftRoot, includesRoot]) {
     final dir = Directory(generatedDir);
     if (await dir.exists()) {
+      logger.info("🧹  Deleting '${dir.path}'");
       await dir.delete(recursive: true);
     }
   }
 
   // Walk through all bindings, generate the code and collect outlets
   List<EmittedOutlet> outlets = [];
+  List<String> generatedDartFiles = [];
   for (final binding in await parseBindings(workingDirectory)) {
     // Collect outlets
     outlets.addAll(
@@ -51,6 +52,8 @@ Future<void> generateBindings(String workingDirectory) async {
     if (dartBody != null) {
       final dartFile = p.join(
           dartRoot, binding.relativePath, "${binding.binding.name}.dart");
+
+      generatedDartFiles.add(dartFile);
 
       logger.log(
           "🖨️  Writing '${binding.binding.name}' Dart code to '$dartFile'");
@@ -86,6 +89,39 @@ Future<void> generateBindings(String workingDirectory) async {
   logger.log(
       "🖨️  Writing outlets registration headers to '$outletsHeadersFile'");
   await outletsHeader.writeToFile(outletsHeadersFile);
+
+  // Generate outlets registration function
+  final registerOutletsFile = CodeUnit.forNewFile();
+
+  registerOutletsFile.appendLine("import 'dart:ffi';");
+  registerOutletsFile.appendLine("import 'lib_widgeteer.dart';");
+  registerOutletsFile.appendLine("import 'package:ffi/ffi.dart';");
+
+  registerOutletsFile.appendEmptyLine();
+  for (final dartFile in generatedDartFiles) {
+    final relativePath =
+        p.relative(dartFile, from: p.join(workingDirectory, "lib"));
+    registerOutletsFile.appendLine("import 'package:widgeteer/$relativePath';");
+  }
+
+  registerOutletsFile.appendEmptyLine();
+  registerOutletsFile
+      .appendLine("void registerOutlets(LibWidgeteer widgeteer) {");
+
+  for (final outlet in outlets) {
+    registerOutletsFile.appendLine(
+        "// Outlet emitted by '${outlet.binding.name}' binding (${outlet.binding})",
+        indentedBy: 4);
+    registerOutletsFile.appendUnit(outlet.outlet.dartRegistrationCall,
+        indentedBy: 4);
+  }
+
+  registerOutletsFile.appendLine("}");
+
+  final registerOutletsDestination = p.join(dartRoot, "register_outlets.dart");
+  registerOutletsFile.writeToFile(registerOutletsDestination);
+  logger.log(
+      "🖨️  Writing outlets registration function to '$registerOutletsDestination'");
 
   // Setup the ffigen logger
   final ffiLogger = logging.Logger("ffigen.ffigen");

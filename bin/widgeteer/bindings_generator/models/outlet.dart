@@ -65,6 +65,12 @@ class Outlet {
 
     return "extern void $cRegistrationDeclarationName(${resolvedReturnType.cType.name} (*outlet)(${parameters.cDeclaration}));";
   }
+
+  /// Dart code to call to register the outlet to Swift.
+  /// Assuming the library binding is available under the `widgeteer` name.
+  CodeUnit get dartRegistrationCall => CodeUnit(
+      content:
+          "widgeteer.$cRegistrationDeclarationName(Pointer.fromFunction($implementationName));");
 }
 
 class EmittedOutlet {

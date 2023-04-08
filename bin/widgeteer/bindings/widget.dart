@@ -95,7 +95,7 @@ class WidgetBinding extends Binding {
 
   @override
   CodeUnit? get dartBody {
-    var body = CodeUnit();
+    final body = CodeUnit();
 
     // Both normal and optional types use the same creation outlet
     body.appendUnit(newFunction.outletImplementation);
@@ -105,7 +105,7 @@ class WidgetBinding extends Binding {
 
   @override
   CodeUnit? get swiftBody {
-    var body = CodeUnit();
+    final body = CodeUnit();
     return body;
   }
 }

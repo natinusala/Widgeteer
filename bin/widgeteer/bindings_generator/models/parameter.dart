@@ -99,7 +99,7 @@ class ParametersList with IterableMixin<Parameter> {
   /// that takes the parameters in their FFI form and turn them into their
   /// final Dart values.
   CodeUnit dartValuesFromFFI(BindingContext context) {
-    var values = CodeUnit();
+    final values = CodeUnit();
 
     for (final parameter in this) {
       final type = context.resolveType(parameter.type);

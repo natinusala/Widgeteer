@@ -66,8 +66,9 @@ class CodeUnit {
     return CodeUnit(content: generatedHeader);
   }
 
-  void appendLine(String line) {
-    lines.add(line);
+  void appendLine(String line, {int indentedBy = 0}) {
+    final indentation = " " * indentedBy;
+    lines.add("$indentation$line");
   }
 
   void appendEmptyLine() {
@@ -80,8 +81,7 @@ class CodeUnit {
 
   void appendUnit(CodeUnit unit, {int indentedBy = 0}) {
     for (final line in unit.lines) {
-      final indentation = " " * indentedBy;
-      lines.add("$indentation$line");
+      appendLine(line, indentedBy: indentedBy);
     }
   }
 

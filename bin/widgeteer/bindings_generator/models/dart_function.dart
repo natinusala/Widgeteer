@@ -52,7 +52,7 @@ class DartFunction {
   /// Dart code containing some imports and the implementation function
   /// for the outlet.
   CodeUnit get outletImplementation {
-    var outlet = CodeUnit();
+    final outlet = CodeUnit();
 
     // Imports
     outlet.appendLines([
@@ -72,7 +72,7 @@ class DartFunction {
     final functionName = outletName;
 
     // Function body
-    var body = CodeUnit();
+    final body = CodeUnit();
 
     // C -> Dart parameters conversion
     body.appendUnit(parameters.dartValuesFromFFI(context));
@@ -82,7 +82,7 @@ class DartFunction {
     body.appendLine("return $name(${parameters.dartArguments});");
 
     // Function signature
-    var function = CodeUnit();
+    final function = CodeUnit();
 
     function.appendLine(
         "${returnType.cType.dartFfiMapping} $functionName(${parameters.dartFFIParameters}) {");
