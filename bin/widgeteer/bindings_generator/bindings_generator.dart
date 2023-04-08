@@ -75,7 +75,8 @@ Future<void> generateBindings(String workingDirectory) async {
   outletsHeader.appendEmptyLine();
 
   for (final outlet in outlets) {
-    outletsHeader.appendLine("// Outlet emitted by '${outlet.binding.name}'");
+    outletsHeader.appendLine(
+        "// Outlet emitted by '${outlet.binding.name}' binding (${outlet.binding})");
     outletsHeader.appendLine(outlet.outlet.registrationCDeclaration);
   }
 
