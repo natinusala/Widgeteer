@@ -66,8 +66,11 @@ class WidgetBinding extends Binding {
     );
   }
 
+  late WidgetType widgetType = WidgetType(this);
+  late OptionalWidgetType optionalWidgetType = OptionalWidgetType(this);
+
   @override
-  List<BoundType> get types => [WidgetType(this)];
+  List<BoundType> get types => [widgetType, optionalWidgetType];
 
   @override
   String get origin => p.relative(tomlPath);
@@ -75,23 +78,12 @@ class WidgetBinding extends Binding {
   @override
   String get name => widgetName;
 
-  /// Function to create a new instance of the widget.
-  DartFunction get newFunction => DartFunction(
-        context: context,
-        outletName: "new$name",
-        location: widgetLocation,
-        // widget constructor is just a function that has the widget name
-        name: name,
-        parameters: parameters,
-        returnType: 'Object',
-      );
-
   @override
   CodeUnit? get dartBody {
     var body = CodeUnit();
 
-    // "new" outlet
-    body.appendUnit(newFunction.outletImplementation);
+    // Both normal and optional types use the same creation outlet
+    body.appendUnit(widgetType.newFunction.outletImplementation);
 
     return body;
   }
@@ -119,6 +111,17 @@ class WidgetType extends BoundType {
 
   @override
   SwiftType get swiftType => SwiftWidget(this);
+
+  /// Function to create a new instance of the widget.
+  DartFunction get newFunction => DartFunction(
+        context: binding.context,
+        outletName: "new$name",
+        location: binding.widgetLocation,
+        // widget constructor is just a function that has the widget name
+        name: name,
+        parameters: binding.parameters,
+        returnType: 'Object',
+      );
 }
 
 class DartWidget extends DartType {
@@ -132,7 +135,7 @@ class DartWidget extends DartType {
   @override
   CodeUnit fromCValue(String sourceFfiValue, String variableName) {
     return CodeUnit(
-        content: "final ${variableName}Value = $sourceFfiValue as Widget;");
+        content: "final ${variableName}Value = $sourceFfiValue as $name;");
   }
 }
 
@@ -143,4 +146,46 @@ class SwiftWidget extends SwiftType {
 
   @override
   String get name => type.name;
+}
+
+class OptionalWidgetType extends BoundType {
+  final WidgetBinding binding;
+
+  OptionalWidgetType(this.binding);
+
+  @override
+  String get name => "${binding.widgetName}?";
+
+  @override
+  CType get cType => OptionalCObject();
+
+  @override
+  DartType get dartType => OptionalDartWidget(this);
+
+  @override
+  SwiftType get swiftType => OptionalSwiftWidget(this);
+}
+
+class OptionalDartWidget extends DartType {
+  final OptionalWidgetType type;
+
+  OptionalDartWidget(this.type);
+
+  @override
+  String get name => "${type.name}?";
+
+  @override
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+    return CodeUnit(
+        content: "final ${variableName}Value = $sourceFfiValue as $name;");
+  }
+}
+
+class OptionalSwiftWidget extends SwiftType {
+  final OptionalWidgetType type;
+
+  OptionalSwiftWidget(this.type);
+
+  @override
+  String get name => "${type.name}?";
 }

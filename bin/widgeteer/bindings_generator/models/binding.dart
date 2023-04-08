@@ -44,7 +44,8 @@ abstract class Binding {
   /// Body of the generated Swift file for this binding.
   CodeUnit? get swiftBody => null;
 
-  String get description => "$name ($origin) => ${types.map((e) => e.name)}";
+  String get description =>
+      "$name ($origin) => ${types.map((e) => e.name).join(", ")}";
 }
 
 class BindingContext {

@@ -28,6 +28,9 @@ class WidgetKeyBinding extends StringBinding {
 
 class WidgetKeyType extends StringType {
   @override
+  String get name => "WidgetKey";
+
+  @override
   DartType get dartType => DartWidgetKey();
 }
 

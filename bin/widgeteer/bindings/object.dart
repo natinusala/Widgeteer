@@ -69,3 +69,14 @@ class SwiftObject extends SwiftType {
   @override
   String get name => "Dart_Handle";
 }
+
+class OptionalCObject extends CType {
+  @override
+  String get name => "Dart_Handle";
+
+  @override
+  String get cInteropMapping => "Dart_Handle?";
+
+  @override
+  String get dartFfiMapping => "Object?";
+}
