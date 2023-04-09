@@ -14,4 +14,15 @@
    limitations under the License.
 */
 
+/// Contains path to the shared library to load on bootstrap.
 const libraryPathEnv = "WIDGETEER_LIBRARY_PATH";
+
+// This tells the app to call `widgeteer_preview` instead of `widgeteer_run`
+// on restart
+const previewEnv = "WIDGETEER_PREVIEW";
+
+// Path to the file where the app writes its PID on start.
+const pidEnv = "WIDGETEER_PID";
+
+/// Path to the "next library" text file to use when hot reloading.
+const nextSoEnv = "WIDGETEER_NEXT_SO";

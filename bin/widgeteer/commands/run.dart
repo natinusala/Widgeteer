@@ -160,24 +160,22 @@ class RunCommand extends Command {
       // Note: as we cannot have any guarantee that the previous library can safely be dlclosed (there may be running
       // async or dispatch tasks, or Dart native finalizers not GC'd yet...), it is currently never closed, which can cause
       // a memory usage grow after a long period of periodic restarts.
-      // TODO: maybe replace SIGUSR1 by something else and remove --no-hot since it prevents the layout inspector from being used
+      // TODO: replace SIGUSR1 by a watch on the next SO text file and remove --no-hot since it prevents the layout inspector from being used
       if (await pidFile.exists()) {
         await pidFile.delete();
       }
 
       additionalFlutterArgs.add("--dart-define=WIDGETEER_HOT_RESTART=true");
       additionalFlutterArgs
-          .add("--dart-define=WIDGETEER_PID=${pidFile.absolute.path}");
+          .add("--dart-define=$pidEnv=${pidFile.absolute.path}");
       additionalFlutterArgs
-          .add("--dart-define=WIDGETEER_NEXT_SO=${nextSoFile.absolute.path}");
+          .add("--dart-define=$nextSoEnv=${nextSoFile.absolute.path}");
     }
 
     // Preview
     if (previewing) {
-      // This tells the app to call `widgeteer_preview` instead of `widgeteer_run`
-      // on restart
       final previewName = argResults!["preview"];
-      additionalFlutterArgs.add("--dart-define=WIDGETEER_PREVIEW=$previewName");
+      additionalFlutterArgs.add("--dart-define=$previewEnv=$previewName");
     }
 
     // Platform specific build
