@@ -21,10 +21,12 @@ import 'package:args/command_runner.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:path/path.dart' as p;
 import 'package:watcher/watcher.dart';
+import 'package:widgeteer/environment.dart';
 
 import '../building/build_path.dart';
 import '../building/build_task.dart';
 import '../building/device.dart';
+import '../config.dart';
 import '../logger.dart';
 
 class RunCommand extends Command {
@@ -211,7 +213,7 @@ class RunCommand extends Command {
             "--$mode",
             "-d",
             device.id, // trust Flutter to find the device from its id
-            "--dart-define=WIDGETEER_LIBRARY_PATH=$appLibrary",
+            "--dart-define=$libraryPathEnv=$appLibrary",
             if (watch) "--no-hot",
           ] +
           additionalFlutterArgs,

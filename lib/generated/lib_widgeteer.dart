@@ -45,4 +45,18 @@ class LibWidgeteer {
               ffi.NativeFunction<
                   ffi.Handle Function(ffi.Pointer<ffi.Char> key,
                       ffi.Pointer<ffi.Char> data)>>)>();
+
+  void init(
+    ffi.Pointer<ffi.Void> data,
+  ) {
+    return _init(
+      data,
+    );
+  }
+
+  late final _initPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Void>)>>(
+          'widgeteer_init');
+  late final _init =
+      _initPtr.asFunction<void Function(ffi.Pointer<ffi.Void>)>();
 }

@@ -25,18 +25,18 @@ import '../models/native_library.dart';
 class LibWidgeteer extends NativeLibrary {
   @override
   Config config(String workingDirectory) {
-    final includesRoot = p.join(workingDirectory, generatedIncludesRoot);
-
     Map<String, dynamic> map = {
       "output": output(workingDirectory),
       "name": name,
       "description": "Widgeteer Runtime",
       "headers": {
         "entry-points": [
-          p.join(includesRoot, "outlets.h"),
+          p.join(workingDirectory, generatedIncludesRoot, "outlets.h"),
+          p.join(workingDirectory, includesRoot, "libwidgeteer.h"),
         ],
         "include-directives": [
           "**outlets.h",
+          "**libwidgeteer.h",
         ],
       },
       "functions": {

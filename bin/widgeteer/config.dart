@@ -39,7 +39,8 @@ const generatedHeader =
 final generatedDartRoot = p.join("lib", "generated");
 final generatedSwiftRoot =
     p.join("Widgeteer", "Sources", "Widgeteer", "Generated");
-final generatedIncludesRoot = p.join("Include", "generated");
+const includesRoot = "Include";
+final generatedIncludesRoot = p.join(includesRoot, "generated");
 
 /// Attempt to create a [Device] handle from the given settings.
 /// Platform string should follow the `platform-arch` pattern.
