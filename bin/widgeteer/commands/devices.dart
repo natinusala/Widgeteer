@@ -16,14 +16,24 @@
 
 import 'package:args/command_runner.dart';
 
-import 'widgeteer/commands/bindings.dart';
-import 'widgeteer/commands/devices.dart';
-import 'widgeteer/commands/run.dart';
+import '../building/device.dart';
+import '../logger.dart';
 
-void main(List<String> args) async {
-  CommandRunner("widgeteer", "Manage your Widgeteer app development.")
-    ..addCommand(BindingsCommand())
-    ..addCommand(RunCommand())
-    ..addCommand(DevicesCommand())
-    ..run(args);
+class DevicesCommand extends Command {
+  @override
+  String get description => "List all connected devices.";
+
+  @override
+  String get name => "devices";
+
+  @override
+  void run() {
+    final devices = getDevices();
+    logger.log("${devices.length} connected devices:");
+    logger.log("");
+
+    for (Device device in devices) {
+      logger.log(device.description);
+    }
+  }
 }

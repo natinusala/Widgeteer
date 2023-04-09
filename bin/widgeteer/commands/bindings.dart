@@ -60,7 +60,7 @@ class ListBindingsCommand extends Command {
   void run() async {
     final list = await parseBindings(Directory.current.path);
 
-    logger.print(
+    logger.log(
         "List of all available bindings:\n${list.map((e) => e.binding).map((e) => "    - ${e.description}").join("\n")}");
   }
 }

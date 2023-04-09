@@ -19,7 +19,7 @@ import 'dart:io';
 import 'package:path/path.dart' as p;
 import 'package:stack_trace/stack_trace.dart';
 
-import 'config.dart';
+import '../config.dart';
 
 /// A unit of generated source code in any language,
 /// whether it's a whole file, a class or the body of a function.

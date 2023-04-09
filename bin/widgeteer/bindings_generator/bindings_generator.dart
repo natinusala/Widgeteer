@@ -21,7 +21,7 @@ import 'package:logging/logging.dart' as logging;
 
 import '../logger.dart';
 import 'code_unit.dart';
-import 'config.dart';
+import '../config.dart';
 import 'models/outlet.dart';
 import 'toml.dart';
 

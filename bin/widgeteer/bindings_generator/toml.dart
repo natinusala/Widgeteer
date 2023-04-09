@@ -16,7 +16,7 @@
 
 import 'dart:io';
 
-import 'config.dart';
+import '../config.dart';
 import 'models/binding.dart';
 
 import 'package:toml/toml.dart';

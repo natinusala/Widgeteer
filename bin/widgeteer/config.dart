@@ -15,10 +15,13 @@
 */
 
 import 'package:path/path.dart' as p;
-import '../bindings/object.dart';
-import '../bindings/string.dart';
-import '../bindings/widget_key.dart';
-import 'native_libraries/lib_widgeteer.dart';
+import 'bindings/object.dart';
+import 'bindings/string.dart';
+import 'bindings/widget_key.dart';
+import 'building/device.dart';
+import 'building/devices/android.dart';
+import 'building/devices/linux.dart';
+import 'bindings_generator/native_libraries/lib_widgeteer.dart';
 
 final builtinBindings = [
   StringBinding(),
@@ -37,3 +40,24 @@ final generatedDartRoot = p.join("lib", "generated");
 final generatedSwiftRoot =
     p.join("Widgeteer", "Sources", "Widgeteer", "Generated");
 final generatedIncludesRoot = p.join("Include", "generated");
+
+/// Attempt to create a [Device] handle from the given settings.
+/// Platform string should follow the `platform-arch` pattern.
+Device createDevice(String id, String name, String platform, String version) {
+  // Linux
+  if (platform.startsWith("linux")) {
+    // Assume we are not cross-compiling and ignore arch suffix
+    return LinuxDevice(
+        id: id, name: name, platform: platform, version: version);
+  }
+
+  // Android
+  if (platform.startsWith("android")) {
+    return AndroidDevice(
+        id: id, name: name, platform: platform, version: version);
+  }
+
+  // Unsupported / unknown device
+  return UnsupportedDevice(
+      id: id, name: name, platform: platform, version: version);
+}

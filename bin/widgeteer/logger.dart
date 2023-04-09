@@ -17,6 +17,7 @@
 */
 
 import 'dart:core' as core;
+import 'dart:io';
 
 class Logger {
   const Logger();
@@ -26,20 +27,25 @@ class Logger {
     core.print("[INFO] $message");
   }
 
+  /// Used to inform the user that an error has occured.
+  void error(core.String message) {
+    core.print("[ERROR] $message");
+  }
+
   /// Used for debugging only messages.
   void debug(core.String message) {
     core.print("[DEBUG] $message");
   }
 
   /// Prints the message as-is to the terminal.
-  void print(core.String message) {
-    core.print(message);
-  }
-
-  /// Used to notify advance of a task.
   void log(core.String message) {
     core.print(message);
   }
+}
+
+core.Never fail(core.String message) {
+  logger.error("❌  Fatal error: $message");
+  exit(-1);
 }
 
 const logger = Logger();

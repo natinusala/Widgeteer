@@ -18,7 +18,7 @@ import 'package:ffigen/src/config_provider/config.dart';
 import 'package:yaml/yaml.dart';
 import 'package:path/path.dart' as p;
 
-import '../config.dart';
+import '../../config.dart';
 import '../models/native_library.dart';
 
 /// The Swift Widgeteer runtime library itself, including bootstrapping functions.
@@ -40,10 +40,10 @@ class LibWidgeteer extends NativeLibrary {
         ],
       },
       "functions": {
-        "rename": {"chatter_(.*)": "\$1"}
+        "rename": {"widgeteer_(.*)": "\$1"}
       },
       "typedefs": {
-        "rename": {"chatter_(.*)": "\$1"}
+        "rename": {"widgeteer_(.*)": "\$1"}
       }
     };
 
