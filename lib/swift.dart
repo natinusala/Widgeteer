@@ -43,7 +43,7 @@ void _bootstrap(List<String> args) {
   // TODO: somehow find a way to autodetect the directory
   final cur = Directory.current.parent.path;
   // ignore: invalid_use_of_protected_member
-  WidgetInspectorService.instance.addPubRootDirectories(["$cur/../chatter"]);
+  WidgetInspectorService.instance.addPubRootDirectories(["$cur/../Widgeteer"]);
 
   _libWidgeteer.init(NativeApi.initializeApiDLData);
   registerOutlets(_libWidgeteer);
