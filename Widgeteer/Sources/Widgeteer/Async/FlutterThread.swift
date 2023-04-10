@@ -29,7 +29,7 @@ func markFlutterThread() {
 // Ensure the current thread is the Flutter main thread.
 // TODO: switch to package access level (SE-0386)
 public func assertIsOnFlutterThread() {
-    assert(flutterThread != nil, "Flutter thread not marked, has Chatter been initialized?")
+    assert(flutterThread != nil, "Flutter thread not marked, has Widgeteer been initialized?")
     assert(isOnFlutterThread(), "Expected to be on Flutter thread, is on '\(Thread.current)' instead")
 }
 

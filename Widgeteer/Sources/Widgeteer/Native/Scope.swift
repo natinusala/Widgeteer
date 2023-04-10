@@ -14,7 +14,24 @@
    limitations under the License.
 */
 
-extern void widgeteer_init(void* data);
+import DartApiDl
 
-extern void widgeteer_enter_scope();
-extern void widgeteer_exit_scope();
+@_cdecl("widgeteer_enter_scope")
+public func _enterScope() {
+    trace("---------------------------------")
+    trace(">>> Entering scope on behalf of Dart")
+    trace("---------------------------------")
+
+    assertIsOnFlutterThread()
+    Dart_EnterScope_DL()
+}
+
+@_cdecl("widgeteer_exit_scope")
+public func _exitScope() {
+    trace("---------------------------------")
+    trace("<<< Exiting scope on behalf of Dart")
+    trace("---------------------------------")
+
+    assertIsOnFlutterThread()
+    Dart_ExitScope_DL()
+}

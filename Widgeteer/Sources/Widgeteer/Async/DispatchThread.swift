@@ -21,7 +21,7 @@ private class DispatchThread: Thread {
     override init() {
         super.init()
 
-        self.name = "chatter.dispatch_main"
+        self.name = "widgeteer.dispatch_main"
     }
 
     override func main() {

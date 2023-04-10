@@ -21,22 +21,20 @@ import 'package:path/path.dart' as p;
 import '../../config.dart';
 import '../models/native_library.dart';
 
-/// The Swift Widgeteer runtime library itself, including bootstrapping functions.
-class LibWidgeteer extends NativeLibrary {
+/// The library containing the Swift app.
+class LibApp extends NativeLibrary {
   @override
   Config config(String workingDirectory) {
     Map<String, dynamic> map = {
       "output": output(workingDirectory),
       "name": name,
-      "description": "Widgeteer runtime library",
+      "description": "User app library",
       "headers": {
         "entry-points": [
-          p.join(workingDirectory, generatedIncludesRoot, "outlets.h"),
-          p.join(workingDirectory, includesRoot, "libwidgeteer.h"),
+          p.join(workingDirectory, includesRoot, "libapp.h"),
         ],
         "include-directives": [
-          "**outlets.h",
-          "**libwidgeteer.h",
+          "**libapp.h",
         ],
       },
       "functions": {
@@ -52,9 +50,9 @@ class LibWidgeteer extends NativeLibrary {
 
   @override
   String output(String workingDirectory) {
-    return p.join(workingDirectory, generatedDartRoot, "lib_widgeteer.dart");
+    return p.join(workingDirectory, generatedDartRoot, "lib_app.dart");
   }
 
   @override
-  String get name => "LibWidgeteer";
+  String get name => "LibApp";
 }

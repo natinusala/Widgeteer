@@ -18,6 +18,7 @@ import 'package:path/path.dart' as p;
 import 'bindings/object.dart';
 import 'bindings/string.dart';
 import 'bindings/widget_key.dart';
+import 'bindings_generator/native_libraries/lib_app.dart';
 import 'building/device.dart';
 import 'building/devices/android.dart';
 import 'building/devices/linux.dart';
@@ -31,6 +32,7 @@ final builtinBindings = [
 
 final nativeLibraries = [
   LibWidgeteer(),
+  LibApp(),
 ];
 
 const generatedHeader =

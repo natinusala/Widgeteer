@@ -14,7 +14,4 @@
    limitations under the License.
 */
 
-extern void widgeteer_init(void* data);
-
-extern void widgeteer_enter_scope();
-extern void widgeteer_exit_scope();
+extern void widgeteer_main();

@@ -4,7 +4,7 @@
 // ignore_for_file: type=lint
 import 'dart:ffi' as ffi;
 
-/// Widgeteer Runtime
+/// Widgeteer runtime library
 class LibWidgeteer {
   /// Holds the symbol lookup function.
   final ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName)
@@ -59,4 +59,20 @@ class LibWidgeteer {
           'widgeteer_init');
   late final _init =
       _initPtr.asFunction<void Function(ffi.Pointer<ffi.Void>)>();
+
+  void enter_scope() {
+    return _enter_scope();
+  }
+
+  late final _enter_scopePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function()>>('widgeteer_enter_scope');
+  late final _enter_scope = _enter_scopePtr.asFunction<void Function()>();
+
+  void exit_scope() {
+    return _exit_scope();
+  }
+
+  late final _exit_scopePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function()>>('widgeteer_exit_scope');
+  late final _exit_scope = _exit_scopePtr.asFunction<void Function()>();
 }
