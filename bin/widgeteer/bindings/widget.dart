@@ -25,6 +25,7 @@ import '../bindings_generator/models/parameter.dart';
 import '../bindings_generator/models/type.dart';
 import 'object.dart';
 
+/// Binding for a specific widget found in Flutter or an external library.
 class WidgetBinding extends Binding {
   final BindingContext context;
 

@@ -20,6 +20,25 @@ class LibWidgeteer {
           lookup)
       : _lookup = lookup;
 
+  void register_run_app_outlet(
+    ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Handle app)>> outlet,
+  ) {
+    return _register_run_app_outlet(
+      outlet,
+    );
+  }
+
+  late final _register_run_app_outletPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Pointer<
+                      ffi.NativeFunction<ffi.Void Function(ffi.Handle app)>>)>>(
+      'register_run_app_outlet');
+  late final _register_run_app_outlet = _register_run_app_outletPtr.asFunction<
+      void Function(
+          ffi.Pointer<
+              ffi.NativeFunction<ffi.Void Function(ffi.Handle app)>>)>();
+
   void register_new_text(
     ffi.Pointer<
             ffi.NativeFunction<

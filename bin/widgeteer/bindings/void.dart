@@ -14,57 +14,57 @@
    limitations under the License.
 */
 
-import '../bindings_generator/models/binding.dart';
 import '../bindings_generator/code_unit.dart';
+import '../bindings_generator/models/binding.dart';
 import '../bindings_generator/models/type.dart';
 
-class StringBinding extends Binding {
+class VoidBinding extends Binding {
   @override
-  String get name => "String";
+  String get name => "Void";
 
   @override
   String get origin => "built in";
 
   @override
-  List<BoundType> get types => [StringType()];
+  List<BoundType> get types => [VoidType()];
 }
 
-class StringType extends BoundType {
+class VoidType extends BoundType {
   @override
-  String get name => "String";
+  CType get cType => CVoid();
 
   @override
-  SwiftType get swiftType => SwiftString();
+  DartType get dartType => DartVoid();
 
   @override
-  DartType get dartType => DartString();
+  String get name => "Void";
 
   @override
-  CType get cType => CString();
+  SwiftType get swiftType => SwiftVoid();
 }
 
-class SwiftString extends SwiftType {
+class SwiftVoid extends SwiftType {
   @override
-  String get name => "String";
+  String get name => "Void";
 }
 
-class DartString extends DartType {
+class DartVoid extends DartType {
   @override
-  String get name => "String";
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+    throw UnimplementedError();
+  }
 
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) => CodeUnit(
-      content:
-          "final ${variableName}Value = $sourceFfiValue.cast<Utf8>().toDartString();");
+  String get name => "void";
 }
 
-class CString extends CType {
+class CVoid extends CType {
   @override
-  String get name => "char*";
+  String get swiftCInteropMapping => "Void";
 
   @override
-  String get swiftCInteropMapping => "UnsafePointer<CChar>?";
+  String get dartFfiMapping => "void";
 
   @override
-  String get dartFfiMapping => "Pointer<Char>";
+  String get name => "void";
 }

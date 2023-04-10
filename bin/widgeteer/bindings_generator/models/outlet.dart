@@ -81,7 +81,7 @@ class Outlet {
     final cFuncTypealias = "_${name}_CFunctionPointer";
     final resolvedReturnType = context.resolveType(returnType);
     final closureTypeAlias =
-        "(${parameters.swiftCFunctionParameters}) -> ${resolvedReturnType.cType.cInteropMapping}";
+        "(${parameters.swiftCFunctionParameters}) -> ${resolvedReturnType.cType.swiftCInteropMapping}";
 
     final registration = CodeUnit();
 

@@ -12,10 +12,12 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-[widget]
+[function]
 location = "package:flutter/widgets.dart"
+name = "runApp"
+return_type = "Void"
 
 [[parameter]]
-swift_label = "_"
-name = "data"
-type = "String"
+label = "_"
+name = "app"
+type = "Widget"

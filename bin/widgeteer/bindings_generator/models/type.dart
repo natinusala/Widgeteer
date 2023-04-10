@@ -66,8 +66,8 @@ abstract class DartType {
 abstract class CType {
   String get name;
 
-  /// Representation of the type as a C interop type.
-  String get cInteropMapping;
+  /// Representation of the type as a Swift C interop type.
+  String get swiftCInteropMapping;
 
   /// Representation of the type inside FFI.
   /// Should be an FFI type such as `Pointer`.

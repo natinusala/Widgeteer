@@ -22,22 +22,19 @@ import 'models/binding.dart';
 import 'package:toml/toml.dart';
 import 'package:path/path.dart' as p;
 
-import '../bindings/widget.dart';
 import 'models/type.dart';
-
-final types = [BindingType("widget", WidgetBinding.fromTOML)];
 
 Future<Binding> parseTomlFile(String path, BindingContext context) async {
   final toml = (await TomlDocument.load(path)).toMap();
   final stem = p.basenameWithoutExtension(path);
 
-  for (BindingType type in types) {
+  for (BindingType type in tomlTypes) {
     if (toml.containsKey(type.name)) {
       return type.makeBinding(path, stem, toml, context);
     }
   }
 
-  throw "Unsupported binding type in '$path' - supported types are: ${types.map((e) => e.name)}";
+  throw "Unsupported binding type in '$path' - supported types are: ${tomlTypes.map((e) => e.name)}";
 }
 
 class BindingType {

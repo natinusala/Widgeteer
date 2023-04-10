@@ -15,10 +15,15 @@
 */
 
 import 'package:path/path.dart' as p;
+import 'bindings/any_widget.dart';
+import 'bindings/function.dart';
 import 'bindings/object.dart';
 import 'bindings/string.dart';
+import 'bindings/void.dart';
+import 'bindings/widget.dart';
 import 'bindings/widget_key.dart';
 import 'bindings_generator/native_libraries/lib_app.dart';
+import 'bindings_generator/toml.dart';
 import 'building/device.dart';
 import 'building/devices/android.dart';
 import 'building/devices/linux.dart';
@@ -28,11 +33,18 @@ final builtinBindings = [
   StringBinding(),
   WidgetKeyBinding(),
   ObjectBinding(),
+  VoidBinding(),
+  AnyWidgetBinding(),
 ];
 
 final nativeLibraries = [
   LibWidgeteer(),
   LibApp(),
+];
+
+final tomlTypes = [
+  BindingType("widget", WidgetBinding.fromTOML),
+  BindingType("function", FunctionBinding.fromTOML),
 ];
 
 const generatedHeader =

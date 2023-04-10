@@ -4,9 +4,13 @@ import 'dart:ffi';
 import 'lib_widgeteer.dart';
 import 'package:ffi/ffi.dart';
 
+import 'package:widgeteer/generated/Bindings/Widgets/RunApp.dart';
 import 'package:widgeteer/generated/Bindings/Widgets/Text.dart';
 
 void registerOutlets(LibWidgeteer widgeteer) {
+    // Outlet emitted by 'RunApp' binding (Instance of 'FunctionBinding')
+    // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
+    widgeteer.register_run_app_outlet(Pointer.fromFunction(runAppOutlet));
     // Outlet emitted by 'Text' binding (Instance of 'WidgetBinding')
     // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
     widgeteer.register_new_text(Pointer.fromFunction(newText));

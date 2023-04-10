@@ -38,9 +38,9 @@ class Parameter {
   factory Parameter.fromTOML(Map toml) {
     return Parameter(
       name: toml["name"],
-      swiftLabel: toml["swiftLabel"],
+      swiftLabel: toml["swift_label"],
       type: toml["type"],
-      dartNamed: toml["dartNamed"] ?? false,
+      dartNamed: toml["dart_named"] ?? false,
     );
   }
 }
@@ -122,7 +122,7 @@ class ParametersList with IterableMixin<Parameter> {
   /// signature or a `@convention(c)` closure type.
   String get swiftCFunctionParameters => parameters.map((element) {
         final resolvedType = context.resolveType(element.type);
-        return "_ ${element.name}: ${resolvedType.cType.cInteropMapping}";
+        return "_ ${element.name}: ${resolvedType.cType.swiftCInteropMapping}";
       }).join(", ");
 
   /// Swift discarded closure parameters.

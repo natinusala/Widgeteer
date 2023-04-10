@@ -48,7 +48,7 @@ class CObject extends CType {
   String get name => "Dart_Handle";
 
   @override
-  String get cInteropMapping => "Dart_Handle";
+  String get swiftCInteropMapping => "Dart_Handle";
 
   @override
   String get dartFfiMapping => "Object";
@@ -105,7 +105,7 @@ class OptionalCObject extends CType {
   String get name => "Dart_Handle";
 
   @override
-  String get cInteropMapping => "Dart_Handle?";
+  String get swiftCInteropMapping => "Dart_Handle?";
 
   @override
   String get dartFfiMapping => "Object?";
