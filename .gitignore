@@ -33,7 +33,7 @@ xcuserdata
 *.moved-aside
 
 *.pyc
-*sync/
+# *sync/
 Icon?
 .tags*
 

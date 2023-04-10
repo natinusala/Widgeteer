@@ -46,6 +46,9 @@ class Outlet {
 
   late String cRegistrationDeclarationName = "register_${name.snakeCase}";
 
+  /// Name of the bound function as exposed to the Swift library.
+  late String swiftFunctionName = "Flutter_$name";
+
   Outlet({
     required this.context,
     required this.implementationName,
@@ -71,6 +74,43 @@ class Outlet {
   CodeUnit get dartRegistrationCall => CodeUnit(
       content:
           "widgeteer.$cRegistrationDeclarationName(Pointer.fromFunction($implementationName));");
+
+  /// Swift closure type aliases, registration function and function to call
+  /// in the rest of the program.
+  CodeUnit get swiftRegistration {
+    final cFuncTypealias = "_${name}_CFunctionPointer";
+    final resolvedReturnType = context.resolveType(returnType);
+    final closureTypeAlias =
+        "(${parameters.swiftCFunctionParameters}) -> ${resolvedReturnType.cType.cInteropMapping}";
+
+    final registration = CodeUnit();
+
+    // C Function Pointer typealias
+    registration.appendLine(
+        "public typealias $cFuncTypealias = @convention(c) $closureTypeAlias");
+
+    // Swift typealias
+    registration.appendLine("public typealias _$name = $closureTypeAlias");
+
+    // Function pointer storage
+    registration.appendEmptyLine();
+    registration.appendLine(
+        'public var $swiftFunctionName: _$name = { (${parameters.swiftClosureDiscardParameters}) in fatalError("\'$name\' called before it was registered") }');
+
+    // Registration function
+    registration.appendEmptyLine();
+    registration.appendLine('@_cdecl("$cRegistrationDeclarationName")');
+    registration
+        .appendLine("public func _register$name(_ outlet: $cFuncTypealias) {");
+    registration.appendLine("assertIsOnFlutterThread()", indentedBy: 4);
+    registration.appendLine('trace("Registering \'$name\'")', indentedBy: 4);
+    registration.appendLine(
+        "$swiftFunctionName = { (${parameters.swiftClosureNamedParameters}) in assertIsOnFlutterThread(); return outlet(${parameters.swiftClosureNamedParameters}) }",
+        indentedBy: 4);
+    registration.appendLine("}");
+
+    return registration;
+  }
 }
 
 class EmittedOutlet {

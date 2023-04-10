@@ -8,7 +8,7 @@ import 'package:ffi/ffi.dart';
 // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:85
 Object newText(Pointer<Char> key, Pointer<Char> data) {
     // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:75
-    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:102
+    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:104
     // 🍞 bin/widgeteer/bindings/widget_key.dart:43
     final keyString = key.cast<Utf8>().toDartString();
     final keyValue = ValueKey(keyString);

@@ -16,6 +16,8 @@
 
 import 'dart:collection';
 
+import 'package:collection/collection.dart';
+
 import '../code_unit.dart';
 import 'binding.dart';
 
@@ -115,6 +117,22 @@ class ParametersList with IterableMixin<Parameter> {
       .map((element) =>
           "${context.resolveType(element.type).cType.name} ${element.name}")
       .join(", ");
+
+  /// List of parameters to put in a Swift `@_cdecl` function
+  /// signature or a `@convention(c)` closure type.
+  String get swiftCFunctionParameters => parameters.map((element) {
+        final resolvedType = context.resolveType(element.type);
+        return "_ ${element.name}: ${resolvedType.cType.cInteropMapping}";
+      }).join(", ");
+
+  /// Swift discarded closure parameters.
+  String get swiftClosureDiscardParameters =>
+      parameters.map((element) => "_").join(", ");
+
+  /// Swift named closure parameters.
+  /// Parameters will be named `p0`, `p1`, `p2`...
+  String get swiftClosureNamedParameters =>
+      parameters.mapIndexed((index, element) => "p$index").join(", ");
 
   void insert(int index, Parameter element) {
     parameters.insert(index, element);

@@ -11,11 +11,17 @@ let package = Package(
         ),
     ],
     dependencies: [
+        .package(url: "https://github.com/wickwirew/Runtime", .upToNextMajor(from: "2.2.4")),
+        .package(url: "https://github.com/swift-server/swift-backtrace", .upToNextMajor(from: "1.3.3")),
     ],
     targets: [
         .target(
             name: "Widgeteer",
-            dependencies: []
+            dependencies: [
+                "DartApiDl",
+                "Runtime",
+                .product(name: "Backtrace", package: "swift-backtrace"),
+            ]
         ),
         .target(
             name: "DartApiDl",

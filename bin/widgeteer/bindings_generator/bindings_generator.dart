@@ -123,6 +123,22 @@ Future<void> generateBindings(String workingDirectory) async {
   logger.log(
       "🖨️  Writing outlets registration function to '$registerOutletsDestination'");
 
+  // Write the outlets Swift file
+  final outletsSwift = CodeUnit.forNewFile();
+  outletsSwift.appendLine("import DartApiDl");
+  outletsSwift.appendEmptyLine();
+
+  for (final outlet in outlets) {
+    outletsSwift.appendLine("// MARK: ${outlet.outlet.name}");
+    outletsSwift.appendLine(
+        "// Outlet emitted by '${outlet.binding.name}' binding (${outlet.binding})");
+    outletsSwift.appendUnit(outlet.outlet.swiftRegistration);
+  }
+
+  final swiftOutletsDestination = p.join(swiftRoot, "Outlets.swift");
+  outletsSwift.writeToFile(swiftOutletsDestination);
+  logger.log("🖨️  Writing Swift outlets to '$swiftOutletsDestination'");
+
   // Setup the ffigen logger
   final ffiLogger = logging.Logger("ffigen.ffigen");
   ffiLogger.onRecord.listen((event) {
