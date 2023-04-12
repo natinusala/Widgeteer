@@ -22,7 +22,7 @@ import '../bindings_generator/models/type.dart';
 /// `PreferredSizeWidget`.
 class AnyWidgetBinding extends Binding {
   @override
-  String get name => "Widget";
+  String get name => "AnyWidget";
 
   @override
   String get origin => "built in";
