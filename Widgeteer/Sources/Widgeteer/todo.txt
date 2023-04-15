@@ -1,0 +1,4 @@
+restaurer hot restart
+restaurer les preview
+restaurer Android et au passage faire une extension kotlin propre
+supprimer SIGUSR1 et watch le fichier plutôt

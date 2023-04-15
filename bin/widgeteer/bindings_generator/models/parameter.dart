@@ -134,8 +134,61 @@ class ParametersList with IterableMixin<Parameter> {
   String get swiftClosureNamedParameters =>
       parameters.mapIndexed((index, element) => "p$index").join(", ");
 
+  /// Swift initializer parameters.
+  String get swiftInitParameters {
+    List<String> parameters = [];
+
+    for (final parameter in this) {
+      final resolvedType = context.resolveType(parameter.type);
+
+      var str = "";
+      if (parameter.swiftLabel != null) {
+        str += "${parameter.swiftLabel} ";
+      }
+
+      str += "${parameter.name}: ${resolvedType.swiftType.name}";
+
+      parameters.add(str);
+    }
+
+    return parameters.join(", ");
+  }
+
+  /// Swift property declarations (`let` constants).
+  CodeUnit get swiftProperties {
+    final properties = CodeUnit();
+
+    for (final parameter in this) {
+      final resolvedType = context.resolveType(parameter.type);
+      properties
+          .appendLine("let ${parameter.name}: ${resolvedType.swiftType.name}");
+    }
+
+    return properties;
+  }
+
+  /// Swift initializer that sets all properties.
+  CodeUnit get swiftInitializer {
+    final init = CodeUnit();
+
+    init.appendLine("public init($swiftInitParameters) {");
+
+    for (final parameter in this) {
+      init.appendLine("self.${parameter.name} = ${parameter.name}",
+          indentedBy: 4);
+    }
+
+    init.appendLine("}");
+
+    return init;
+  }
+
   void insert(int index, Parameter element) {
     parameters.insert(index, element);
+  }
+
+  ParametersList sublist(int start, [int? end]) {
+    return ParametersList(context, parameters.toList().sublist(start, end));
   }
 
   @override

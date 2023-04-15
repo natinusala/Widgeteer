@@ -67,4 +67,10 @@ class CString extends CType {
 
   @override
   String get dartFfiMapping => "Pointer<Char>";
+
+  @override
+  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+    // Use Swift implicit conversion from String to CChar* in function calls
+    return CodeUnit(content: "let ${variableName}Value = $sourceValue");
+  }
 }

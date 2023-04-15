@@ -28,7 +28,7 @@ class DartFunction {
   /// Name of the original Dart function to call in the outlet.
   final String name;
 
-  /// Name of the generated outlet and outlet implementation.
+  /// Name of the generated outlet.
   final String outletName;
 
   /// What Dart file to import to make the function visible.
@@ -48,6 +48,8 @@ class DartFunction {
     required this.returnType,
     required this.parameters,
   });
+
+  String get outletImplementationName => "${outletName}Impl";
 
   /// Dart code containing some imports and the implementation function
   /// for the outlet.
@@ -85,7 +87,7 @@ class DartFunction {
     final function = CodeUnit();
 
     function.appendLine(
-        "${returnType.cType.dartFfiMapping} $functionName(${parameters.dartFFIParameters}) {");
+        "${returnType.cType.dartFfiMapping} $outletImplementationName(${parameters.dartFFIParameters}) {");
     function.appendUnit(body, indentedBy: 4);
     function.appendLine("}");
     return function;
@@ -96,7 +98,7 @@ class DartFunction {
         context: context,
         name: outletName.pascalCase,
         returnType: returnType,
-        implementationName: outletName,
+        implementationName: outletImplementationName,
         parameters: parameters,
       );
 }

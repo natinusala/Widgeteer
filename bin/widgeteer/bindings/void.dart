@@ -67,4 +67,9 @@ class CVoid extends CType {
 
   @override
   String get name => "void";
+
+  @override
+  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+    throw UnimplementedError();
+  }
 }

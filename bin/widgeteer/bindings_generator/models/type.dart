@@ -72,4 +72,8 @@ abstract class CType {
   /// Representation of the type inside FFI.
   /// Should be an FFI type such as `Pointer`.
   String get dartFfiMapping;
+
+  /// Swift code that takes [sourceValue] and turns it unto a value of the
+  /// interop C type inside a variable called `${variableName}Value`.
+  CodeUnit fromSwiftValue(String sourceValue, String variableName);
 }

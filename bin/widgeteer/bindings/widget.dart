@@ -107,7 +107,78 @@ class WidgetBinding extends Binding {
   @override
   CodeUnit? get swiftBody {
     final body = CodeUnit();
+
+    // Swift struct
+    body.appendUnit(swiftStruct);
+
     return body;
+  }
+
+  /// The Swift struct properties.
+  /// Remove the first parameter that's always the key as it is computed
+  /// during reduction and is invisible to the user
+  ParametersList get swiftProperties =>
+      parameters.isNotEmpty ? parameters.sublist(1) : parameters;
+
+  CodeUnit get swiftStruct {
+    final struct = CodeUnit();
+
+    struct.appendLine("public struct $widgetName: BuiltinWidget {");
+
+    // Properties
+    struct.appendUnit(swiftProperties.swiftProperties, indentedBy: 4);
+
+    // Initializer
+    struct.appendEmptyLine();
+    struct.appendUnit(swiftProperties.swiftInitializer, indentedBy: 4);
+
+    // Reduction function
+    struct.appendEmptyLine();
+    struct.appendUnit(reductionFunction, indentedBy: 4);
+
+    struct.appendLine("}");
+    return struct;
+  }
+
+  CodeUnit get reductionFunction {
+    final reduce = CodeUnit();
+
+    reduce.appendLine(
+        "public func reduce(parentKey: WidgetKey) -> ReducedWidget {");
+
+    // Translate all properties from Swift to C
+    for (final property in swiftProperties) {
+      final resolvedType = context.resolveType(property.type);
+
+      reduce.appendUnit(
+          resolvedType.cType
+              .fromSwiftValue("self.${property.name}", property.name),
+          indentedBy: 4);
+    }
+
+    reduce.appendLine(
+        "let localHandle = ${newFunction.callingOutlet.swiftFunctionName}(",
+        indentedBy: 4);
+
+    // Key
+    reduce.appendLine("parentKey.joined(String(describing: Self.self)),",
+        indentedBy: 8);
+
+    reduce.appendLines(
+        swiftProperties
+            .map((element) => "${element.name}Value")
+            .join(",\n")
+            .split("\n"),
+        indentedBy: 8);
+
+    reduce.appendLine(")", indentedBy: 4);
+
+    reduce.appendLine("return ReducedWidget(handle: localHandle)",
+        indentedBy: 4);
+
+    reduce.appendLine("}");
+
+    return reduce;
   }
 }
 
@@ -120,7 +191,7 @@ class WidgetType extends BoundType {
   String get name => binding.widgetName;
 
   @override
-  CType get cType => CObject();
+  CType get cType => CWidget();
 
   @override
   DartType get dartType => DartWidget(this);
@@ -153,6 +224,24 @@ class SwiftWidget extends SwiftType {
   String get name => type.name;
 }
 
+class CWidget extends CType {
+  @override
+  String get dartFfiMapping => "Object";
+
+  @override
+  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+    return CodeUnit(
+        content:
+            "let ${variableName}Value = $sourceValue.reduce(parentKey: parentKey.joined(\"$variableName\")).handle");
+  }
+
+  @override
+  String get name => "Dart_Handle";
+
+  @override
+  String get swiftCInteropMapping => "Dart_Handle";
+}
+
 class OptionalWidgetType extends BoundType {
   final WidgetBinding binding;
 
@@ -162,7 +251,7 @@ class OptionalWidgetType extends BoundType {
   String get name => "${binding.widgetName}?";
 
   @override
-  CType get cType => OptionalCObject();
+  CType get cType => OptionalCWidget();
 
   @override
   DartType get dartType => OptionalDartWidget(this);
@@ -193,4 +282,22 @@ class OptionalSwiftWidget extends SwiftType {
 
   @override
   String get name => "${type.name}?";
+}
+
+class OptionalCWidget extends CType {
+  @override
+  String get dartFfiMapping => "Object?";
+
+  @override
+  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+    return CodeUnit(
+        content:
+            "let ${variableName}Value = $sourceValue?.reduce(parentKey: parentKey.joined(\"$variableName\")).handle");
+  }
+
+  @override
+  String get name => "Dart_Handle";
+
+  @override
+  String get swiftCInteropMapping => "Dart_Handle?";
 }

@@ -52,6 +52,11 @@ class CObject extends CType {
 
   @override
   String get dartFfiMapping => "Object";
+
+  @override
+  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+    throw UnimplementedError();
+  }
 }
 
 class DartObject extends DartType {
@@ -109,4 +114,9 @@ class OptionalCObject extends CType {
 
   @override
   String get dartFfiMapping => "Object?";
+
+  @override
+  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+    throw UnimplementedError();
+  }
 }

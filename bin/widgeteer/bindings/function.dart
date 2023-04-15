@@ -64,7 +64,7 @@ class FunctionBinding extends Binding {
   String get origin => p.relative(tomlPath);
 
   late DartFunction function = DartFunction(
-    outletName: "${functionName}Outlet",
+    outletName: functionName,
     context: context,
     name: functionName,
     location: functionLocation,

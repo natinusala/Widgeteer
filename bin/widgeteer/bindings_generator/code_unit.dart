@@ -75,8 +75,10 @@ class CodeUnit {
     lines.add("");
   }
 
-  void appendLines(List<String> lines) {
-    this.lines.addAll(lines);
+  void appendLines(List<String> lines, {int indentedBy = 0}) {
+    for (final line in lines) {
+      appendLine(line, indentedBy: indentedBy);
+    }
   }
 
   void appendUnit(CodeUnit unit, {int indentedBy = 0}) {

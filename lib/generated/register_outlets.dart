@@ -10,8 +10,8 @@ import 'package:widgeteer/generated/Bindings/Widgets/Text.dart';
 void registerOutlets(LibWidgeteer widgeteer) {
     // Outlet emitted by 'RunApp' binding (Instance of 'FunctionBinding')
     // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
-    widgeteer.register_run_app_outlet(Pointer.fromFunction(runAppOutlet));
+    widgeteer.register_run_app(Pointer.fromFunction(runAppImpl));
     // Outlet emitted by 'Text' binding (Instance of 'WidgetBinding')
     // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
-    widgeteer.register_new_text(Pointer.fromFunction(newText));
+    widgeteer.register_new_text(Pointer.fromFunction(newTextImpl));
 }

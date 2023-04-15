@@ -96,6 +96,13 @@ class CAnyWidget extends CType {
 
   @override
   String get swiftCInteropMapping => "Dart_Handle";
+
+  @override
+  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+    return CodeUnit(
+        content:
+            "let ${variableName}Value = $sourceValue.reduce(parentKey: parentKey.joined(\"$variableName\")).handle");
+  }
 }
 
 class COptionalAnyWidget extends CType {
@@ -108,4 +115,11 @@ class COptionalAnyWidget extends CType {
 
   @override
   String get swiftCInteropMapping => "Dart_Handle?";
+
+  @override
+  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+    return CodeUnit(
+        content:
+            "let ${variableName}Value = $sourceValue?.reduce(parentKey: parentKey.joined(\"$variableName\")).handle");
+  }
 }
