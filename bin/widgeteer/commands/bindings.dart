@@ -61,6 +61,6 @@ class ListBindingsCommand extends Command {
     final list = await parseBindings(Directory.current.path);
 
     logger.log(
-        "List of all available bindings:\n${list.map((e) => e.binding).map((e) => "    - ${e.description}").join("\n")}");
+        "List of all available bindings and the types they emit:\n${list.map((e) => e.binding).map((e) => "    - ${e.description}").join("\n")}");
   }
 }

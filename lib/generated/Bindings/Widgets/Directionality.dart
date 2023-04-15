@@ -6,14 +6,19 @@ import 'package:flutter/widgets.dart';
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
 // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:87
-Object newTextImpl(Pointer<Char> key, Pointer<Char> data) {
+Object newDirectionalityImpl(Pointer<Char> key, int textDirection) {
     // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:77
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:104
     // 🍞 bin/widgeteer/bindings/widget_key.dart:43
     final keyString = key.cast<Utf8>().toDartString();
     final keyValue = ValueKey(keyString);
-    // 🍞 bin/widgeteer/bindings/string.dart:56
-    final dataValue = data.cast<Utf8>().toDartString();
+    // 🍞 bin/widgeteer/bindings/enum.dart:126
+    late final TextDirection textDirectionValue;
+    switch (textDirection) {
+        case 0: textDirectionValue = TextDirection.rtl; break;
+        case 1: textDirectionValue = TextDirection.ltr; break;
+        default: throw "Received invalid index '$textDirection' for value of enum 'TextDirection'";
+    }
     
-    return Text(key: keyValue, dataValue);
+    return Directionality(key: keyValue, textDirection: textDirectionValue);
 }

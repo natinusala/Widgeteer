@@ -16,7 +16,9 @@
 
 import 'package:path/path.dart' as p;
 import 'bindings/any_widget.dart';
+import 'bindings/enum.dart';
 import 'bindings/function.dart';
+import 'bindings/int.dart';
 import 'bindings/object.dart';
 import 'bindings/string.dart';
 import 'bindings/void.dart';
@@ -35,6 +37,7 @@ final builtinBindings = [
   ObjectBinding(),
   VoidBinding(),
   AnyWidgetBinding(),
+  IntBinding(),
 ];
 
 final nativeLibraries = [
@@ -45,6 +48,7 @@ final nativeLibraries = [
 final tomlTypes = [
   BindingType("widget", WidgetBinding.fromTOML),
   BindingType("function", FunctionBinding.fromTOML),
+  BindingType("enum", EnumBinding.fromTOML),
 ];
 
 const generatedHeader =

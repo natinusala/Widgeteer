@@ -30,3 +30,17 @@ public func _registerNewText(_ outlet: _NewText_CFunctionPointer) {
     trace("Registering 'NewText'")
     Flutter_NewText = { (p0, p1) in assertIsOnFlutterThread(); return outlet(p0, p1) }
 }
+// MARK: NewDirectionality
+// Outlet emitted by 'Directionality' binding (Instance of 'WidgetBinding')
+// 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:86
+public typealias _NewDirectionality_CFunctionPointer = @convention(c) (_ key: UnsafePointer<CChar>?, _ textDirection: Int) -> Dart_Handle
+public typealias _NewDirectionality = (_ key: UnsafePointer<CChar>?, _ textDirection: Int) -> Dart_Handle
+
+public var Flutter_NewDirectionality: _NewDirectionality = { (_, _) in fatalError("'NewDirectionality' called before it was registered") }
+
+@_cdecl("register_new_directionality")
+public func _registerNewDirectionality(_ outlet: _NewDirectionality_CFunctionPointer) {
+    assertIsOnFlutterThread()
+    trace("Registering 'NewDirectionality'")
+    Flutter_NewDirectionality = { (p0, p1) in assertIsOnFlutterThread(); return outlet(p0, p1) }
+}

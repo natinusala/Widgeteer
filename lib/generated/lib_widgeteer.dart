@@ -65,6 +65,34 @@ class LibWidgeteer {
                   ffi.Handle Function(ffi.Pointer<ffi.Char> key,
                       ffi.Pointer<ffi.Char> data)>>)>();
 
+  void register_new_directionality(
+    ffi.Pointer<
+            ffi.NativeFunction<
+                ffi.Handle Function(
+                    ffi.Pointer<ffi.Char> key, ffi.Int textDirection)>>
+        outlet,
+  ) {
+    return _register_new_directionality(
+      outlet,
+    );
+  }
+
+  late final _register_new_directionalityPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Pointer<
+                      ffi.NativeFunction<
+                          ffi.Handle Function(ffi.Pointer<ffi.Char> key,
+                              ffi.Int textDirection)>>)>>(
+      'register_new_directionality');
+  late final _register_new_directionality =
+      _register_new_directionalityPtr.asFunction<
+          void Function(
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      ffi.Handle Function(ffi.Pointer<ffi.Char> key,
+                          ffi.Int textDirection)>>)>();
+
   void init(
     ffi.Pointer<ffi.Void> data,
   ) {

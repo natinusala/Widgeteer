@@ -23,7 +23,6 @@ import '../bindings_generator/models/dart_function.dart';
 import '../bindings_generator/models/outlet.dart';
 import '../bindings_generator/models/parameter.dart';
 import '../bindings_generator/models/type.dart';
-import 'object.dart';
 
 /// Binding for a specific widget found in Flutter or an external library.
 class WidgetBinding extends Binding {
