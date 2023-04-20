@@ -19,3 +19,8 @@ location = "package:flutter/widgets.dart"
 name = "textDirection"
 type = "TextDirection"
 dart_named = true
+
+[[content]]
+name = "child"
+multi = false
+dart_named = true

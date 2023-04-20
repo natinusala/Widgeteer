@@ -14,6 +14,8 @@
    limitations under the License.
 */
 
+import 'package:recase/recase.dart';
+
 import '../bindings_generator/models/binding.dart';
 
 import 'package:path/path.dart' as p;
@@ -24,6 +26,47 @@ import '../bindings_generator/models/outlet.dart';
 import '../bindings_generator/models/parameter.dart';
 import '../bindings_generator/models/type.dart';
 
+/// Content of a widget.
+class WidgetContent extends BoundType {
+  /// Camel case name of the content property.
+  final String contentName;
+
+  final bool multi;
+  final bool dartNamed;
+
+  WidgetContent({
+    required this.contentName,
+    required this.dartNamed,
+    required this.multi,
+  });
+
+  factory WidgetContent.fromTOML(Map toml) {
+    return WidgetContent(
+      contentName: toml["name"],
+      dartNamed: toml["dart_named"],
+      multi: toml["multi"],
+    );
+  }
+
+  /// Name of the Swift generic parameter.
+  String get swiftGenericParameter => contentName.pascalCase;
+
+  /// Name of the Swift generic parameter contraint.
+  String get swiftGenericConstraint => multi ? "MultiWidget" : "SingleWidget";
+
+  @override
+  CType get cType => throw UnimplementedError();
+
+  @override
+  DartType get dartType => throw UnimplementedError();
+
+  @override
+  String get name => throw UnimplementedError();
+
+  @override
+  SwiftType get swiftType => throw UnimplementedError();
+}
+
 /// Binding for a specific widget found in Flutter or an external library.
 class WidgetBinding extends Binding {
   final BindingContext context;
@@ -31,6 +74,7 @@ class WidgetBinding extends Binding {
   final String widgetName;
   final String tomlPath;
   final ParametersList parameters;
+  final List<WidgetContent> content;
 
   /// Dart import to use to make the widget class accessible.
   final String widgetLocation;
@@ -41,6 +85,7 @@ class WidgetBinding extends Binding {
     required this.widgetLocation,
     required this.tomlPath,
     required this.parameters,
+    required this.content,
   });
 
   factory WidgetBinding.fromTOML(
@@ -57,13 +102,21 @@ class WidgetBinding extends Binding {
           dartNamed: true,
         ));
 
-    // Widget
+    // Parse content
+    final List<WidgetContent> contentList = [];
+
+    for (final Map<String, dynamic> content in toml["content"] ?? {}) {
+      contentList.add(WidgetContent.fromTOML(content));
+    }
+
+    // Create binding
     return WidgetBinding(
       context: context,
       widgetName: fileStem,
       tomlPath: tomlPath,
       widgetLocation: toml["widget"]["location"],
       parameters: parameters,
+      content: contentList,
     );
   }
 
@@ -81,6 +134,8 @@ class WidgetBinding extends Binding {
 
   @override
   String get name => widgetName;
+
+  bool get hasContent => content.isNotEmpty;
 
   /// Function to create a new instance of the widget.
   late DartFunction newFunction = DartFunction(
@@ -103,6 +158,31 @@ class WidgetBinding extends Binding {
     return body;
   }
 
+  /// Generic parameters clause of the Swift struct.
+  String get swiftGenericParameters {
+    if (!hasContent) {
+      return "";
+    }
+
+    return "<${content.map((e) => "${e.swiftGenericParameter}: ${e.swiftGenericConstraint}").join(", ")}>";
+  }
+
+  /// Swift properties for content.
+  CodeUnit get contentProperties {
+    if (!hasContent) {
+      return CodeUnit.empty();
+    }
+
+    var properties = CodeUnit();
+
+    for (final content in content) {
+      properties.appendLine(
+          "let ${content.contentName}: ${content.swiftGenericParameter}");
+    }
+
+    return properties;
+  }
+
   @override
   CodeUnit? get swiftBody {
     final body = CodeUnit();
@@ -122,14 +202,21 @@ class WidgetBinding extends Binding {
   CodeUnit get swiftStruct {
     final struct = CodeUnit();
 
-    struct.appendLine("public struct $widgetName: BuiltinWidget {");
+    struct.appendLine(
+        "public struct $widgetName$swiftGenericParameters: BuiltinWidget {");
 
     // Properties
     struct.appendUnit(swiftProperties.swiftProperties, indentedBy: 4);
+    // TODO: turn content into a list of parameters instead of giving content separately (contentProperties must go)
+    // Content
+    struct.appendUnit(contentProperties, indentedBy: 4);
 
     // Initializer
     struct.appendEmptyLine();
-    struct.appendUnit(swiftProperties.swiftInitializer, indentedBy: 4);
+    // TODO: turn content into a list of parameters instead of giving content separately (content parameter must go)
+    // TODO: sort content
+    struct.appendUnit(swiftProperties.swiftInitializer(content: content),
+        indentedBy: 4);
 
     // Reduction function
     struct.appendEmptyLine();

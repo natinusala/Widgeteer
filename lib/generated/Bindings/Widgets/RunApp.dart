@@ -8,7 +8,7 @@ import 'package:ffi/ffi.dart';
 // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:87
 void runAppImpl(Object app) {
     // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:77
-    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:104
+    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:105
     // 🍞 bin/widgeteer/bindings/any_widget.dart:74
     final appValue = app as Widget;
     

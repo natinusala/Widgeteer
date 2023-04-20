@@ -18,6 +18,7 @@ import 'dart:collection';
 
 import 'package:collection/collection.dart';
 
+import '../../bindings/widget.dart';
 import '../code_unit.dart';
 import 'binding.dart';
 
@@ -135,9 +136,10 @@ class ParametersList with IterableMixin<Parameter> {
       parameters.mapIndexed((index, element) => "p$index").join(", ");
 
   /// Swift initializer parameters.
-  String get swiftInitParameters {
+  String swiftInitParameters({List<WidgetContent>? content}) {
     List<String> parameters = [];
 
+    // Regular params
     for (final parameter in this) {
       final resolvedType = context.resolveType(parameter.type);
 
@@ -149,6 +151,12 @@ class ParametersList with IterableMixin<Parameter> {
       str += "${parameter.name}: ${resolvedType.swiftType.name}";
 
       parameters.add(str);
+    }
+
+    // Content
+    for (final content in content ?? []) {
+      parameters
+          .add("${content.contentName}: ${content.swiftGenericParameter}");
     }
 
     return parameters.join(", ");
@@ -168,13 +176,18 @@ class ParametersList with IterableMixin<Parameter> {
   }
 
   /// Swift initializer that sets all properties.
-  CodeUnit get swiftInitializer {
+  CodeUnit swiftInitializer({List<WidgetContent>? content}) {
     final init = CodeUnit();
 
-    init.appendLine("public init($swiftInitParameters) {");
+    init.appendLine("public init(${swiftInitParameters(content: content)}) {");
 
     for (final parameter in this) {
       init.appendLine("self.${parameter.name} = ${parameter.name}",
+          indentedBy: 4);
+    }
+
+    for (final content in content ?? []) {
+      init.appendLine("self.${content.contentName} = ${content.contentName}",
           indentedBy: 4);
     }
 

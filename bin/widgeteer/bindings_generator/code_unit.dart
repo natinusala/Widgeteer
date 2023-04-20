@@ -66,6 +66,10 @@ class CodeUnit {
     return CodeUnit(content: generatedHeader);
   }
 
+  factory CodeUnit.empty() {
+    return CodeUnit(stamp: false);
+  }
+
   void appendLine(String line, {int indentedBy = 0}) {
     final indentation = " " * indentedBy;
     lines.add("$indentation$line");
