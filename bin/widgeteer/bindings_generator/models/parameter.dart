@@ -136,10 +136,9 @@ class ParametersList with IterableMixin<Parameter> {
       parameters.mapIndexed((index, element) => "p$index").join(", ");
 
   /// Swift initializer parameters.
-  String swiftInitParameters({List<WidgetContent>? content}) {
+  String get swiftInitParameters {
     List<String> parameters = [];
 
-    // Regular params
     for (final parameter in this) {
       final resolvedType = context.resolveType(parameter.type);
 
@@ -148,15 +147,9 @@ class ParametersList with IterableMixin<Parameter> {
         str += "${parameter.swiftLabel} ";
       }
 
-      str += "${parameter.name}: ${resolvedType.swiftType.name}";
+      str += "${parameter.name}: ${resolvedType.swiftType.initType}";
 
       parameters.add(str);
-    }
-
-    // Content
-    for (final content in content ?? []) {
-      parameters
-          .add("${content.contentName}: ${content.swiftGenericParameter}");
     }
 
     return parameters.join(", ");
@@ -176,18 +169,16 @@ class ParametersList with IterableMixin<Parameter> {
   }
 
   /// Swift initializer that sets all properties.
-  CodeUnit swiftInitializer({List<WidgetContent>? content}) {
+  CodeUnit get swiftInitializer {
     final init = CodeUnit();
 
-    init.appendLine("public init(${swiftInitParameters(content: content)}) {");
+    init.appendLine("public init($swiftInitParameters) {");
 
     for (final parameter in this) {
-      init.appendLine("self.${parameter.name} = ${parameter.name}",
-          indentedBy: 4);
-    }
+      final resolvedType = context.resolveType(parameter.type);
 
-    for (final content in content ?? []) {
-      init.appendLine("self.${content.contentName} = ${content.contentName}",
+      init.appendLine(
+          "self.${parameter.name} = ${resolvedType.swiftType.initSetterValue(parameter.name)}",
           indentedBy: 4);
     }
 
@@ -206,4 +197,8 @@ class ParametersList with IterableMixin<Parameter> {
 
   @override
   Iterator<Parameter> get iterator => parameters.iterator;
+
+  ParametersList operator +(ParametersList other) {
+    return ParametersList(context, parameters + other.parameters);
+  }
 }

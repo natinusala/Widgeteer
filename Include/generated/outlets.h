@@ -7,4 +7,4 @@ extern void register_new_text(Dart_Handle (*outlet)(char* key, char* data));
 // Outlet emitted by 'RunApp' binding (Instance of 'FunctionBinding')
 extern void register_run_app(void (*outlet)(Dart_Handle app));
 // Outlet emitted by 'Directionality' binding (Instance of 'WidgetBinding')
-extern void register_new_directionality(Dart_Handle (*outlet)(char* key, int textDirection));
+extern void register_new_directionality(Dart_Handle (*outlet)(char* key, int textDirection, Dart_Handle child));

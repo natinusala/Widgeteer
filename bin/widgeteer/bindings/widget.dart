@@ -26,47 +26,6 @@ import '../bindings_generator/models/outlet.dart';
 import '../bindings_generator/models/parameter.dart';
 import '../bindings_generator/models/type.dart';
 
-/// Content of a widget.
-class WidgetContent extends BoundType {
-  /// Camel case name of the content property.
-  final String contentName;
-
-  final bool multi;
-  final bool dartNamed;
-
-  WidgetContent({
-    required this.contentName,
-    required this.dartNamed,
-    required this.multi,
-  });
-
-  factory WidgetContent.fromTOML(Map toml) {
-    return WidgetContent(
-      contentName: toml["name"],
-      dartNamed: toml["dart_named"],
-      multi: toml["multi"],
-    );
-  }
-
-  /// Name of the Swift generic parameter.
-  String get swiftGenericParameter => contentName.pascalCase;
-
-  /// Name of the Swift generic parameter contraint.
-  String get swiftGenericConstraint => multi ? "MultiWidget" : "SingleWidget";
-
-  @override
-  CType get cType => throw UnimplementedError();
-
-  @override
-  DartType get dartType => throw UnimplementedError();
-
-  @override
-  String get name => throw UnimplementedError();
-
-  @override
-  SwiftType get swiftType => throw UnimplementedError();
-}
-
 /// Binding for a specific widget found in Flutter or an external library.
 class WidgetBinding extends Binding {
   final BindingContext context;
@@ -74,7 +33,7 @@ class WidgetBinding extends Binding {
   final String widgetName;
   final String tomlPath;
   final ParametersList parameters;
-  final List<WidgetContent> content;
+  final List<WidgetContentType> content;
 
   /// Dart import to use to make the widget class accessible.
   final String widgetLocation;
@@ -103,10 +62,10 @@ class WidgetBinding extends Binding {
         ));
 
     // Parse content
-    final List<WidgetContent> contentList = [];
+    final List<WidgetContentType> contentList = [];
 
     for (final Map<String, dynamic> content in toml["content"] ?? {}) {
-      contentList.add(WidgetContent.fromTOML(content));
+      contentList.add(WidgetContentType.fromTOML(fileStem, content));
     }
 
     // Create binding
@@ -124,7 +83,7 @@ class WidgetBinding extends Binding {
   late OptionalWidgetType optionalWidgetType = OptionalWidgetType(this);
 
   @override
-  List<BoundType> get types => [widgetType, optionalWidgetType];
+  List<BoundType> get types => [widgetType, optionalWidgetType] + content;
 
   @override
   List<Outlet> get outlets => [newFunction.callingOutlet];
@@ -144,7 +103,8 @@ class WidgetBinding extends Binding {
     location: widgetLocation,
     // widget constructor is just a function that has the widget name
     name: name,
-    parameters: parameters,
+    parameters: parameters +
+        ParametersList(context, content.map((e) => e.parameter).toList()),
     returnType: 'Object',
   );
 
@@ -167,22 +127,6 @@ class WidgetBinding extends Binding {
     return "<${content.map((e) => "${e.swiftGenericParameter}: ${e.swiftGenericConstraint}").join(", ")}>";
   }
 
-  /// Swift properties for content.
-  CodeUnit get contentProperties {
-    if (!hasContent) {
-      return CodeUnit.empty();
-    }
-
-    var properties = CodeUnit();
-
-    for (final content in content) {
-      properties.appendLine(
-          "let ${content.contentName}: ${content.swiftGenericParameter}");
-    }
-
-    return properties;
-  }
-
   @override
   CodeUnit? get swiftBody {
     final body = CodeUnit();
@@ -196,8 +140,16 @@ class WidgetBinding extends Binding {
   /// The Swift struct properties.
   /// Remove the first parameter that's always the key as it is computed
   /// during reduction and is invisible to the user
-  ParametersList get swiftProperties =>
-      parameters.isNotEmpty ? parameters.sublist(1) : parameters;
+  ParametersList get swiftProperties {
+    final parametersProperties =
+        parameters.isNotEmpty ? parameters.sublist(1) : parameters;
+
+    // TODO: sort content
+    final contentProperties =
+        ParametersList(context, content.map((e) => e.parameter).toList());
+
+    return parametersProperties + contentProperties;
+  }
 
   CodeUnit get swiftStruct {
     final struct = CodeUnit();
@@ -207,16 +159,10 @@ class WidgetBinding extends Binding {
 
     // Properties
     struct.appendUnit(swiftProperties.swiftProperties, indentedBy: 4);
-    // TODO: turn content into a list of parameters instead of giving content separately (contentProperties must go)
-    // Content
-    struct.appendUnit(contentProperties, indentedBy: 4);
 
     // Initializer
     struct.appendEmptyLine();
-    // TODO: turn content into a list of parameters instead of giving content separately (content parameter must go)
-    // TODO: sort content
-    struct.appendUnit(swiftProperties.swiftInitializer(content: content),
-        indentedBy: 4);
+    struct.appendUnit(swiftProperties.swiftInitializer, indentedBy: 4);
 
     // Reduction function
     struct.appendEmptyLine();
@@ -386,4 +332,112 @@ class OptionalCWidget extends CType {
 
   @override
   String get swiftCInteropMapping => "Dart_Handle?";
+}
+
+/// Content of a widget.
+class WidgetContentType extends BoundType {
+  final String widgetName;
+
+  /// Camel case name of the content property.
+  final String contentName;
+
+  final bool multi;
+  final bool dartNamed;
+
+  WidgetContentType({
+    required this.contentName,
+    required this.dartNamed,
+    required this.multi,
+    required this.widgetName,
+  });
+
+  factory WidgetContentType.fromTOML(String widgetName, Map toml) {
+    return WidgetContentType(
+      contentName: toml["name"],
+      dartNamed: toml["dart_named"],
+      multi: toml["multi"],
+      widgetName: widgetName,
+    );
+  }
+
+  /// Name of the Swift generic parameter.
+  String get swiftGenericParameter => contentName.pascalCase;
+
+  /// Name of the Swift generic parameter contraint.
+  String get swiftGenericConstraint => multi ? "MultiWidget" : "SingleWidget";
+
+  String get dartClass => "Widget";
+
+  @override
+  CType get cType => CWidgetContent(this);
+
+  @override
+  DartType get dartType => DartWidgetContent(this);
+
+  @override
+  String get name => "$widgetName/$swiftGenericParameter";
+
+  @override
+  SwiftType get swiftType => SwiftWidgetContent(this);
+
+  /// Parameter to use this content in the widget.
+  Parameter get parameter {
+    return Parameter(
+      name: contentName,
+      type: name,
+      swiftLabel: null,
+      dartNamed: dartNamed,
+    );
+  }
+}
+
+class SwiftWidgetContent extends SwiftType {
+  final WidgetContentType type;
+
+  SwiftWidgetContent(this.type);
+
+  @override
+  String get name => type.swiftGenericParameter;
+
+  @override
+  String get initType => "() -> $name";
+
+  @override
+  String initSetterValue(String source) {
+    return "$source()";
+  }
+}
+
+class DartWidgetContent extends DartType {
+  final WidgetContentType type;
+
+  DartWidgetContent(this.type);
+
+  @override
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) => CodeUnit(
+      content:
+          "final ${variableName}Value = $sourceFfiValue as ${type.dartClass};");
+
+  @override
+  String get name => type.dartClass;
+}
+
+class CWidgetContent extends CType {
+  final WidgetContentType type;
+
+  CWidgetContent(this.type);
+
+  @override
+  String get dartFfiMapping => "Object";
+
+  @override
+  CodeUnit fromSwiftValue(String sourceValue, String variableName) => CodeUnit(
+      content:
+          "let ${variableName}Value = $sourceValue.reduce(parentKey: parentKey.joined(\"$variableName\")).handle");
+
+  @override
+  String get name => "Dart_Handle";
+
+  @override
+  String get swiftCInteropMapping => "Dart_Handle";
 }

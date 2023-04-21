@@ -44,6 +44,14 @@ abstract class SwiftType {
   /// Name of the actual, final Swift type, as used
   /// in regular Swift code.
   String get name;
+
+  /// Name of the type inside the initializer.
+  String get initType => name;
+
+  /// Value to use for the property in the initializer.
+  String initSetterValue(String source) {
+    return source;
+  }
 }
 
 abstract class DartType {
