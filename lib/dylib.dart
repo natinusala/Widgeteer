@@ -14,7 +14,8 @@
    limitations under the License.
 */
 
-// All the functions exposed by the app library (not generated).
-// See their Swift implementation for documentation.
+import 'generated/lib_app.dart';
+import 'generated/lib_widgeteer.dart';
 
-extern void widgeteer_main();
+late LibWidgeteer libWidgeteer;
+late LibApp libApp;

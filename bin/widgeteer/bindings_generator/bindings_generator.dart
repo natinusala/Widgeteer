@@ -140,10 +140,12 @@ Future<void> generateBindings(String workingDirectory) async {
   logger.log("🖨️  Writing Swift outlets to '$swiftOutletsDestination'");
 
   // Setup the ffigen logger
+  var ffigenError = false;
   final ffiLogger = logging.Logger("ffigen.ffigen");
   ffiLogger.onRecord.listen((event) {
     if (event.level >= logging.Level.SEVERE) {
       logger.log("❌  ffigen error: ${event.message}");
+      ffigenError = true;
     } else if (event.level >= logging.Level.WARNING) {
       logger.log("⚠️  ffigen warning: ${event.message}");
     }
@@ -159,4 +161,10 @@ Future<void> generateBindings(String workingDirectory) async {
 
     library.generateFile(output);
   }
+
+  if (ffigenError) {
+    fail("ffigen emitted one or more errors, please fix them and retry");
+  }
+
+  logger.log("✔️  Done");
 }

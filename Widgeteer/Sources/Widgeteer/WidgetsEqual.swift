@@ -111,7 +111,7 @@ extension Equatable {
 
 /// Allows using POD and memory layout features in a type-erased way.
 public protocol IsPodable {
-    /// Is the object a "Plain Old Data" object?
+    /// Is the type a "Plain Old Data" type?
     var isPod: Bool { get }
 
     /// Memory size of the type.
@@ -124,7 +124,11 @@ func tryPod(lhs: inout Any, rhs: inout Any) -> Bool? {
         return nil
     }
 
-    return memcmp(&lhs, &rhs, maybePod.size) == 0
+    return withUnsafePointer(to: &lhs) { lhs in
+        return withUnsafePointer(to: &rhs) { rhs in
+            return memcmp(lhs, rhs, maybePod.size) == 0
+        }
+    }
 }
 
 public extension IsPodable {

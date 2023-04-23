@@ -21,6 +21,7 @@ import 'package:flutter/widgets.dart';
 import 'package:widgeteer/generated/lib_app.dart';
 import 'package:widgeteer/generated/lib_widgeteer.dart';
 
+import 'dylib.dart';
 import 'environment.dart';
 import 'generated/register_outlets.dart';
 
@@ -38,8 +39,8 @@ void _bootstrap(List<String> args) {
   // to open one library in here
   final DynamicLibrary lib = DynamicLibrary.open(_getLibraryPath(args));
 
-  _libWidgeteer = LibWidgeteer(lib);
-  _libApp = LibApp(lib);
+  libWidgeteer = LibWidgeteer(lib);
+  libApp = LibApp(lib);
 
   // This is necessary for Swift widgets to appear in DevTools
   // See: https://github.com/flutter/devtools/issues/4152
@@ -48,18 +49,18 @@ void _bootstrap(List<String> args) {
   // ignore: invalid_use_of_protected_member
   WidgetInspectorService.instance.addPubRootDirectories(["$cur/../Widgeteer"]);
 
-  _libWidgeteer.init(NativeApi.initializeApiDLData);
-  registerOutlets(_libWidgeteer);
+  libWidgeteer.init(NativeApi.initializeApiDLData);
+  registerOutlets(libWidgeteer);
 }
 
 /// Restart the app: call the Swift app entry function, but do
 /// not bootstrap again.
 void _restart() {
-  _libWidgeteer.enter_scope();
+  libWidgeteer.enter_scope();
 
-  _libApp.main();
+  libApp.main();
 
-  _libWidgeteer.exit_scope();
+  libWidgeteer.exit_scope();
 }
 
 String _getLibraryPath(List<String> args) {
@@ -77,6 +78,3 @@ String _getLibraryPath(List<String> args) {
 
   return widgeteerPath;
 }
-
-late LibWidgeteer _libWidgeteer;
-late LibApp _libApp;

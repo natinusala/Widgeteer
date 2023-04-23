@@ -20,6 +20,25 @@ class LibWidgeteer {
           lookup)
       : _lookup = lookup;
 
+  void register_run_app(
+    ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Handle app)>> outlet,
+  ) {
+    return _register_run_app(
+      outlet,
+    );
+  }
+
+  late final _register_run_appPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Pointer<
+                      ffi.NativeFunction<ffi.Void Function(ffi.Handle app)>>)>>(
+      'register_run_app');
+  late final _register_run_app = _register_run_appPtr.asFunction<
+      void Function(
+          ffi.Pointer<
+              ffi.NativeFunction<ffi.Void Function(ffi.Handle app)>>)>();
+
   void register_new_text(
     ffi.Pointer<
             ffi.NativeFunction<
@@ -45,25 +64,6 @@ class LibWidgeteer {
               ffi.NativeFunction<
                   ffi.Handle Function(ffi.Pointer<ffi.Char> key,
                       ffi.Pointer<ffi.Char> data)>>)>();
-
-  void register_run_app(
-    ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Handle app)>> outlet,
-  ) {
-    return _register_run_app(
-      outlet,
-    );
-  }
-
-  late final _register_run_appPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Void Function(
-                  ffi.Pointer<
-                      ffi.NativeFunction<ffi.Void Function(ffi.Handle app)>>)>>(
-      'register_run_app');
-  late final _register_run_app = _register_run_appPtr.asFunction<
-      void Function(
-          ffi.Pointer<
-              ffi.NativeFunction<ffi.Void Function(ffi.Handle app)>>)>();
 
   void register_new_directionality(
     ffi.Pointer<
@@ -123,4 +123,71 @@ class LibWidgeteer {
   late final _exit_scopePtr =
       _lookup<ffi.NativeFunction<ffi.Void Function()>>('widgeteer_exit_scope');
   late final _exit_scope = _exit_scopePtr.asFunction<void Function()>();
+
+  bool user_widget_proxy_equals(
+    user_widget_proxy lhs,
+    user_widget_proxy rhs,
+  ) {
+    return _user_widget_proxy_equals(
+      lhs,
+      rhs,
+    );
+  }
+
+  late final _user_widget_proxy_equalsPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Bool Function(user_widget_proxy,
+              user_widget_proxy)>>('widgeteer_user_widget_proxy_equals');
+  late final _user_widget_proxy_equals = _user_widget_proxy_equalsPtr
+      .asFunction<bool Function(user_widget_proxy, user_widget_proxy)>();
+
+  void stateless_user_widget_proxy_build(
+    stateless_user_widget_proxy proxy,
+    ffi.Pointer<ffi.Char> parentKey,
+    Object buildContext,
+  ) {
+    return _stateless_user_widget_proxy_build(
+      proxy,
+      parentKey,
+      buildContext,
+    );
+  }
+
+  late final _stateless_user_widget_proxy_buildPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(stateless_user_widget_proxy, ffi.Pointer<ffi.Char>,
+              ffi.Handle)>>('widgeteer_stateless_user_widget_proxy_build');
+  late final _stateless_user_widget_proxy_build =
+      _stateless_user_widget_proxy_buildPtr.asFunction<
+          void Function(
+              stateless_user_widget_proxy, ffi.Pointer<ffi.Char>, Object)>();
+
+  void stateless_user_widget_proxy_release(
+    stateless_user_widget_proxy proxy,
+  ) {
+    return _stateless_user_widget_proxy_release(
+      proxy,
+    );
+  }
+
+  late final _stateless_user_widget_proxy_releasePtr = _lookup<
+          ffi.NativeFunction<ffi.Void Function(stateless_user_widget_proxy)>>(
+      'widgeteer_stateless_user_widget_proxy_release');
+  late final _stateless_user_widget_proxy_release =
+      _stateless_user_widget_proxy_releasePtr
+          .asFunction<void Function(stateless_user_widget_proxy)>();
+
+  late final addresses = _SymbolAddresses(this);
 }
+
+class _SymbolAddresses {
+  final LibWidgeteer _library;
+  _SymbolAddresses(this._library);
+  ffi.Pointer<
+          ffi.NativeFunction<ffi.Void Function(stateless_user_widget_proxy)>>
+      get stateless_user_widget_proxy_release =>
+          _library._stateless_user_widget_proxy_releasePtr;
+}
+
+typedef user_widget_proxy = ffi.Pointer<ffi.Void>;
+typedef stateless_user_widget_proxy = ffi.Pointer<ffi.Void>;

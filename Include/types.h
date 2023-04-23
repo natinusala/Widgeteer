@@ -15,3 +15,10 @@
 */
 
 #include "../Widgeteer/Sources/DartApiDl/include/dart_api_dl.h"
+
+// All types used to communicate between Swift and Dart.
+// Unless stated otherwise, `void*` types correspond to opaque retained Swift classes.
+// See their Swift implementation for documentation.
+
+typedef void* widgeteer_user_widget_proxy;
+typedef void* widgeteer_stateless_user_widget_proxy;
