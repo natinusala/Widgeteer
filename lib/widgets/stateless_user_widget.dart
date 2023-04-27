@@ -65,7 +65,7 @@ class StatelessUserWidgetProxy implements Finalizable {
   final stateless_user_widget_proxy nativeProxy;
 
   StatelessUserWidgetProxy(this.nativeProxy) {
-    _finalizer.attach(this, nativeProxy, detach: this);
+    _finalizer.attach(this, nativeProxy);
   }
 
   Widget build(BuildContext context, String key) {

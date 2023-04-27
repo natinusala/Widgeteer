@@ -66,6 +66,7 @@ abstract class DartType {
   /// that has the FFI type described in the binding associated C type.
   ///
   /// [variableName] is the name of the associated parameter.
+  /// TODO: rename parameters to "source" and "destination" everywhere for consistency and clarity
   CodeUnit fromCValue(String sourceFfiValue, String variableName);
 }
 

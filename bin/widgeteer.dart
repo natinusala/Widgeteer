@@ -16,16 +16,16 @@
 
 import 'package:args/command_runner.dart';
 
-import 'widgeteer/commands/bindings.dart';
+import 'widgeteer/commands/library.dart';
 import 'widgeteer/commands/clean.dart';
 import 'widgeteer/commands/devices.dart';
 import 'widgeteer/commands/run.dart';
 
 void main(List<String> args) async {
   CommandRunner("widgeteer", "Manage your Widgeteer app development.")
-    ..addCommand(BindingsCommand())
     ..addCommand(RunCommand())
     ..addCommand(DevicesCommand())
     ..addCommand(CleanCommand())
+    ..addCommand(LibraryCommand())
     ..run(args);
 }

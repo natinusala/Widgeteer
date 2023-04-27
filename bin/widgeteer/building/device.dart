@@ -116,6 +116,39 @@ Device? findDevice(String device, List<Device> devices) {
   return null;
 }
 
+/// Return the target device from CLI options or fail if none was found.
+Device getTargetDevice(String? requestedDevice) {
+  // Find the target device
+  final devices = getDevices().toList();
+
+  // If there are no devices, error out
+  // (the desktop platform isn't guaranteed to be available if SDK or libs are missing)
+  if (devices.isEmpty) {
+    fail("No connected devices. "
+        "Use 'widgeteer devices' to list connected devices.");
+  }
+
+  // If there is only one device, pick it
+  // Otherwise require the user to explicitely select one with `-d`
+  if (devices.length == 1) {
+    return devices.first;
+  } else {
+    if (requestedDevice == null) {
+      fail("Multiple connected devices; please select one with '--device'. "
+          "Use 'widgeteer devices' to list connected devices.");
+    }
+
+    final foundDevice = findDevice(requestedDevice, devices);
+    if (foundDevice == null) {
+      fail(
+          "Did not find any connected device with name or id '$requestedDevice'. "
+          "Use 'widgeteer devices' to list connected devices.");
+    }
+
+    return foundDevice;
+  }
+}
+
 /// An unsupported or unknown device.
 ///
 /// We should still show them to the user to show that we detected it

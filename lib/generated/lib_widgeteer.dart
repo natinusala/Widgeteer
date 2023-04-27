@@ -20,25 +20,6 @@ class LibWidgeteer {
           lookup)
       : _lookup = lookup;
 
-  void register_run_app(
-    ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Handle app)>> outlet,
-  ) {
-    return _register_run_app(
-      outlet,
-    );
-  }
-
-  late final _register_run_appPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Void Function(
-                  ffi.Pointer<
-                      ffi.NativeFunction<ffi.Void Function(ffi.Handle app)>>)>>(
-      'register_run_app');
-  late final _register_run_app = _register_run_appPtr.asFunction<
-      void Function(
-          ffi.Pointer<
-              ffi.NativeFunction<ffi.Void Function(ffi.Handle app)>>)>();
-
   void register_new_text(
     ffi.Pointer<
             ffi.NativeFunction<
@@ -64,6 +45,25 @@ class LibWidgeteer {
               ffi.NativeFunction<
                   ffi.Handle Function(ffi.Pointer<ffi.Char> key,
                       ffi.Pointer<ffi.Char> data)>>)>();
+
+  void register_run_app(
+    ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Handle app)>> outlet,
+  ) {
+    return _register_run_app(
+      outlet,
+    );
+  }
+
+  late final _register_run_appPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Pointer<
+                      ffi.NativeFunction<ffi.Void Function(ffi.Handle app)>>)>>(
+      'register_run_app');
+  late final _register_run_app = _register_run_appPtr.asFunction<
+      void Function(
+          ffi.Pointer<
+              ffi.NativeFunction<ffi.Void Function(ffi.Handle app)>>)>();
 
   void register_new_directionality(
     ffi.Pointer<
@@ -93,6 +93,40 @@ class LibWidgeteer {
                   ffi.NativeFunction<
                       ffi.Handle Function(ffi.Pointer<ffi.Char> key,
                           ffi.Int textDirection, ffi.Handle child)>>)>();
+
+  void register_new_stateless_user_widget(
+    ffi.Pointer<
+            ffi.NativeFunction<
+                ffi.Handle Function(
+                    ffi.Pointer<ffi.Char> key,
+                    stateless_user_widget_proxy proxy,
+                    ffi.Pointer<ffi.Char> swiftWidgetName)>>
+        outlet,
+  ) {
+    return _register_new_stateless_user_widget(
+      outlet,
+    );
+  }
+
+  late final _register_new_stateless_user_widgetPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Pointer<
+                      ffi.NativeFunction<
+                          ffi.Handle Function(
+                              ffi.Pointer<ffi.Char> key,
+                              stateless_user_widget_proxy proxy,
+                              ffi.Pointer<ffi.Char> swiftWidgetName)>>)>>(
+      'register_new_stateless_user_widget');
+  late final _register_new_stateless_user_widget =
+      _register_new_stateless_user_widgetPtr.asFunction<
+          void Function(
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      ffi.Handle Function(
+                          ffi.Pointer<ffi.Char> key,
+                          stateless_user_widget_proxy proxy,
+                          ffi.Pointer<ffi.Char> swiftWidgetName)>>)>();
 
   void init(
     ffi.Pointer<ffi.Void> data,
@@ -189,5 +223,5 @@ class _SymbolAddresses {
           _library._stateless_user_widget_proxy_releasePtr;
 }
 
-typedef user_widget_proxy = ffi.Pointer<ffi.Void>;
 typedef stateless_user_widget_proxy = ffi.Pointer<ffi.Void>;
+typedef user_widget_proxy = ffi.Pointer<ffi.Void>;

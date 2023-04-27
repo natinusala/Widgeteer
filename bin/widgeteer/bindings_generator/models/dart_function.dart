@@ -61,6 +61,8 @@ class DartFunction {
       "import '$location';",
       "import 'dart:ffi';",
       "import 'package:ffi/ffi.dart';",
+      "import 'package:widgeteer/generated/lib_widgeteer.dart';",
+      "import 'package:flutter/foundation.dart';",
     ]);
 
     // Function
@@ -71,7 +73,6 @@ class DartFunction {
 
   CodeUnit get _outletFunction {
     final returnType = context.resolveType(this.returnType);
-    final functionName = outletName;
 
     // Function body
     final body = CodeUnit();

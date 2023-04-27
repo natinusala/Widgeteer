@@ -16,8 +16,6 @@
 
 import DartApiDl
 
-public typealias BuildContext = Void
-
 /// A handle to a Flutter widget in the local scope.
 public typealias LocalWidgetHandle = Dart_Handle
 
@@ -54,7 +52,7 @@ public protocol InstallableWidget {
 /// A widget that can be built by Flutter when needed.
 public protocol BuildableWidget: IsPodable, InstallableWidget {
     /// Called by Flutter when the widget needs to be rebuilt.
-    // func build(parentKey: String, buildContext: BuildContext) -> LocalWidgetHandle
+    func build(parentKey: String, buildContext: BuildContext) -> LocalWidgetHandle
 }
 
 /// A widget that's reduced to a built in Flutter widget.
@@ -94,3 +92,44 @@ extension WidgetKey {
 
 /// A property which value is managed by either Flutter or Widgeteer.
 public protocol ManagedProperty: IsPodable {}
+
+public class WidgetProxy {
+    let widget: any BuildableWidget
+    let widgetType: any BuildableWidget.Type
+
+    init<Proxied: BuildableWidget>(of widget: Proxied) {
+        self.widget = widget
+        self.widgetType = Proxied.self
+    }
+
+    var widgetName: String {
+        return String(describing: self.widgetType)
+    }
+
+    /// Return `true` if the widget held by this proxy is equal to the
+    /// widget held by the given proxy.
+    func equals(other: Any) -> Bool {
+        guard let other = other as? Self else { return false }
+
+        return widgetsEqual(lhs: self.widget, rhs: other.widget)
+    }
+}
+
+@_cdecl("widgeteer_user_widget_proxy_equals")
+public func _userWidgetProxyEquals(_ lhs: UnsafeRawPointer, _ rhs: UnsafeRawPointer) -> Bool {
+    let lhs = Unmanaged<WidgetProxy>.fromOpaque(lhs).takeUnretainedValue()
+    let rhs = Unmanaged<WidgetProxy>.fromOpaque(rhs).takeUnretainedValue()
+
+    // Don't bother checking for value equality if the proxy is identical then we already know the widget is the same
+    // This is also to handle cases where Flutter asserts that the current widget
+    // is the same as the new one after an update (widgets with closures would always return `false`,
+    // tripping the assertion)
+    if lhs === rhs {
+        trace("Skipping equality check of '\(lhs.widgetType)': proxy is identical")
+        return true
+    }
+
+    let equals = lhs.equals(other: rhs)
+    trace("Equality of '\(lhs.widgetType)': \(equals)")
+    return equals
+}

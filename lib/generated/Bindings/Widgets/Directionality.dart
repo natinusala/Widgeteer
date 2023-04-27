@@ -5,9 +5,11 @@
 import 'package:flutter/widgets.dart';
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
-// 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:87
+import 'package:widgeteer/generated/lib_widgeteer.dart';
+import 'package:flutter/foundation.dart';
+// 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:88
 Object newDirectionalityImpl(Pointer<Char> key, int textDirection, Object child) {
-    // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:77
+    // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:78
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:105
     // 🍞 bin/widgeteer/bindings/widget_key.dart:43
     final keyString = key.cast<Utf8>().toDartString();

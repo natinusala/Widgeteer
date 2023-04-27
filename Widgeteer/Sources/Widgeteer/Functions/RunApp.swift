@@ -32,6 +32,6 @@ public func runApp<Root: Widget>(_ root: Root) {
     let now = Date()
     let parentKey = String(describing: now.timeIntervalSince1970).joined(String(describing: Root.self))
 
-    let app = root.reduce(parentKey: parentKey).handle
-    Flutter_RunApp(app)
+    let localApp = root.reduce(parentKey: parentKey).handle
+    Flutter_RunApp(localApp)
 }
