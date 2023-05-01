@@ -45,7 +45,7 @@ void _bootstrap(List<String> args) {
   // This is necessary for Swift widgets to appear in DevTools
   // See: https://github.com/flutter/devtools/issues/4152
   // TODO: somehow find a way to autodetect the directory
-  final cur = Directory.current.parent.path;
+  final cur = Directory.current.path;
   // ignore: invalid_use_of_protected_member
   WidgetInspectorService.instance.addPubRootDirectories(["$cur/../Widgeteer"]);
 
