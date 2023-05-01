@@ -17,6 +17,7 @@
 import '../bindings_generator/code_unit.dart';
 import '../bindings_generator/models/binding.dart';
 import '../bindings_generator/models/type.dart';
+import 'object.dart';
 
 /// Binding for all "bridging" types such as widgets proxies, lists, wrappers...
 class BridgingBinding extends Binding {
@@ -27,7 +28,8 @@ class BridgingBinding extends Binding {
   String get origin => "built in";
 
   @override
-  List<BoundType> get types => [StatelessUserWidgetProxyType()];
+  List<BoundType> get types =>
+      [StatelessUserWidgetProxyType(), BuildContextType()];
 }
 
 class StatelessUserWidgetProxyType extends BoundType {
@@ -77,4 +79,52 @@ class CStatelessUserWidgetProxy extends CType {
 class SwiftStatelessUserWidgetProxy extends SwiftType {
   @override
   String get name => "StatelessUserWidgetProxy";
+}
+
+class BuildContextType extends BoundType {
+  @override
+  CType get cType => CBuildContext();
+
+  @override
+  DartType get dartType => DartBuildContext();
+
+  @override
+  String get name => "BuildContext";
+
+  @override
+  SwiftType get swiftType => SwiftBuildContext();
+}
+
+class CBuildContext extends CType {
+  @override
+  String get dartFfiMapping => "Object";
+
+  @override
+  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+    // `BuildContext` is an alias to `Dart_Handle` in Swift
+    return CodeUnit(content: "let ${variableName}Value = $sourceValue");
+  }
+
+  @override
+  String get name => "Dart_Handle";
+
+  @override
+  String get swiftCInteropMapping => "Dart_Handle";
+}
+
+class DartBuildContext extends DartType {
+  @override
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+    return CodeUnit(
+        content:
+            "final ${variableName}Value = $sourceFfiValue as BuildContext;");
+  }
+
+  @override
+  String get name => "BuildContext";
+}
+
+class SwiftBuildContext extends SwiftType {
+  @override
+  String get name => "BuildContext";
 }

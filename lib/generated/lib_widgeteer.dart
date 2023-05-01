@@ -175,7 +175,7 @@ class LibWidgeteer {
   late final _user_widget_proxy_equals = _user_widget_proxy_equalsPtr
       .asFunction<bool Function(user_widget_proxy, user_widget_proxy)>();
 
-  void stateless_user_widget_proxy_build(
+  Object stateless_user_widget_proxy_build(
     stateless_user_widget_proxy proxy,
     ffi.Pointer<ffi.Char> parentKey,
     Object buildContext,
@@ -189,11 +189,13 @@ class LibWidgeteer {
 
   late final _stateless_user_widget_proxy_buildPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Void Function(stateless_user_widget_proxy, ffi.Pointer<ffi.Char>,
+          ffi.Handle Function(
+              stateless_user_widget_proxy,
+              ffi.Pointer<ffi.Char>,
               ffi.Handle)>>('widgeteer_stateless_user_widget_proxy_build');
   late final _stateless_user_widget_proxy_build =
       _stateless_user_widget_proxy_buildPtr.asFunction<
-          void Function(
+          Object Function(
               stateless_user_widget_proxy, ffi.Pointer<ffi.Char>, Object)>();
 
   void stateless_user_widget_proxy_release(

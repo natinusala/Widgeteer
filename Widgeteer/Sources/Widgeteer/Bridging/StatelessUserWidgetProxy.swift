@@ -43,7 +43,9 @@ public func _statelessUserWidgetProxyRelease(_ proxy: UnsafeRawPointer) {
 }
 
 @_cdecl("widgeteer_stateless_user_widget_proxy_build")
-public func _statelessUserWidgetProxyBuild(_ proxy: UnsafeRawPointer, _ parentKey: UnsafePointer<CChar>, _ buildContext: Dart_Handle) {
-    // TODO: reinstate BuildContext and implement this
-    fatalError("Unimplemented")
+public func _statelessUserWidgetProxyBuild(_ proxy: UnsafeRawPointer, _ parentKey: UnsafePointer<CChar>, _ buildContext: Dart_Handle) -> LocalWidgetHandle {
+    let proxy = Unmanaged<StatelessUserWidgetProxy>.fromOpaque(proxy).takeUnretainedValue()
+    let parentKey = String(cString: parentKey)
+
+    return proxy.build(parentKey: parentKey, buildContext: buildContext)
 }

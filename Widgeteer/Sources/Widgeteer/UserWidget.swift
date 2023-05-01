@@ -40,4 +40,3 @@ public extension InstallableWidget {
 }
 
 public typealias StateStorage = String // TODO: remove
-public typealias BuildContext = Void // TODO: remove

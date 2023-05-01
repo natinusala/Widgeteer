@@ -16,6 +16,10 @@
 
 import DartApiDl
 
+/// Local handle to the build context.
+/// Becomes invalid after the call to `build`, do not let it escape out of scope.
+public typealias BuildContext = Dart_Handle
+
 /// A handle to a Flutter widget in the local scope.
 public typealias LocalWidgetHandle = Dart_Handle
 

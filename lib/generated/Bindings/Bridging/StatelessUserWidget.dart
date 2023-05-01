@@ -14,7 +14,7 @@ Object newStatelessUserWidgetImpl(Pointer<Char> key, stateless_user_widget_proxy
     // 🍞 bin/widgeteer/bindings/widget_key.dart:43
     final keyString = key.cast<Utf8>().toDartString();
     final keyValue = ValueKey(keyString);
-    // 🍞 bin/widgeteer/bindings/bridging.dart:50
+    // 🍞 bin/widgeteer/bindings/bridging.dart:52
     final proxyValue = StatelessUserWidgetProxy(proxy);
     // 🍞 bin/widgeteer/bindings/string.dart:56
     final swiftWidgetNameValue = swiftWidgetName.cast<Utf8>().toDartString();

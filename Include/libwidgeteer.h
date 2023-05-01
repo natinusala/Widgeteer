@@ -30,6 +30,6 @@ extern void widgeteer_exit_scope();
 extern bool widgeteer_user_widget_proxy_equals(widgeteer_user_widget_proxy lhs, widgeteer_user_widget_proxy rhs);
 
 // widgeteer_stateless_user_widget_proxy: stateless user widgets
-extern void widgeteer_stateless_user_widget_proxy_build(widgeteer_stateless_user_widget_proxy proxy, char* parentKey, Dart_Handle buildContext);
+extern Dart_Handle widgeteer_stateless_user_widget_proxy_build(widgeteer_stateless_user_widget_proxy proxy, char* parentKey, Dart_Handle buildContext);
 extern void widgeteer_stateless_user_widget_proxy_release(widgeteer_stateless_user_widget_proxy proxy);
 
