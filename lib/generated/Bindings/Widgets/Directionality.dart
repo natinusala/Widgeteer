@@ -14,7 +14,7 @@ Object newDirectionalityImpl(Pointer<Char> key, int textDirection, Object child)
     // 🍞 bin/widgeteer/bindings/widget_key.dart:43
     final keyString = key.cast<Utf8>().toDartString();
     final keyValue = ValueKey(keyString);
-    // 🍞 bin/widgeteer/bindings/enum.dart:126
+    // 🍞 bin/widgeteer/bindings/enum.dart:137
     late final TextDirection textDirectionValue;
     switch (textDirection) {
         case 0: textDirectionValue = TextDirection.rtl; break;

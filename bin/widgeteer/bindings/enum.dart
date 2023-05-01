@@ -30,6 +30,7 @@ class EnumBinding extends Binding {
   final String enumName;
   final String enumLocation;
   final String tomlPath;
+  final String? prefix;
   final List<String> cases;
 
   EnumBinding({
@@ -38,16 +39,19 @@ class EnumBinding extends Binding {
     required this.enumName,
     required this.cases,
     required this.tomlPath,
+    required this.prefix,
   });
 
   factory EnumBinding.fromTOML(
       String tomlPath, String fileStem, Map toml, BindingContext context) {
     return EnumBinding(
-        context: context,
-        enumLocation: toml["enum"]["location"],
-        enumName: fileStem,
-        cases: (toml["enum"]["cases"] as List).cast<String>(),
-        tomlPath: tomlPath);
+      context: context,
+      enumLocation: toml["enum"]["location"],
+      enumName: fileStem,
+      cases: (toml["enum"]["cases"] as List).cast<String>(),
+      prefix: toml["enum"]["prefix"],
+      tomlPath: tomlPath,
+    );
   }
 
   @override
@@ -75,6 +79,13 @@ class EnumBinding extends Binding {
 
     return swiftEnum;
   }
+
+  /// The Dart "prefix" to access the enum cases.
+  /// Either the enum name itself or another enum if the binding is an alias
+  /// or a class if the type isn't really an enum.
+  /// The name "prefix" is intentionnaly vague and nondescript to allow
+  /// using any Dart expression.
+  String get enumPrefix => prefix ?? name;
 }
 
 class EnumType extends BoundType {
@@ -130,7 +141,7 @@ class DartEnum extends DartType {
 
     type.binding.cases
         .mapIndexed((index, element) => unit.appendLine(
-            "case $index: ${variableName}Value = ${type.name}.$element; break;",
+            "case $index: ${variableName}Value = ${type.binding.enumPrefix}.$element; break;",
             indentedBy: 4))
         .toList();
     unit.appendLine(
@@ -190,7 +201,7 @@ class OptionalDartEnum extends DartType {
 
     type.binding.cases.mapIndexed((index, element) {
       unit.appendLine(
-          "case $index: ${variableName}Value = ${type.name}.$element; break;",
+          "case $index: ${variableName}Value = ${type.binding.enumPrefix}.$element; break;",
           indentedBy: 4);
     }).toList();
     unit.appendLine(
