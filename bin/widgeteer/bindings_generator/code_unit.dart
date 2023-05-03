@@ -70,6 +70,8 @@ class CodeUnit {
     return CodeUnit(stamp: false);
   }
 
+  // TODO: add `enterScope` and `exitScope` that auto indent everything inside them, replace indentedBy usages with this
+
   void appendLine(String line, {int indentedBy = 0}) {
     final indentation = " " * indentedBy;
     lines.add("$indentation$line");

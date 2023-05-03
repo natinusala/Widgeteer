@@ -18,6 +18,9 @@ import 'package:path/path.dart' as p;
 
 import '../bindings_generator/code_unit.dart';
 import '../bindings_generator/models/binding.dart';
+import '../bindings_generator/models/dart_function.dart';
+import '../bindings_generator/models/outlet.dart';
+import '../bindings_generator/models/parameter.dart';
 import '../bindings_generator/models/type.dart';
 
 /// A binding to any Dart object to be persisted in Swift.
@@ -27,22 +30,38 @@ import '../bindings_generator/models/type.dart';
 /// On bridging, the handle is turned into a "persistent" handle and given to a Swift class instance.
 /// The persistent handle is then freed when the Swift instance is collected by ARC.
 class PersistentObjectBinding extends Binding {
+  final BindingContext context;
+
   final String className;
   final String classLocation;
   final String tomlPath;
 
+  /// Parameters are set in the generated initializer but are not
+  /// accessible as properties. Use [properties] for that purpose instead.
+  final ParametersList parameters;
+
+  /// Properties are set in the generated initializer and can be
+  /// get and set in the class as well.
+  final ParametersList properties;
+
   PersistentObjectBinding({
+    required this.context,
     required this.className,
     required this.classLocation,
     required this.tomlPath,
+    required this.parameters,
+    required this.properties,
   });
 
   factory PersistentObjectBinding.fromTOML(
       String tomlPath, String fileStem, Map toml, BindingContext context) {
     return PersistentObjectBinding(
+      context: context,
       className: fileStem,
       classLocation: toml["class"]["location"],
       tomlPath: tomlPath,
+      parameters: ParametersList.fromTOML(toml["parameter"] ?? [], context),
+      properties: ParametersList.fromTOML(toml["property"] ?? [], context),
     );
   }
 
@@ -57,8 +76,76 @@ class PersistentObjectBinding extends Binding {
       [PersistentObjectType(this)]; // TODO: add optional support
 
   @override
+  List<Outlet> get outlets => [newFunction.callingOutlet];
+
+  ParametersList get initializerParams => parameters + properties;
+
+  /// Function to create a new instance of the object.
+  late DartFunction newFunction = DartFunction(
+    context: context,
+    outletName: "new$className",
+    location: classLocation,
+    // constructor is just a function that has the widget name
+    name: name,
+    parameters: initializerParams,
+    returnType: 'Object',
+  );
+
+  /// The Swift class initializer.
+  CodeUnit get swiftInitializer {
+    final initializer = CodeUnit();
+
+    initializer
+        .appendLine("public init(${initializerParams.swiftInitParameters}) {");
+    initializer.appendUnit(newFunction.callingOutlet.swiftCall("localHandle"),
+        indentedBy: 4);
+    initializer.appendLine("self.handle = localHandle", indentedBy: 4);
+    initializer.appendLine("}");
+
+    return initializer;
+  }
+
+  CodeUnit get swiftDeinitializer {
+    final deinit = CodeUnit();
+    deinit.appendLine("deinit {");
+    deinit.appendLine("Flutter_Schedule(scoped: false) { [handle] _ in",
+        indentedBy: 4);
+    deinit.appendLine("Dart_DeletePersistentHandle_DL(handle)", indentedBy: 8);
+    deinit.appendLine("}", indentedBy: 4);
+    deinit.appendLine("}");
+    return deinit;
+  }
+
+  /// The Swift class holding the persistent handle to the object.
+  CodeUnit get swiftClass {
+    final swiftClass = CodeUnit();
+
+    swiftClass.appendLine("public class $className {");
+
+    swiftClass.appendLine("/// Persistent handle to the Dart object.",
+        indentedBy: 4);
+    swiftClass.appendLine("let handle: Dart_Handle", indentedBy: 4);
+    swiftClass.appendEmptyLine();
+
+    swiftClass.appendUnit(swiftInitializer, indentedBy: 4);
+
+    swiftClass.appendEmptyLine();
+    swiftClass.appendUnit(swiftDeinitializer, indentedBy: 4);
+
+    swiftClass.appendLine("}");
+
+    return swiftClass;
+  }
+
+  @override
   CodeUnit get swiftBody {
     final body = CodeUnit();
+
+    body.appendLine("import DartApiDl");
+    body.appendEmptyLine();
+
+    body.appendUnit(swiftClass);
+
     return body;
   }
 }

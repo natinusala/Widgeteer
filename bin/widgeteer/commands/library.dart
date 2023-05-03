@@ -27,7 +27,8 @@ import '../logger.dart';
 
 class LibraryCommand extends Command {
   LibraryCommand() {
-    addSubcommand(BuildCommand());
+    addSubcommand(BuildLibraryCommand());
+    addSubcommand(CleanLibraryCommand());
     addSubcommand(GenerateBindingsCommand());
     addSubcommand(ListBindingsCommand());
   }
@@ -40,8 +41,48 @@ class LibraryCommand extends Command {
   String get name => "library";
 }
 
-class BuildCommand extends Command {
-  BuildCommand() {
+class CleanLibraryCommand extends Command {
+  CleanLibraryCommand() {
+    argParser.addOption(
+      "device",
+      abbr: "d",
+      help:
+          "The device id or name to clean the library for (prefixes allowed).",
+      defaultsTo: null,
+    );
+
+    argParser.addFlag(
+      "verbose",
+      abbr: "v",
+      defaultsTo: false,
+    );
+  }
+  @override
+  String get description =>
+      "Clean the Swift library previously built with 'build'.";
+
+  @override
+  String get name => "clean";
+
+  @override
+  void run() async {
+    final device = getTargetDevice(argResults!["device"]);
+    final bool verbose = argResults!["verbose"];
+
+    logger.log("Cleaning Swift library for ${device.name}");
+
+    // Clean Swift library
+    final directory = p.join(Directory.current.path, "Widgeteer");
+
+    final swiftBuildArgs = ["package", "clean"] + device.swiftBuildArgs;
+    await runBuildTask("swift", swiftBuildArgs, directory, {},
+        "🔨  Building library", "Library built",
+        fatalFailure: true, verbose: verbose);
+  }
+}
+
+class BuildLibraryCommand extends Command {
+  BuildLibraryCommand() {
     argParser.addOption(
       "device",
       abbr: "d",

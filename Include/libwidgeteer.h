@@ -21,6 +21,7 @@
 
 // Lifecycle
 extern void widgeteer_init(void* data);
+extern void widgeteer_tick();
 
 // Scope management
 extern void widgeteer_enter_scope();

@@ -94,6 +94,57 @@ class LibWidgeteer {
                       ffi.Handle Function(ffi.Pointer<ffi.Char> key,
                           ffi.Int textDirection, ffi.Handle child)>>)>();
 
+  void register_new_material_app(
+    ffi.Pointer<
+            ffi.NativeFunction<
+                ffi.Handle Function(ffi.Pointer<ffi.Char> key,
+                    ffi.Pointer<ffi.Char> title, ffi.Handle home)>>
+        outlet,
+  ) {
+    return _register_new_material_app(
+      outlet,
+    );
+  }
+
+  late final _register_new_material_appPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      ffi.Handle Function(
+                          ffi.Pointer<ffi.Char> key,
+                          ffi.Pointer<ffi.Char> title,
+                          ffi.Handle home)>>)>>('register_new_material_app');
+  late final _register_new_material_app =
+      _register_new_material_appPtr.asFunction<
+          void Function(
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      ffi.Handle Function(ffi.Pointer<ffi.Char> key,
+                          ffi.Pointer<ffi.Char> title, ffi.Handle home)>>)>();
+
+  void register_new_theme_data(
+    ffi.Pointer<ffi.NativeFunction<ffi.Handle Function(ffi.Int primarySwatch)>>
+        outlet,
+  ) {
+    return _register_new_theme_data(
+      outlet,
+    );
+  }
+
+  late final _register_new_theme_dataPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Pointer<
+                      ffi.NativeFunction<
+                          ffi.Handle Function(ffi.Int primarySwatch)>>)>>(
+      'register_new_theme_data');
+  late final _register_new_theme_data = _register_new_theme_dataPtr.asFunction<
+      void Function(
+          ffi.Pointer<
+              ffi.NativeFunction<
+                  ffi.Handle Function(ffi.Int primarySwatch)>>)>();
+
   void register_new_stateless_user_widget(
     ffi.Pointer<
             ffi.NativeFunction<
@@ -141,6 +192,14 @@ class LibWidgeteer {
           'widgeteer_init');
   late final _init =
       _initPtr.asFunction<void Function(ffi.Pointer<ffi.Void>)>();
+
+  void tick() {
+    return _tick();
+  }
+
+  late final _tickPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function()>>('widgeteer_tick');
+  late final _tick = _tickPtr.asFunction<void Function()>();
 
   void enter_scope() {
     return _enter_scope();

@@ -45,6 +45,34 @@ public func _registerNewDirectionality(_ outlet: _NewDirectionality_CFunctionPoi
     trace("Registering 'NewDirectionality'")
     Flutter_NewDirectionality = { (p0, p1, p2) in assertIsOnFlutterThread(); return outlet(p0, p1, p2) }
 }
+// MARK: NewMaterialApp
+// Outlet emitted by 'MaterialApp' binding (Instance of 'WidgetBinding')
+// 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:86
+public typealias _NewMaterialApp_CFunctionPointer = @convention(c) (_ key: UnsafePointer<CChar>?, _ title: UnsafePointer<CChar>?, _ home: Dart_Handle) -> Dart_Handle
+public typealias _NewMaterialApp = (_ key: UnsafePointer<CChar>?, _ title: UnsafePointer<CChar>?, _ home: Dart_Handle) -> Dart_Handle
+
+public var Flutter_NewMaterialApp: _NewMaterialApp = { (_, _, _) in fatalError("'NewMaterialApp' called before it was registered") }
+
+@_cdecl("register_new_material_app")
+public func _registerNewMaterialApp(_ outlet: _NewMaterialApp_CFunctionPointer) {
+    assertIsOnFlutterThread()
+    trace("Registering 'NewMaterialApp'")
+    Flutter_NewMaterialApp = { (p0, p1, p2) in assertIsOnFlutterThread(); return outlet(p0, p1, p2) }
+}
+// MARK: NewThemeData
+// Outlet emitted by 'ThemeData' binding (Instance of 'PersistentObjectBinding')
+// 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:86
+public typealias _NewThemeData_CFunctionPointer = @convention(c) (_ primarySwatch: Int) -> Dart_Handle
+public typealias _NewThemeData = (_ primarySwatch: Int) -> Dart_Handle
+
+public var Flutter_NewThemeData: _NewThemeData = { (_) in fatalError("'NewThemeData' called before it was registered") }
+
+@_cdecl("register_new_theme_data")
+public func _registerNewThemeData(_ outlet: _NewThemeData_CFunctionPointer) {
+    assertIsOnFlutterThread()
+    trace("Registering 'NewThemeData'")
+    Flutter_NewThemeData = { (p0) in assertIsOnFlutterThread(); return outlet(p0) }
+}
 // MARK: NewStatelessUserWidget
 // Outlet emitted by 'StatelessUserWidget' binding (Instance of 'WidgetBinding')
 // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:86

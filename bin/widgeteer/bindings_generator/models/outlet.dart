@@ -111,6 +111,35 @@ class Outlet {
 
     return registration;
   }
+
+  /// Generates a Swift call to the outlet, setting the result in [destination].
+  /// TODO: use inside widgets reductionFunction too
+  CodeUnit swiftCall(String destination) {
+    final call = CodeUnit();
+
+    call.appendLine("assertIsOnFlutterThread()");
+    call.appendEmptyLine();
+
+    // Translate all properties from Swift to C
+    for (final property in parameters) {
+      final resolvedType = context.resolveType(property.type);
+
+      call.appendUnit(
+          resolvedType.cType.fromSwiftValue(property.name, property.name));
+
+      // Call
+      call.appendLine("let $destination = $swiftFunctionName(");
+      call.appendLines(
+          parameters
+              .map((element) => "${element.name}Value")
+              .join(",\n")
+              .split("\n"),
+          indentedBy: 4);
+      call.appendLine(")");
+    }
+
+    return call;
+  }
 }
 
 class EmittedOutlet {

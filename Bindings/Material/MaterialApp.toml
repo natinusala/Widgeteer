@@ -12,10 +12,21 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-[class]
+[widget]
 location = "package:flutter/material.dart"
 
 [[parameter]]
-name = "primarySwatch"
-type = "MaterialColor?"
+name = "title"
+type = "String"
+named = true
+default = '""'
+
+# [[parameter]]
+# name = "theme"
+# type = "ThemeData?"
+# dart_named = true
+
+[[content]]
+name = "home"
+multi = false
 dart_named = true

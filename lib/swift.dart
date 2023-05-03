@@ -14,6 +14,7 @@
    limitations under the License.
 */
 
+import 'dart:async';
 import 'dart:ffi';
 import 'dart:io';
 
@@ -51,6 +52,10 @@ void _bootstrap(List<String> args) {
 
   libWidgeteer.init(NativeApi.initializeApiDLData);
   registerOutlets(libWidgeteer);
+
+  Timer.periodic(const Duration(milliseconds: 8), (Timer t) {
+    libWidgeteer.tick();
+  });
 }
 
 /// Restart the app: call the Swift app entry function, but do
