@@ -193,7 +193,7 @@ class OptionalDartEnum extends DartType {
   CodeUnit fromCValue(String sourceFfiValue, String variableName) {
     final unit = CodeUnit();
 
-    unit.appendLine("late final ${type.dartType.name}? ${variableName}Value;");
+    unit.appendLine("late final $name ${variableName}Value;");
     unit.appendLine("switch ($sourceFfiValue) {");
 
     unit.appendLine("case -1: ${variableName}Value = null; break;",
@@ -214,7 +214,7 @@ class OptionalDartEnum extends DartType {
   }
 
   @override
-  String get name => "${type.dartType.name}?";
+  String get name => type.name;
 }
 
 class OptionalCEnum extends CType {

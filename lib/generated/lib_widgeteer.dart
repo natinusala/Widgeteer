@@ -97,8 +97,11 @@ class LibWidgeteer {
   void register_new_material_app(
     ffi.Pointer<
             ffi.NativeFunction<
-                ffi.Handle Function(ffi.Pointer<ffi.Char> key,
-                    ffi.Pointer<ffi.Char> title, ffi.Handle home)>>
+                ffi.Handle Function(
+                    ffi.Pointer<ffi.Char> key,
+                    ffi.Pointer<ffi.Char> title,
+                    ffi.Handle theme,
+                    ffi.Handle home)>>
         outlet,
   ) {
     return _register_new_material_app(
@@ -114,14 +117,18 @@ class LibWidgeteer {
                       ffi.Handle Function(
                           ffi.Pointer<ffi.Char> key,
                           ffi.Pointer<ffi.Char> title,
+                          ffi.Handle theme,
                           ffi.Handle home)>>)>>('register_new_material_app');
   late final _register_new_material_app =
       _register_new_material_appPtr.asFunction<
           void Function(
               ffi.Pointer<
                   ffi.NativeFunction<
-                      ffi.Handle Function(ffi.Pointer<ffi.Char> key,
-                          ffi.Pointer<ffi.Char> title, ffi.Handle home)>>)>();
+                      ffi.Handle Function(
+                          ffi.Pointer<ffi.Char> key,
+                          ffi.Pointer<ffi.Char> title,
+                          ffi.Handle theme,
+                          ffi.Handle home)>>)>();
 
   void register_new_theme_data(
     ffi.Pointer<ffi.NativeFunction<ffi.Handle Function(ffi.Int primarySwatch)>>

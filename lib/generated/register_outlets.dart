@@ -9,6 +9,7 @@ import 'package:widgeteer/generated/Bindings/Widgets/Text.dart';
 import 'package:widgeteer/generated/Bindings/Widgets/RunApp.dart';
 import 'package:widgeteer/generated/Bindings/Widgets/Directionality.dart';
 import 'package:widgeteer/generated/Bindings/Material/MaterialApp.dart';
+import 'package:widgeteer/generated/Bindings/Material/ThemeData.dart';
 import 'package:widgeteer/generated/Bindings/Bridging/StatelessUserWidget.dart';
 
 void registerOutlets(LibWidgeteer widgeteer) {

@@ -18,13 +18,13 @@ location = "package:flutter/material.dart"
 [[parameter]]
 name = "title"
 type = "String"
-named = true
+dart_named = true
 default = '""'
 
-# [[parameter]]
-# name = "theme"
-# type = "ThemeData?"
-# dart_named = true
+[[parameter]]
+name = "theme"
+type = "ThemeData?"
+dart_named = true
 
 [[content]]
 name = "home"

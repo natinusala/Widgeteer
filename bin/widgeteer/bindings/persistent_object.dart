@@ -73,7 +73,7 @@ class PersistentObjectBinding extends Binding {
 
   @override
   List<BoundType> get types =>
-      [PersistentObjectType(this)]; // TODO: add optional support
+      [PersistentObjectType(this), OptionalPersistentObjectType(this)];
 
   @override
   List<Outlet> get outlets => [newFunction.callingOutlet];
@@ -99,7 +99,9 @@ class PersistentObjectBinding extends Binding {
         .appendLine("public init(${initializerParams.swiftInitParameters}) {");
     initializer.appendUnit(newFunction.callingOutlet.swiftCall("localHandle"),
         indentedBy: 4);
-    initializer.appendLine("self.handle = localHandle", indentedBy: 4);
+    initializer.appendLine(
+        "self.handle = Dart_NewPersistentHandle_DL(localHandle)!",
+        indentedBy: 4);
     initializer.appendLine("}");
 
     return initializer;
@@ -124,7 +126,7 @@ class PersistentObjectBinding extends Binding {
 
     swiftClass.appendLine("/// Persistent handle to the Dart object.",
         indentedBy: 4);
-    swiftClass.appendLine("let handle: Dart_Handle", indentedBy: 4);
+    swiftClass.appendLine("let handle: Dart_PersistentHandle", indentedBy: 4);
     swiftClass.appendEmptyLine();
 
     swiftClass.appendUnit(swiftInitializer, indentedBy: 4);
@@ -148,6 +150,15 @@ class PersistentObjectBinding extends Binding {
 
     return body;
   }
+
+  @override
+  CodeUnit get dartBody {
+    final body = CodeUnit();
+
+    body.appendUnit(newFunction.outletImplementation);
+
+    return body;
+  }
 }
 
 class PersistentObjectType extends BoundType {
@@ -166,4 +177,69 @@ class PersistentObjectType extends BoundType {
 
   @override
   SwiftType get swiftType => throw UnimplementedError();
+}
+
+class OptionalPersistentObjectType extends BoundType {
+  final PersistentObjectBinding binding;
+
+  OptionalPersistentObjectType(this.binding);
+
+  @override
+  CType get cType => COptionalPersistentObject(this);
+
+  @override
+  DartType get dartType => DartOptionalPersistentObject(this);
+
+  @override
+  String get name => "${binding.className}?";
+
+  @override
+  SwiftType get swiftType => SwiftOptionalPersistentObject(this);
+}
+
+class SwiftOptionalPersistentObject extends SwiftType {
+  final OptionalPersistentObjectType type;
+
+  SwiftOptionalPersistentObject(this.type);
+
+  @override
+  String get name => type.name;
+}
+
+class COptionalPersistentObject extends CType {
+  final OptionalPersistentObjectType type;
+
+  COptionalPersistentObject(this.type);
+
+  @override
+  String get dartFfiMapping => "Object?";
+
+  @override
+  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+    return CodeUnit(
+        content: "let ${variableName}Value = $sourceValue?.handle ?? nil");
+  }
+
+  @override
+  String get name =>
+      "Dart_PersistentHandle"; // already a pointer type that allows `NULL`
+
+  @override
+  String get swiftCInteropMapping => "Dart_PersistentHandle?";
+}
+
+class DartOptionalPersistentObject extends DartType {
+  final OptionalPersistentObjectType type;
+
+  DartOptionalPersistentObject(this.type);
+
+  @override
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+    // FFI gives us an `Object?` so we just need to cast it
+    return CodeUnit(
+        content: "final ${variableName}Value = $sourceFfiValue as $name;");
+  }
+
+  @override
+  String get name => type.name;
 }
