@@ -51,6 +51,8 @@ private var globalPersistentNull: Dart_PersistentHandle?
 public func _setNullHandle(_ nullObjectHandle: Dart_Handle) {
     assertIsOnFlutterThread()
 
+    assert(globalPersistentNull == nil, "'widgeteer_set_null_handle' called twice, leaking the first handle")
+
     guard let persistentNull = Dart_NewPersistentHandle_DL(nullObjectHandle) else {
         fatalError("Could not make the null handle persistent")
     }
@@ -70,4 +72,3 @@ var Dart_Null: Dart_PersistentHandle {
 
     return handle
 }
-
