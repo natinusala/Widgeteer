@@ -44,3 +44,24 @@ public func _init(data: UnsafeMutableRawPointer) {
         fatalError("'Dart_InitializeApiDL' returned '\(result)'")
     }
 }
+
+/// Persistent `null` object handle. Can be used with any optional type in Dart.
+private var globalPersistentNull: Dart_PersistentHandle?
+
+@_cdecl("widgeteer_set_null_handle")
+public func _setNullHandle(_ nullObjectHandle: Dart_Handle) {
+    guard let persistentNull = Dart_NewPersistentHandle_DL(nullObjectHandle) else {
+        fatalError("Could not make the null handle persistent")
+    }
+
+    globalPersistentNull = persistentNull
+}
+
+var Dart_Null: Dart_PersistentHandle {
+    guard let handle = globalPersistentNull else {
+        fatalError("Tried to access 'Dart_Null' before 'widgeteer_set_null_handle' was called")
+    }
+
+    return handle
+}
+

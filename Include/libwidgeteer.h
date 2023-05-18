@@ -23,6 +23,9 @@
 extern void widgeteer_init(void* data);
 extern void widgeteer_tick();
 
+// Don't use ffigen for this function as it needs `Object?` which is not supported yet
+// extern void widgeteer_set_null_handle(Dart_Handle handle);
+
 // Scope management
 extern void widgeteer_enter_scope();
 extern void widgeteer_exit_scope();

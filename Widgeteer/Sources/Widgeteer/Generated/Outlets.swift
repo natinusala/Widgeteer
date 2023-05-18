@@ -48,8 +48,8 @@ public func _registerNewDirectionality(_ outlet: _NewDirectionality_CFunctionPoi
 // MARK: NewMaterialApp
 // Outlet emitted by 'MaterialApp' binding (Instance of 'WidgetBinding')
 // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:86
-public typealias _NewMaterialApp_CFunctionPointer = @convention(c) (_ key: UnsafePointer<CChar>?, _ title: UnsafePointer<CChar>?, _ theme: Dart_PersistentHandle?, _ home: Dart_Handle) -> Dart_Handle
-public typealias _NewMaterialApp = (_ key: UnsafePointer<CChar>?, _ title: UnsafePointer<CChar>?, _ theme: Dart_PersistentHandle?, _ home: Dart_Handle) -> Dart_Handle
+public typealias _NewMaterialApp_CFunctionPointer = @convention(c) (_ key: UnsafePointer<CChar>?, _ title: UnsafePointer<CChar>?, _ theme: Dart_PersistentHandle, _ home: Dart_Handle) -> Dart_Handle
+public typealias _NewMaterialApp = (_ key: UnsafePointer<CChar>?, _ title: UnsafePointer<CChar>?, _ theme: Dart_PersistentHandle, _ home: Dart_Handle) -> Dart_Handle
 
 public var Flutter_NewMaterialApp: _NewMaterialApp = { (_, _, _, _) in fatalError("'NewMaterialApp' called before it was registered") }
 

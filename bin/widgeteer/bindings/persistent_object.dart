@@ -217,15 +217,15 @@ class COptionalPersistentObject extends CType {
   @override
   CodeUnit fromSwiftValue(String sourceValue, String variableName) {
     return CodeUnit(
-        content: "let ${variableName}Value = $sourceValue?.handle ?? nil");
+        content:
+            "let ${variableName}Value = $sourceValue?.handle ?? Dart_Null");
   }
 
   @override
-  String get name =>
-      "Dart_PersistentHandle"; // already a pointer type that allows `NULL`
+  String get name => "Dart_PersistentHandle";
 
   @override
-  String get swiftCInteropMapping => "Dart_PersistentHandle?";
+  String get swiftCInteropMapping => "Dart_PersistentHandle";
 }
 
 class DartOptionalPersistentObject extends DartType {

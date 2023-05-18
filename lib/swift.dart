@@ -26,6 +26,8 @@ import 'dylib.dart';
 import 'environment.dart';
 import 'generated/register_outlets.dart';
 
+final Object? nullHandle = null;
+
 /// Load, initialize and run the Swift app.
 void main(List<String> args) {
   _bootstrap(args);
@@ -51,6 +53,7 @@ void _bootstrap(List<String> args) {
   WidgetInspectorService.instance.addPubRootDirectories(["$cur/../Widgeteer"]);
 
   libWidgeteer.init(NativeApi.initializeApiDLData);
+  setNullHandle(lib);
   registerOutlets(libWidgeteer);
 
   Timer.periodic(const Duration(milliseconds: 8), (Timer t) {
@@ -82,4 +85,17 @@ String _getLibraryPath(List<String> args) {
   }
 
   return widgeteerPath;
+}
+
+/// This bootstrap step has its own separate mechanism because it needs `Object?`
+/// and ffigen doesn't support it yet, so we need to work our way around the generated
+/// wrapper and call the function directly.
+void setNullHandle(DynamicLibrary lib) {
+  late final _set_null_handlePtr =
+      lib.lookup<NativeFunction<Void Function(Handle)>>(
+          'widgeteer_set_null_handle');
+  late final _set_null_handle =
+      _set_null_handlePtr.asFunction<void Function(Object?)>();
+
+  _set_null_handle(nullHandle);
 }
