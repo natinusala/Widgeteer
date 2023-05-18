@@ -45,11 +45,12 @@ public func _init(data: UnsafeMutableRawPointer) {
     }
 }
 
-/// Persistent `null` object handle. Can be used with any optional type in Dart.
 private var globalPersistentNull: Dart_PersistentHandle?
 
 @_cdecl("widgeteer_set_null_handle")
 public func _setNullHandle(_ nullObjectHandle: Dart_Handle) {
+    assertIsOnFlutterThread()
+
     guard let persistentNull = Dart_NewPersistentHandle_DL(nullObjectHandle) else {
         fatalError("Could not make the null handle persistent")
     }
@@ -57,6 +58,11 @@ public func _setNullHandle(_ nullObjectHandle: Dart_Handle) {
     globalPersistentNull = persistentNull
 }
 
+/// Persistent `null` object handle. Use in place of any handle when calling back to
+/// Dart if you want to return `null` instead (if the function takes `Object?` for that parameter).
+///
+/// Originally an `Object?` instance, it is safe to cast to any optional type in Dart
+/// since its value is guaranteed to always be `null`.
 var Dart_Null: Dart_PersistentHandle {
     guard let handle = globalPersistentNull else {
         fatalError("Tried to access 'Dart_Null' before 'widgeteer_set_null_handle' was called")
