@@ -8,6 +8,7 @@ import 'package:ffi/ffi.dart';
 import 'package:widgeteer/generated/Bindings/Widgets/Text.dart';
 import 'package:widgeteer/generated/Bindings/Widgets/RunApp.dart';
 import 'package:widgeteer/generated/Bindings/Widgets/Directionality.dart';
+import 'package:widgeteer/generated/Bindings/Widgets/Center.dart';
 import 'package:widgeteer/generated/Bindings/Material/MaterialApp.dart';
 import 'package:widgeteer/generated/Bindings/Material/ThemeData.dart';
 import 'package:widgeteer/generated/Bindings/Material/AppBar.dart';
@@ -23,6 +24,9 @@ void registerOutlets(LibWidgeteer widgeteer) {
     // Outlet emitted by 'Directionality' binding (Instance of 'WidgetBinding')
     // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
     widgeteer.register_new_directionality(Pointer.fromFunction(newDirectionalityImpl));
+    // Outlet emitted by 'Center' binding (Instance of 'WidgetBinding')
+    // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
+    widgeteer.register_new_center(Pointer.fromFunction(newCenterImpl));
     // Outlet emitted by 'MaterialApp' binding (Instance of 'WidgetBinding')
     // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
     widgeteer.register_new_material_app(Pointer.fromFunction(newMaterialAppImpl));

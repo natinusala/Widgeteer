@@ -42,6 +42,21 @@ class WidgetBinding extends Binding {
   /// Dart import to use to make the widget class accessible.
   final String widgetLocation;
 
+  /// Name of the wrapper function for that widget, if any.
+  /// The widget must have at least one content property to use a wrapper.
+  ///
+  /// If set, a `WidgetWraper` will be generated for this widget as well
+  /// as the function to wrap another widget inside (the name of the function is
+  /// stored in this property).
+  ///
+  /// The naming convention for wrappers and modifiers is to consider them as
+  /// properties of the wrapped widgets.
+  /// For `Center`, that would be `center` and not `centered` since we consider it
+  /// as `center: true`.
+  /// For `ColoredBox`, it would be `backgroundColor` since ultimately that's what
+  /// it does to the wrapped widget. It's considered as `backgroundColor: blue`.
+  final String? wrapperFunction;
+
   WidgetBinding({
     required this.context,
     required this.widgetName,
@@ -50,6 +65,7 @@ class WidgetBinding extends Binding {
     required this.parameters,
     required this.content,
     required this.superClass,
+    required this.wrapperFunction,
   });
 
   factory WidgetBinding.fromTOML(
@@ -83,6 +99,7 @@ class WidgetBinding extends Binding {
       parameters: parameters,
       content: contentList,
       superClass: toml["widget"]["super_class"],
+      wrapperFunction: toml["widget"]["wrapper"],
     );
   }
 
@@ -141,7 +158,66 @@ class WidgetBinding extends Binding {
     // Swift struct
     body.appendUnit(swiftStruct);
 
+    // Wrapper, if any
+    if (wrapperFunction != null) {
+      body.appendEmptyLine();
+      body.appendUnit(swiftWrapper);
+    }
+
     return body;
+  }
+
+  /// The Swift widget wrapper to surround any widget in this one.
+  CodeUnit get swiftWrapper {
+    // Ensure the widget has at least one content property
+    if (content.isEmpty) {
+      throw "Cannot generate a wrapper for '$name': it has no content property.";
+    }
+
+    final wrapper = CodeUnit();
+
+    wrapper.appendUnit(swiftWrapperStruct);
+    wrapper.appendEmptyLine();
+    wrapper.appendUnit(swiftWrapperFunction);
+
+    return wrapper;
+  }
+
+  String get wrapperStructName => "${name}Wrapper";
+
+  CodeUnit get swiftWrapperStruct {
+    final struct = CodeUnit();
+
+    struct.appendLine("struct $wrapperStructName: WidgetWrapper {");
+
+    struct.appendLine("public func body(content: Content) -> $name<Content> {",
+        indentedBy: 4);
+
+    struct.appendLine("return $name() { content }", indentedBy: 8);
+
+    struct.appendLine("}", indentedBy: 4);
+
+    struct.appendLine("}");
+
+    return struct;
+  }
+
+  CodeUnit get swiftWrapperFunction {
+    final function = CodeUnit();
+
+    function.appendLine("public extension Widget {");
+
+    function.appendLine("func $wrapperFunction() -> some Widget {",
+        indentedBy: 4);
+
+    function.appendLine("return self.wrapped(in: $wrapperStructName())",
+        indentedBy: 8);
+
+    function.appendLine("}", indentedBy: 4);
+
+    function.appendLine("}");
+
+    return function;
   }
 
   /// The Swift struct properties.
@@ -355,12 +431,23 @@ class WidgetContentType extends BoundType {
 
   final bool optional;
 
+  /// Each widget can have one (or zero) "body" content property, which
+  /// is considered the "main content" of the widget.
+  ///
+  /// The body will have a discard label ("_") in the initializer and will
+  /// be placed last in the parameters list.
+  ///
+  /// All other content properties will require a label at the call site,
+  /// preferably using the multiple trailing closures syntax.
+  final bool body;
+
   WidgetContentType({
     required this.contentName,
     required this.dartNamed,
     required this.multi,
     required this.widgetName,
     required this.optional,
+    required this.body,
   });
 
   factory WidgetContentType.fromTOML(String widgetName, Map toml) {
@@ -370,6 +457,7 @@ class WidgetContentType extends BoundType {
       multi: toml["multi"],
       widgetName: widgetName,
       optional: toml["optional"] ?? false,
+      body: toml["body"] ?? false,
     );
   }
 
@@ -400,7 +488,7 @@ class WidgetContentType extends BoundType {
     return Parameter(
       name: contentName,
       type: name,
-      swiftLabel: null,
+      swiftLabel: body ? "_" : null,
       dartNamed: dartNamed,
     );
   }

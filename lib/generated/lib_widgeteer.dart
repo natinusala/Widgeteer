@@ -94,6 +94,32 @@ class LibWidgeteer {
                       ffi.Handle Function(ffi.Pointer<ffi.Char> key,
                           ffi.Int textDirection, ffi.Handle child)>>)>();
 
+  void register_new_center(
+    ffi.Pointer<
+            ffi.NativeFunction<
+                ffi.Handle Function(
+                    ffi.Pointer<ffi.Char> key, ffi.Handle child)>>
+        outlet,
+  ) {
+    return _register_new_center(
+      outlet,
+    );
+  }
+
+  late final _register_new_centerPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      ffi.Handle Function(ffi.Pointer<ffi.Char> key,
+                          ffi.Handle child)>>)>>('register_new_center');
+  late final _register_new_center = _register_new_centerPtr.asFunction<
+      void Function(
+          ffi.Pointer<
+              ffi.NativeFunction<
+                  ffi.Handle Function(
+                      ffi.Pointer<ffi.Char> key, ffi.Handle child)>>)>();
+
   void register_new_material_app(
     ffi.Pointer<
             ffi.NativeFunction<

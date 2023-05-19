@@ -45,6 +45,20 @@ public func _registerNewDirectionality(_ outlet: _NewDirectionality_CFunctionPoi
     trace("Registering 'NewDirectionality'")
     Flutter_NewDirectionality = { (p0, p1, p2) in assertIsOnFlutterThread(); return outlet(p0, p1, p2) }
 }
+// MARK: NewCenter
+// Outlet emitted by 'Center' binding (Instance of 'WidgetBinding')
+// 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:86
+public typealias _NewCenter_CFunctionPointer = @convention(c) (_ key: UnsafePointer<CChar>?, _ child: Dart_Handle) -> Dart_Handle
+public typealias _NewCenter = (_ key: UnsafePointer<CChar>?, _ child: Dart_Handle) -> Dart_Handle
+
+public var Flutter_NewCenter: _NewCenter = { (_, _) in fatalError("'NewCenter' called before it was registered") }
+
+@_cdecl("register_new_center")
+public func _registerNewCenter(_ outlet: _NewCenter_CFunctionPointer) {
+    assertIsOnFlutterThread()
+    trace("Registering 'NewCenter'")
+    Flutter_NewCenter = { (p0, p1) in assertIsOnFlutterThread(); return outlet(p0, p1) }
+}
 // MARK: NewMaterialApp
 // Outlet emitted by 'MaterialApp' binding (Instance of 'WidgetBinding')
 // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:86
