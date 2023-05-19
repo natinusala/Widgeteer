@@ -10,6 +10,7 @@ import 'package:widgeteer/generated/Bindings/Widgets/RunApp.dart';
 import 'package:widgeteer/generated/Bindings/Widgets/Directionality.dart';
 import 'package:widgeteer/generated/Bindings/Material/MaterialApp.dart';
 import 'package:widgeteer/generated/Bindings/Material/ThemeData.dart';
+import 'package:widgeteer/generated/Bindings/Material/AppBar.dart';
 import 'package:widgeteer/generated/Bindings/Bridging/StatelessUserWidget.dart';
 
 void registerOutlets(LibWidgeteer widgeteer) {
@@ -28,6 +29,9 @@ void registerOutlets(LibWidgeteer widgeteer) {
     // Outlet emitted by 'ThemeData' binding (Instance of 'PersistentObjectBinding')
     // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
     widgeteer.register_new_theme_data(Pointer.fromFunction(newThemeDataImpl));
+    // Outlet emitted by 'AppBar' binding (Instance of 'WidgetBinding')
+    // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
+    widgeteer.register_new_app_bar(Pointer.fromFunction(newAppBarImpl));
     // Outlet emitted by 'StatelessUserWidget' binding (Instance of 'WidgetBinding')
     // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
     widgeteer.register_new_stateless_user_widget(Pointer.fromFunction(newStatelessUserWidgetImpl));

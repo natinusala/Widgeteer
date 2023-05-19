@@ -9,18 +9,14 @@ import 'package:ffi/ffi.dart';
 import 'package:widgeteer/generated/lib_widgeteer.dart';
 import 'package:flutter/foundation.dart';
 // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:88
-Object newMaterialAppImpl(Pointer<Char> key, Pointer<Char> title, Object? theme, Object home) {
+Object newAppBarImpl(Pointer<Char> key, Object? title) {
     // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:78
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:105
     // 🍞 bin/widgeteer/bindings/widget_key.dart:43
     final keyString = key.cast<Utf8>().toDartString();
     final keyValue = ValueKey(keyString);
-    // 🍞 bin/widgeteer/bindings/string.dart:56
-    final titleValue = title.cast<Utf8>().toDartString();
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:239
-    final themeValue = theme as ThemeData?;
     // 🍞 bin/widgeteer/bindings/widget.dart:434
-    final homeValue = home as Widget;
+    final titleValue = title as Widget?;
     
-    return MaterialApp(key: keyValue, title: titleValue, theme: themeValue, home: homeValue);
+    return AppBar(key: keyValue, title: titleValue);
 }

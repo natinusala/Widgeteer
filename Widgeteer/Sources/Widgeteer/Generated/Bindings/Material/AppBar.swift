@@ -3,22 +3,22 @@
 // === Follow the breadcrumbs to find what code generated what you're reading ===
 // 🍞 bin/widgeteer/bindings/widget.dart:139
 // 🍞 bin/widgeteer/bindings/widget.dart:162
-public struct Text: BuiltinWidget {
+public struct AppBar<Title: OptionalSingleWidget>: PreferredSizeWidget {
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:160
-    let data: String
+    let title: Title
 
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:173
-    public init(_ data: String) {
-        self.data = data
+    public init(title: (() -> Title) = { EmptyWidget() }) {
+        self.title = title()
     }
 
     // 🍞 bin/widgeteer/bindings/widget.dart:185
     public func reduce(parentKey: WidgetKey) -> ReducedWidget {
-        // 🍞 bin/widgeteer/bindings/string.dart:74
-        let dataValue = self.data
-        let localHandle = Flutter_NewText(
+        // 🍞 bin/widgeteer/bindings/widget.dart:451
+        let titleValue = self.title.reduce(parentKey: parentKey.joined("title")).handle
+        let localHandle = Flutter_NewAppBar(
             parentKey.joined(String(describing: Self.self)),
-            dataValue
+            titleValue
         )
         return ReducedWidget(handle: localHandle)
     }

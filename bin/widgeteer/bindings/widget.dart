@@ -35,6 +35,10 @@ class WidgetBinding extends Binding {
   final ParametersList parameters;
   final List<WidgetContentType> content;
 
+  /// The Dart super class of this widget. If nothing is specified
+  /// it will be assumed to be `Widget`.
+  final String? superClass;
+
   /// Dart import to use to make the widget class accessible.
   final String widgetLocation;
 
@@ -45,11 +49,13 @@ class WidgetBinding extends Binding {
     required this.tomlPath,
     required this.parameters,
     required this.content,
+    required this.superClass,
   });
 
   factory WidgetBinding.fromTOML(
       String tomlPath, String fileStem, Map toml, BindingContext context) {
-    final parameters = ParametersList.fromTOML(toml["parameter"], context);
+    final parameters =
+        ParametersList.fromTOML(toml["parameter"] ?? [], context);
 
     // Insert the "key" parameter at the beginning of parameters of all widgets
     parameters.insert(
@@ -76,6 +82,7 @@ class WidgetBinding extends Binding {
       widgetLocation: toml["widget"]["location"],
       parameters: parameters,
       content: contentList,
+      superClass: toml["widget"]["super_class"],
     );
   }
 
@@ -154,8 +161,10 @@ class WidgetBinding extends Binding {
   CodeUnit get swiftStruct {
     final struct = CodeUnit();
 
+    final protocol = superClass ?? "BuiltinWidget";
+
     struct.appendLine(
-        "public struct $widgetName$swiftGenericParameters: BuiltinWidget {");
+        "public struct $widgetName$swiftGenericParameters: $protocol {");
 
     // Properties
     struct.appendUnit(swiftProperties.swiftProperties, indentedBy: 4);
@@ -344,11 +353,14 @@ class WidgetContentType extends BoundType {
   final bool multi;
   final bool dartNamed;
 
+  final bool optional;
+
   WidgetContentType({
     required this.contentName,
     required this.dartNamed,
     required this.multi,
     required this.widgetName,
+    required this.optional,
   });
 
   factory WidgetContentType.fromTOML(String widgetName, Map toml) {
@@ -357,6 +369,7 @@ class WidgetContentType extends BoundType {
       dartNamed: toml["dart_named"],
       multi: toml["multi"],
       widgetName: widgetName,
+      optional: toml["optional"] ?? false,
     );
   }
 
@@ -364,9 +377,11 @@ class WidgetContentType extends BoundType {
   String get swiftGenericParameter => contentName.pascalCase;
 
   /// Name of the Swift generic parameter contraint.
-  String get swiftGenericConstraint => multi ? "MultiWidget" : "SingleWidget";
+  String get swiftGenericConstraint => multi
+      ? "MultiWidget"
+      : (optional ? "OptionalSingleWidget" : "SingleWidget");
 
-  String get dartClass => "Widget";
+  String get dartClass => optional ? "Widget?" : "Widget";
 
   @override
   CType get cType => CWidgetContent(this);
@@ -400,7 +415,9 @@ class SwiftWidgetContent extends SwiftType {
   String get name => type.swiftGenericParameter;
 
   @override
-  String get initType => "() -> $name";
+  String get initType => type.optional
+      ? "(() -> ${type.swiftGenericParameter}) = { EmptyWidget() }"
+      : "() -> ${type.swiftGenericParameter}";
 
   @override
   String initSetterValue(String source) {
@@ -428,7 +445,7 @@ class CWidgetContent extends CType {
   CWidgetContent(this.type);
 
   @override
-  String get dartFfiMapping => "Object";
+  String get dartFfiMapping => type.optional ? "Object?" : "Object";
 
   @override
   CodeUnit fromSwiftValue(String sourceValue, String variableName) => CodeUnit(

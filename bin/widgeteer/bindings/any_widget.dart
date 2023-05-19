@@ -18,8 +18,7 @@ import '../bindings_generator/code_unit.dart';
 import '../bindings_generator/models/binding.dart';
 import '../bindings_generator/models/type.dart';
 
-/// Binding for `Widget`, `Widget?` and all abstract subclasses like
-/// `PreferredSizeWidget`.
+/// Binding for `Widget` and `Widget?`.
 class AnyWidgetBinding extends Binding {
   @override
   String get name => "AnyWidget";

@@ -28,11 +28,16 @@ public struct ReducedWidget {
     let handle: LocalWidgetHandle
 }
 
-/// A widget that's reduced to a single Flutter widget.
-public protocol SingleWidget {
+/// A widget that's reduced to a single optional Flutter widget.
+/// ``Dart_Null`` is allowed as a return value.
+public protocol OptionalSingleWidget {
     /// Reduce the widget to a Flutter widget.
     func reduce(parentKey: WidgetKey) -> ReducedWidget
 }
+
+/// A widget that's reduced to a single Flutter widget.
+/// ``Dart_Null`` is NOT allowed as a return value.
+public protocol SingleWidget: OptionalSingleWidget {}
 
 /// A widget that's reduced to multiple Flutter widgets.
 public protocol MultiWidget: IsPodable {
@@ -137,3 +142,7 @@ public func _userWidgetProxyEquals(_ lhs: UnsafeRawPointer, _ rhs: UnsafeRawPoin
     trace("Equality of '\(lhs.widgetType)': \(equals)")
     return equals
 }
+
+// MARK: Constrained built in widget protocols
+
+protocol PreferredSizeWidget: BuiltinWidget {}

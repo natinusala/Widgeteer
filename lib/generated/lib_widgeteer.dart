@@ -152,6 +152,32 @@ class LibWidgeteer {
               ffi.NativeFunction<
                   ffi.Handle Function(ffi.Int primarySwatch)>>)>();
 
+  void register_new_app_bar(
+    ffi.Pointer<
+            ffi.NativeFunction<
+                ffi.Handle Function(
+                    ffi.Pointer<ffi.Char> key, ffi.Handle title)>>
+        outlet,
+  ) {
+    return _register_new_app_bar(
+      outlet,
+    );
+  }
+
+  late final _register_new_app_barPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      ffi.Handle Function(ffi.Pointer<ffi.Char> key,
+                          ffi.Handle title)>>)>>('register_new_app_bar');
+  late final _register_new_app_bar = _register_new_app_barPtr.asFunction<
+      void Function(
+          ffi.Pointer<
+              ffi.NativeFunction<
+                  ffi.Handle Function(
+                      ffi.Pointer<ffi.Char> key, ffi.Handle title)>>)>();
+
   void register_new_stateless_user_widget(
     ffi.Pointer<
             ffi.NativeFunction<

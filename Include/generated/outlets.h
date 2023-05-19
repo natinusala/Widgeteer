@@ -13,5 +13,7 @@ extern void register_new_directionality(Dart_Handle (*outlet)(char* key, int tex
 extern void register_new_material_app(Dart_Handle (*outlet)(char* key, char* title, Dart_PersistentHandle theme, Dart_Handle home));
 // Outlet emitted by 'ThemeData' binding (Instance of 'PersistentObjectBinding')
 extern void register_new_theme_data(Dart_Handle (*outlet)(int primarySwatch));
+// Outlet emitted by 'AppBar' binding (Instance of 'WidgetBinding')
+extern void register_new_app_bar(Dart_Handle (*outlet)(char* key, Dart_Handle title));
 // Outlet emitted by 'StatelessUserWidget' binding (Instance of 'WidgetBinding')
 extern void register_new_stateless_user_widget(Dart_Handle (*outlet)(char* key, widgeteer_stateless_user_widget_proxy proxy, char* swiftWidgetName));

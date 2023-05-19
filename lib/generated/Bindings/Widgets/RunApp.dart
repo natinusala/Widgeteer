@@ -12,7 +12,7 @@ import 'package:flutter/foundation.dart';
 void runAppImpl(Object app) {
     // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:78
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:105
-    // 🍞 bin/widgeteer/bindings/any_widget.dart:74
+    // 🍞 bin/widgeteer/bindings/any_widget.dart:73
     final appValue = app as Widget;
     
     return runApp(appValue);

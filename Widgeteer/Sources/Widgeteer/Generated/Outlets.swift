@@ -73,6 +73,20 @@ public func _registerNewThemeData(_ outlet: _NewThemeData_CFunctionPointer) {
     trace("Registering 'NewThemeData'")
     Flutter_NewThemeData = { (p0) in assertIsOnFlutterThread(); return outlet(p0) }
 }
+// MARK: NewAppBar
+// Outlet emitted by 'AppBar' binding (Instance of 'WidgetBinding')
+// 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:86
+public typealias _NewAppBar_CFunctionPointer = @convention(c) (_ key: UnsafePointer<CChar>?, _ title: Dart_Handle) -> Dart_Handle
+public typealias _NewAppBar = (_ key: UnsafePointer<CChar>?, _ title: Dart_Handle) -> Dart_Handle
+
+public var Flutter_NewAppBar: _NewAppBar = { (_, _) in fatalError("'NewAppBar' called before it was registered") }
+
+@_cdecl("register_new_app_bar")
+public func _registerNewAppBar(_ outlet: _NewAppBar_CFunctionPointer) {
+    assertIsOnFlutterThread()
+    trace("Registering 'NewAppBar'")
+    Flutter_NewAppBar = { (p0, p1) in assertIsOnFlutterThread(); return outlet(p0, p1) }
+}
 // MARK: NewStatelessUserWidget
 // Outlet emitted by 'StatelessUserWidget' binding (Instance of 'WidgetBinding')
 // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:86
