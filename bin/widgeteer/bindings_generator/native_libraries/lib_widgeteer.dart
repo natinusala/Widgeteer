@@ -32,10 +32,12 @@ class LibWidgeteer extends NativeLibrary {
       "headers": {
         "entry-points": [
           p.join(workingDirectory, generatedIncludesRoot, "outlets.h"),
+          p.join(workingDirectory, generatedIncludesRoot, "declarations.h"),
           p.join(workingDirectory, includesRoot, "libwidgeteer.h"),
         ],
         "include-directives": [
           "**outlets.h",
+          "**declarations.h",
           "**libwidgeteer.h",
         ],
       },
@@ -44,6 +46,7 @@ class LibWidgeteer extends NativeLibrary {
         "symbol-address": {
           "include": [
             "widgeteer_stateless_user_widget_proxy_release",
+            "widgeteer_(.*)_callback_proxy_release",
           ]
         }
       },

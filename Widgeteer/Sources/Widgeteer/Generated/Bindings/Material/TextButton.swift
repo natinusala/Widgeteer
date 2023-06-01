@@ -3,38 +3,28 @@
 // === Follow the breadcrumbs to find what code generated what you're reading ===
 // 🍞 bin/widgeteer/bindings/widget.dart:156
 // 🍞 bin/widgeteer/bindings/widget.dart:238
-public struct Center<Child: SingleWidget>: BuiltinWidget {
+public struct TextButton<Child: SingleWidget>: BuiltinWidget {
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:160
+    let onPressed: VoidCallback
     let child: Child
 
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:173
-    public init(_ child: () -> Child) {
+    public init(onPressed: @escaping VoidCallback, _ child: () -> Child) {
+        self.onPressed = onPressed
         self.child = child()
     }
 
     // 🍞 bin/widgeteer/bindings/widget.dart:261
     public func reduce(parentKey: WidgetKey) -> ReducedWidget {
+        // 🍞 bin/widgeteer/bindings/callback.dart:229
+        let onPressedValue = Unmanaged<VoidCallbackProxy>.passRetained(VoidCallbackProxy(self.onPressed)).toOpaque()
         // 🍞 bin/widgeteer/bindings/widget.dart:539
         let childValue = self.child.reduce(parentKey: parentKey.joined("child")).handle
-        let localHandle = Flutter_NewCenter(
+        let localHandle = Flutter_NewTextButton(
             parentKey.joined(String(describing: Self.self)),
+            onPressedValue,
             childValue
         )
         return ReducedWidget(handle: localHandle)
-    }
-}
-
-// 🍞 bin/widgeteer/bindings/widget.dart:177
-// 🍞 bin/widgeteer/bindings/widget.dart:189
-struct CenterWrapper: WidgetWrapper {
-    public func body(content: Content) -> Center<Content> {
-        return Center() { content }
-    }
-}
-
-// 🍞 bin/widgeteer/bindings/widget.dart:206
-public extension Widget {
-    func center() -> some Widget {
-        return self.wrapped(in: CenterWrapper())
     }
 }

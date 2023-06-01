@@ -93,4 +93,12 @@ class ParsedBinding {
   final String relativePath;
 
   ParsedBinding(this.binding, this.relativePath);
+
+  /// Path to the "Dart body" file for this binding.
+  /// The file is not guaranteed to exist, especially if there is no Dart body.
+  /// Used when some generated Dart files need to be imported for
+  /// other bindings to work.
+  String dartBodyPath(String dartRoot) {
+    return p.join(dartRoot, relativePath, "${binding.name}.dart");
+  }
 }

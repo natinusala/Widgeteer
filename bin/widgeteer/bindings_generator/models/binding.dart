@@ -44,6 +44,11 @@ abstract class Binding {
   /// Body of the generated Swift file for this binding.
   CodeUnit? get swiftBody => null;
 
+  /// If the binding needs additional C declarations, they have to be added
+  /// here so that ffigen can generate the corresponding Dart bindings for them.
+  /// They will be made available in `libWidgeteer` like all the others.
+  CodeUnit? get cDeclarations => null;
+
   String get description {
     List<String> output = [];
     output.addAll(types.map((e) => e.name));
@@ -54,6 +59,10 @@ abstract class Binding {
       return "$name ($origin)";
     }
   }
+
+  /// Does the "Dart body" for this binding need to be imported for other
+  /// bindings to use its types?
+  bool get importBody => false;
 }
 
 class BindingContext {

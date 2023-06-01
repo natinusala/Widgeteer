@@ -178,6 +178,37 @@ class LibWidgeteer {
               ffi.NativeFunction<
                   ffi.Handle Function(ffi.Int primarySwatch)>>)>();
 
+  void register_new_text_button(
+    ffi.Pointer<
+            ffi.NativeFunction<
+                ffi.Handle Function(ffi.Pointer<ffi.Char> key,
+                    ffi.Pointer<ffi.Void> onPressed, ffi.Handle child)>>
+        outlet,
+  ) {
+    return _register_new_text_button(
+      outlet,
+    );
+  }
+
+  late final _register_new_text_buttonPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      ffi.Handle Function(
+                          ffi.Pointer<ffi.Char> key,
+                          ffi.Pointer<ffi.Void> onPressed,
+                          ffi.Handle child)>>)>>('register_new_text_button');
+  late final _register_new_text_button =
+      _register_new_text_buttonPtr.asFunction<
+          void Function(
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      ffi.Handle Function(
+                          ffi.Pointer<ffi.Char> key,
+                          ffi.Pointer<ffi.Void> onPressed,
+                          ffi.Handle child)>>)>();
+
   void register_new_app_bar(
     ffi.Pointer<
             ffi.NativeFunction<
@@ -237,6 +268,34 @@ class LibWidgeteer {
                           ffi.Pointer<ffi.Char> key,
                           stateless_user_widget_proxy proxy,
                           ffi.Pointer<ffi.Char> swiftWidgetName)>>)>();
+
+  void void_callback_proxy_release(
+    void_callback_proxy proxy,
+  ) {
+    return _void_callback_proxy_release(
+      proxy,
+    );
+  }
+
+  late final _void_callback_proxy_releasePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(void_callback_proxy)>>(
+          'widgeteer_void_callback_proxy_release');
+  late final _void_callback_proxy_release = _void_callback_proxy_releasePtr
+      .asFunction<void Function(void_callback_proxy)>();
+
+  void void_callback_proxy_call(
+    void_callback_proxy proxy,
+  ) {
+    return _void_callback_proxy_call(
+      proxy,
+    );
+  }
+
+  late final _void_callback_proxy_callPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(void_callback_proxy)>>(
+          'widgeteer_void_callback_proxy_call');
+  late final _void_callback_proxy_call = _void_callback_proxy_callPtr
+      .asFunction<void Function(void_callback_proxy)>();
 
   void init(
     ffi.Pointer<ffi.Void> data,
@@ -337,6 +396,9 @@ class LibWidgeteer {
 class _SymbolAddresses {
   final LibWidgeteer _library;
   _SymbolAddresses(this._library);
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(void_callback_proxy)>>
+      get void_callback_proxy_release =>
+          _library._void_callback_proxy_releasePtr;
   ffi.Pointer<
           ffi.NativeFunction<ffi.Void Function(stateless_user_widget_proxy)>>
       get stateless_user_widget_proxy_release =>
@@ -344,4 +406,5 @@ class _SymbolAddresses {
 }
 
 typedef stateless_user_widget_proxy = ffi.Pointer<ffi.Void>;
+typedef void_callback_proxy = ffi.Pointer<ffi.Void>;
 typedef user_widget_proxy = ffi.Pointer<ffi.Void>;

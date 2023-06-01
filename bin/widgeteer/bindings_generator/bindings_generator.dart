@@ -39,10 +39,28 @@ Future<void> generateBindings(String workingDirectory) async {
     }
   }
 
+  final bindings = await parseBindings(workingDirectory);
+
+  // Prepare a list of imports to blindly give to every generated Dart file
+  final imports = CodeUnit();
+  for (final binding in bindings) {
+    if (!binding.binding.importBody) {
+      continue;
+    }
+
+    final dartBody = binding.binding.dartBody;
+    if (dartBody != null) {
+      final relPath =
+          p.relative(binding.dartBodyPath(dartRoot), from: dartLibRoot);
+      imports.appendLine("import 'package:widgeteer/$relPath';");
+    }
+  }
+
   // Walk through all bindings, generate the code and collect outlets
   List<EmittedOutlet> outlets = [];
   List<String> generatedDartFiles = [];
-  for (final binding in await parseBindings(workingDirectory)) {
+  List<CodeUnit> cDeclarations = [];
+  for (final binding in bindings) {
     // Collect outlets
     outlets.addAll(
         binding.binding.outlets.map((e) => EmittedOutlet(binding.binding, e)));
@@ -50,14 +68,15 @@ Future<void> generateBindings(String workingDirectory) async {
     // Dart file
     final dartBody = binding.binding.dartBody;
     if (dartBody != null) {
-      final dartFile = p.join(
-          dartRoot, binding.relativePath, "${binding.binding.name}.dart");
+      final dartFile = binding.dartBodyPath(dartRoot);
 
       generatedDartFiles.add(dartFile);
 
       logger.log(
           "🖨️  Writing '${binding.binding.name}' Dart code to '$dartFile'");
-      var fileUnit = CodeUnit.forNewFile()..appendUnit(dartBody);
+      var fileUnit = CodeUnit.forNewFile()
+        ..appendUnit(imports)
+        ..appendUnit(dartBody);
       await fileUnit.writeToFile(dartFile);
     }
 
@@ -72,7 +91,27 @@ Future<void> generateBindings(String workingDirectory) async {
       var fileUnit = CodeUnit.forNewFile()..appendUnit(swiftBody);
       await fileUnit.writeToFile(swiftFile);
     }
+
+    // C declarations
+    final cDecls = binding.binding.cDeclarations;
+    if (cDecls != null) {
+      cDeclarations.add(cDecls);
+    }
   }
+
+  // Generate additional C declarations header
+  var cDeclsHeader = CodeUnit.forNewFile();
+  cDeclsHeader.appendLine('#import "../types.h"');
+  cDeclsHeader.appendEmptyLine();
+
+  for (final cDecl in cDeclarations) {
+    cDeclsHeader.appendUnit(cDecl);
+    cDeclsHeader.appendEmptyLine();
+  }
+
+  final cDeclsHeadersFile = p.join(includesRoot, "declarations.h");
+  logger.log("🖨️  Writing additional C declarations to '$cDeclsHeadersFile'");
+  await cDeclsHeader.writeToFile(cDeclsHeadersFile);
 
   // Generate outlets header file
   var outletsHeader = CodeUnit.forNewFile();
@@ -87,7 +126,7 @@ Future<void> generateBindings(String workingDirectory) async {
 
   final outletsHeadersFile = p.join(includesRoot, "outlets.h");
   logger.log(
-      "🖨️  Writing outlets registration headers to '$outletsHeadersFile'");
+      "🖨️  Writing outlets registration functions to '$outletsHeadersFile'");
   await outletsHeader.writeToFile(outletsHeadersFile);
 
   // Generate outlets registration function

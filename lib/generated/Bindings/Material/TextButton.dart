@@ -3,7 +3,7 @@
 // === Follow the breadcrumbs to find what code generated what you're reading ===
 // 🍞 bin/widgeteer/bindings_generator/bindings_generator.dart:45
 import 'package:widgeteer/generated/Bindings/Callback/VoidCallback.dart';
-// 🍞 bin/widgeteer/bindings/persistent_object.dart:156
+// 🍞 bin/widgeteer/bindings/widget.dart:137
 // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:57
 import 'package:flutter/material.dart';
 import 'dart:ffi';
@@ -11,17 +11,17 @@ import 'package:ffi/ffi.dart';
 import 'package:widgeteer/generated/lib_widgeteer.dart';
 import 'package:flutter/foundation.dart';
 // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:88
-Object newThemeDataImpl(int primarySwatch) {
+Object newTextButtonImpl(Pointer<Char> key, Pointer<Void> onPressed, Object child) {
     // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:78
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:105
-    // 🍞 bin/widgeteer/bindings/enum.dart:194
-    late final MaterialColor? primarySwatchValue;
-    switch (primarySwatch) {
-        case -1: primarySwatchValue = null; break;
-        case 0: primarySwatchValue = Colors.blue; break;
-        case 1: primarySwatchValue = Colors.green; break;
-        default: throw "Received invalid index '$primarySwatch' for value of enum 'MaterialColor?'";
-    }
+    // 🍞 bin/widgeteer/bindings/widget_key.dart:43
+    final keyString = key.cast<Utf8>().toDartString();
+    final keyValue = ValueKey(keyString);
+    // 🍞 bin/widgeteer/bindings/callback.dart:251
+    final onPressedProxy = VoidCallbackProxy(onPressed);
+    final onPressedValue = () { return onPressedProxy.call(); };
+    // 🍞 bin/widgeteer/bindings/widget.dart:522
+    final childValue = child as Widget;
     
-    return ThemeData(primarySwatch: primarySwatchValue);
+    return TextButton(key: keyValue, onPressed: onPressedValue, child: childValue);
 }
