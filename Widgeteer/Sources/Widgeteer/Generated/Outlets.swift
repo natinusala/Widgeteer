@@ -90,8 +90,8 @@ public func _registerNewThemeData(_ outlet: _NewThemeData_CFunctionPointer) {
 // MARK: NewTextButton
 // Outlet emitted by 'TextButton' binding (Instance of 'WidgetBinding')
 // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:86
-public typealias _NewTextButton_CFunctionPointer = @convention(c) (_ key: UnsafePointer<CChar>?, _ onPressed: UnsafeRawPointer, _ child: Dart_Handle) -> Dart_Handle
-public typealias _NewTextButton = (_ key: UnsafePointer<CChar>?, _ onPressed: UnsafeRawPointer, _ child: Dart_Handle) -> Dart_Handle
+public typealias _NewTextButton_CFunctionPointer = @convention(c) (_ key: UnsafePointer<CChar>?, _ onPressed: UnsafeRawPointer?, _ child: Dart_Handle) -> Dart_Handle
+public typealias _NewTextButton = (_ key: UnsafePointer<CChar>?, _ onPressed: UnsafeRawPointer?, _ child: Dart_Handle) -> Dart_Handle
 
 public var Flutter_NewTextButton: _NewTextButton = { (_, _, _) in fatalError("'NewTextButton' called before it was registered") }
 

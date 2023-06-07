@@ -24,7 +24,7 @@ public func log(_ message: String) {
     fflush(stdout) // `flutter run` buffers stdout
 }
 
-private let tracingEnabled = true
+private let tracingEnabled = false
 private let timingEnabled = false
 
 public func trace(_ message: String, file: StaticString = #fileID) {

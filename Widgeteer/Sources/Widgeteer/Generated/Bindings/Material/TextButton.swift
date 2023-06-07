@@ -5,19 +5,24 @@
 // 🍞 bin/widgeteer/bindings/widget.dart:238
 public struct TextButton<Child: SingleWidget>: BuiltinWidget {
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:160
-    let onPressed: VoidCallback
+    let onPressed: VoidCallback?
     let child: Child
 
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:173
-    public init(onPressed: @escaping VoidCallback, _ child: () -> Child) {
+    public init(onPressed: VoidCallback? = nil, _ child: () -> Child) {
         self.onPressed = onPressed
         self.child = child()
     }
 
     // 🍞 bin/widgeteer/bindings/widget.dart:261
     public func reduce(parentKey: WidgetKey) -> ReducedWidget {
-        // 🍞 bin/widgeteer/bindings/callback.dart:229
-        let onPressedValue = Unmanaged<VoidCallbackProxy>.passRetained(VoidCallbackProxy(self.onPressed)).toOpaque()
+        // 🍞 bin/widgeteer/bindings/callback.dart:228
+        let onPressedValue: UnsafeMutableRawPointer?
+        if let onPressedClosure = self.onPressed {
+            onPressedValue = Unmanaged<VoidCallbackProxy>.passRetained(VoidCallbackProxy(onPressedClosure)).toOpaque()
+        } else {
+            onPressedValue = nil
+        }
         // 🍞 bin/widgeteer/bindings/widget.dart:539
         let childValue = self.child.reduce(parentKey: parentKey.joined("child")).handle
         let localHandle = Flutter_NewTextButton(

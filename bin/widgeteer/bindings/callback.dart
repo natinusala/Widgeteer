@@ -22,7 +22,6 @@ import '../bindings_generator/models/binding.dart';
 import '../bindings_generator/models/type.dart';
 
 /// A binding for an UI callback (to execute Swift code from UI events).
-/// TODO: add optional support
 class CallbackBinding extends Binding {
   final String callbackName;
   final String tomlPath;
@@ -192,10 +191,99 @@ class CallbackBinding extends Binding {
   String get origin => p.relative(tomlPath);
 
   @override
-  List<BoundType> get types => [CallbackType(this)];
+  List<BoundType> get types => [CallbackType(this), OptionalCallbackType(this)];
 
   @override
   bool get importBody => true;
+}
+
+class OptionalCallbackType extends BoundType {
+  final CallbackBinding binding;
+
+  OptionalCallbackType(this.binding);
+
+  @override
+  String get name => "${binding.name}?";
+
+  @override
+  CType get cType => OptionalCCallback(this);
+
+  @override
+  DartType get dartType => OptionalDartCallback(this);
+
+  @override
+  SwiftType get swiftType => OptionalSwiftCallback(this);
+}
+
+class OptionalCCallback extends CType {
+  final OptionalCallbackType type;
+
+  OptionalCCallback(this.type);
+
+  @override
+  String get dartFfiMapping => "Pointer<Void>"; // opaque proxy handle
+
+  @override
+  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+    final transformer = CodeUnit();
+
+    transformer
+        .appendLine("let ${variableName}Value: UnsafeMutableRawPointer?");
+    transformer.appendLine("if let ${variableName}Closure = $sourceValue {");
+    transformer.appendLine(
+        "${variableName}Value = Unmanaged<${type.binding.proxyName}>.passRetained(${type.binding.proxyName}(${variableName}Closure)).toOpaque()",
+        indentedBy: 4);
+    transformer.appendLine("} else {");
+    transformer.appendLine("${variableName}Value = nil", indentedBy: 4);
+    transformer.appendLine("}");
+
+    return transformer;
+  }
+
+  @override
+  String get name => "void*";
+
+  @override
+  String get swiftCInteropMapping => "UnsafeRawPointer?";
+}
+
+class OptionalDartCallback extends DartType {
+  final OptionalCallbackType type;
+
+  OptionalDartCallback(this.type);
+
+  @override
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+    final transformer = CodeUnit();
+
+    transformer.appendLine("late ${type.name} ${variableName}Value;");
+    transformer.appendLine("if ($sourceFfiValue == nullptr) {");
+    transformer.appendLine("${variableName}Value = null;", indentedBy: 4);
+    transformer.appendLine("} else {");
+    transformer.appendLines([
+      "final ${variableName}Proxy = ${type.binding.proxyName}($sourceFfiValue);",
+      "${variableName}Value = () { return ${variableName}Proxy.call(); };",
+    ], indentedBy: 4);
+    transformer.appendLine("}");
+
+    return transformer;
+  }
+
+  @override
+  String get name => type.name;
+}
+
+class OptionalSwiftCallback extends SwiftType {
+  final OptionalCallbackType type;
+
+  OptionalSwiftCallback(this.type);
+
+  @override
+  String get name => type.name;
+
+  @override
+  String get initType =>
+      "$name = nil"; // closure is already escaping in optional type argument
 }
 
 class CallbackType extends BoundType {
@@ -204,13 +292,13 @@ class CallbackType extends BoundType {
   CallbackType(this.binding);
 
   @override
+  String get name => binding.name;
+
+  @override
   CType get cType => CCallback(this);
 
   @override
   DartType get dartType => DartCallback(this);
-
-  @override
-  String get name => binding.name;
 
   @override
   SwiftType get swiftType => SwiftCallback(this);

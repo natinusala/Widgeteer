@@ -17,7 +17,7 @@ location = "package:flutter/material.dart"
 
 [[parameter]]
 name = "onPressed"
-type = "VoidCallback" # TODO: make it optional
+type = "VoidCallback?"
 dart_named = true
 
 [[content]]

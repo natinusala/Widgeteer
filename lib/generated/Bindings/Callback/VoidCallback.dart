@@ -3,12 +3,12 @@
 // === Follow the breadcrumbs to find what code generated what you're reading ===
 // 🍞 bin/widgeteer/bindings_generator/bindings_generator.dart:45
 import 'package:widgeteer/generated/Bindings/Callback/VoidCallback.dart';
-// 🍞 bin/widgeteer/bindings/callback.dart:125
+// 🍞 bin/widgeteer/bindings/callback.dart:124
 import 'dart:ffi';
 import 'package:widgeteer/dylib.dart';
 import 'package:widgeteer/generated/lib_widgeteer.dart';
 
-// 🍞 bin/widgeteer/bindings/callback.dart:142
+// 🍞 bin/widgeteer/bindings/callback.dart:141
 class VoidCallbackProxy implements Finalizable {
     static final _finalizer = NativeFinalizer(libWidgeteer.addresses.void_callback_proxy_release);
 

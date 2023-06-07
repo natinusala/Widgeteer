@@ -17,9 +17,14 @@ Object newTextButtonImpl(Pointer<Char> key, Pointer<Void> onPressed, Object chil
     // 🍞 bin/widgeteer/bindings/widget_key.dart:43
     final keyString = key.cast<Utf8>().toDartString();
     final keyValue = ValueKey(keyString);
-    // 🍞 bin/widgeteer/bindings/callback.dart:251
-    final onPressedProxy = VoidCallbackProxy(onPressed);
-    final onPressedValue = () { return onPressedProxy.call(); };
+    // 🍞 bin/widgeteer/bindings/callback.dart:257
+    late VoidCallback? onPressedValue;
+    if (onPressed == nullptr) {
+        onPressedValue = null;
+    } else {
+        final onPressedProxy = VoidCallbackProxy(onPressed);
+        onPressedValue = () { return onPressedProxy.call(); };
+    }
     // 🍞 bin/widgeteer/bindings/widget.dart:522
     final childValue = child as Widget;
     
