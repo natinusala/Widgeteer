@@ -290,8 +290,20 @@ class WidgetBinding extends Binding {
 
     reduce.appendLine(")", indentedBy: 4);
 
-    reduce.appendLine("return ReducedWidget(handle: localHandle)",
+    reduce.appendLine("let reducedWidget = ReducedWidget(handle: localHandle)",
         indentedBy: 4);
+
+    for (final property in swiftProperties) {
+      final resolvedType = context.resolveType(property.type);
+
+      final cleanup = resolvedType.cType
+          .fromSwiftValueCleanup("self.${property.name}", property.name);
+      if (cleanup != null) {
+        reduce.appendUnit(cleanup, indentedBy: 4);
+      }
+    }
+
+    reduce.appendLine("return reducedWidget", indentedBy: 4);
 
     reduce.appendLine("}");
 
@@ -472,16 +484,18 @@ class WidgetContentType extends BoundType {
   String get dartClass => optional ? "Widget?" : "Widget";
 
   @override
-  CType get cType => CWidgetContent(this);
-
-  @override
-  DartType get dartType => DartWidgetContent(this);
-
-  @override
   String get name => "$widgetName/$swiftGenericParameter";
 
   @override
-  SwiftType get swiftType => SwiftWidgetContent(this);
+  CType get cType => multi ? MultiCWidgetContent(this) : CWidgetContent(this);
+
+  @override
+  DartType get dartType =>
+      multi ? MultiDartWidgetContent(this) : DartWidgetContent(this);
+
+  @override
+  SwiftType get swiftType =>
+      multi ? MultiSwiftWidgetContent(this) : SwiftWidgetContent(this);
 
   /// Parameter to use this content in the widget.
   Parameter get parameter {
@@ -492,6 +506,61 @@ class WidgetContentType extends BoundType {
       dartNamed: dartNamed,
     );
   }
+}
+
+class MultiSwiftWidgetContent extends SwiftType {
+  final WidgetContentType type;
+
+  MultiSwiftWidgetContent(this.type);
+
+  @override
+  String get name =>
+      type.swiftGenericParameter; // should already conform to `MultiWidget`
+}
+
+class MultiDartWidgetContent extends DartType {
+  final WidgetContentType type;
+
+  MultiDartWidgetContent(this.type);
+
+  @override
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+    return CodeUnit(
+        content:
+            "final ${variableName}Value = consumeHandlesList($sourceFfiValue) as List<${type.dartClass}>;");
+  }
+
+  @override
+  String get name => "List<${type.dartClass}>";
+}
+
+class MultiCWidgetContent extends CType {
+  final WidgetContentType type;
+
+  MultiCWidgetContent(this.type);
+
+  @override
+  String get dartFfiMapping => "handles_list";
+
+  @override
+  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+    return CodeUnit(initialLines: [
+      "let ${variableName}List = HandlesList(handles: $sourceValue.reduce(parentKey: parentKey.joined(\"$variableName\")).map(\\.handle))",
+      "let ${variableName}Unmanaged = Unmanaged<HandlesList>.passRetained(${variableName}List)",
+      "let ${variableName}Value = ${variableName}Unmanaged.toOpaque()",
+    ]);
+  }
+
+  @override
+  CodeUnit? fromSwiftValueCleanup(String sourceValue, String variableName) {
+    return CodeUnit(content: "${variableName}Unmanaged.release()");
+  }
+
+  @override
+  String get name => "widgeteer_handles_list";
+
+  @override
+  String get swiftCInteropMapping => "UnsafeRawPointer";
 }
 
 class SwiftWidgetContent extends SwiftType {

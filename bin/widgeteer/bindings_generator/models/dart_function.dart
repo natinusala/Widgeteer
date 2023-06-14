@@ -62,6 +62,7 @@ class DartFunction {
       "import 'dart:ffi';",
       "import 'package:ffi/ffi.dart';",
       "import 'package:widgeteer/generated/lib_widgeteer.dart';",
+      "import 'package:widgeteer/swift.dart';",
       "import 'package:flutter/foundation.dart';",
     ]);
 

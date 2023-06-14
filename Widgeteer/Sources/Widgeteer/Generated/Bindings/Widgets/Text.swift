@@ -20,6 +20,7 @@ public struct Text: BuiltinWidget {
             parentKey.joined(String(describing: Self.self)),
             dataValue
         )
-        return ReducedWidget(handle: localHandle)
+        let reducedWidget = ReducedWidget(handle: localHandle)
+        return reducedWidget
     }
 }

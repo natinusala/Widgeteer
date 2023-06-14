@@ -9,10 +9,11 @@ import 'package:flutter/widgets.dart';
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
 import 'package:widgeteer/generated/lib_widgeteer.dart';
+import 'package:widgeteer/swift.dart';
 import 'package:flutter/foundation.dart';
-// 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:88
+// 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:89
 void runAppImpl(Object app) {
-    // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:78
+    // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:79
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:105
     // 🍞 bin/widgeteer/bindings/any_widget.dart:73
     final appValue = app as Widget;

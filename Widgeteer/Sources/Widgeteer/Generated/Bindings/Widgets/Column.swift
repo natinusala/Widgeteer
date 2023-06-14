@@ -3,29 +3,28 @@
 // === Follow the breadcrumbs to find what code generated what you're reading ===
 // 🍞 bin/widgeteer/bindings/widget.dart:156
 // 🍞 bin/widgeteer/bindings/widget.dart:238
-public struct StatelessUserWidget: BuiltinWidget {
+public struct Column<Children: MultiWidget>: BuiltinWidget {
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:160
-    let proxy: StatelessUserWidgetProxy
-    let swiftWidgetName: String
+    let children: Children
 
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:173
-    public init(proxy: StatelessUserWidgetProxy, swiftWidgetName: String) {
-        self.proxy = proxy
-        self.swiftWidgetName = swiftWidgetName
+    public init(_ children: Children) {
+        self.children = children
     }
 
     // 🍞 bin/widgeteer/bindings/widget.dart:261
     public func reduce(parentKey: WidgetKey) -> ReducedWidget {
-        // 🍞 bin/widgeteer/bindings/bridging.dart:67
-        let proxyValue = Unmanaged<StatelessUserWidgetProxy>.passRetained(self.proxy).toOpaque()
-        // 🍞 bin/widgeteer/bindings/string.dart:74
-        let swiftWidgetNameValue = self.swiftWidgetName
-        let localHandle = Flutter_NewStatelessUserWidget(
+        // 🍞 bin/widgeteer/bindings/widget.dart:547
+        let childrenList = HandlesList(handles: self.children.reduce(parentKey: parentKey.joined("children")).map(\.handle))
+        let childrenUnmanaged = Unmanaged<HandlesList>.passRetained(childrenList)
+        let childrenValue = childrenUnmanaged.toOpaque()
+        let localHandle = Flutter_NewColumn(
             parentKey.joined(String(describing: Self.self)),
-            proxyValue,
-            swiftWidgetNameValue
+            childrenValue
         )
         let reducedWidget = ReducedWidget(handle: localHandle)
+        // 🍞 bin/widgeteer/bindings/widget.dart:556
+        childrenUnmanaged.release()
         return reducedWidget
     }
 }

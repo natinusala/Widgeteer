@@ -37,3 +37,6 @@ extern bool widgeteer_user_widget_proxy_equals(widgeteer_user_widget_proxy lhs, 
 extern Dart_Handle widgeteer_stateless_user_widget_proxy_build(widgeteer_stateless_user_widget_proxy proxy, char* parentKey, Dart_Handle buildContext);
 extern void widgeteer_stateless_user_widget_proxy_release(widgeteer_stateless_user_widget_proxy proxy);
 
+// widgeteer_handles_list: Dart handles list
+extern int widgeteer_handles_list_count(widgeteer_handles_list list);
+extern Dart_Handle widgeteer_handles_list_get(widgeteer_handles_list list, int idx);

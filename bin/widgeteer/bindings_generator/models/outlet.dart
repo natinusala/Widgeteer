@@ -136,6 +136,12 @@ class Outlet {
               .split("\n"),
           indentedBy: 4);
       call.appendLine(")");
+
+      final cleanup = resolvedType.cType
+          .fromSwiftValueCleanup(property.name, property.name);
+      if (cleanup != null) {
+        call.appendUnit(cleanup);
+      }
     }
 
     return call;

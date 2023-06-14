@@ -85,4 +85,10 @@ abstract class CType {
   /// Swift code that takes [sourceValue] and turns it unto a value of the
   /// interop C type inside a variable called `${variableName}Value`.
   CodeUnit fromSwiftValue(String sourceValue, String variableName);
+
+  /// Optional Swift code to run after the values from [fromSwiftValue] are about
+  /// to go out of scope.
+  CodeUnit? fromSwiftValueCleanup(String sourceValue, String variableName) {
+    return null;
+  }
 }

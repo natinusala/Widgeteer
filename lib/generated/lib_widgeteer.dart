@@ -46,6 +46,32 @@ class LibWidgeteer {
                   ffi.Handle Function(ffi.Pointer<ffi.Char> key,
                       ffi.Pointer<ffi.Char> data)>>)>();
 
+  void register_new_column(
+    ffi.Pointer<
+            ffi.NativeFunction<
+                ffi.Handle Function(
+                    ffi.Pointer<ffi.Char> key, handles_list children)>>
+        outlet,
+  ) {
+    return _register_new_column(
+      outlet,
+    );
+  }
+
+  late final _register_new_columnPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      ffi.Handle Function(ffi.Pointer<ffi.Char> key,
+                          handles_list children)>>)>>('register_new_column');
+  late final _register_new_column = _register_new_columnPtr.asFunction<
+      void Function(
+          ffi.Pointer<
+              ffi.NativeFunction<
+                  ffi.Handle Function(
+                      ffi.Pointer<ffi.Char> key, handles_list children)>>)>();
+
   void register_run_app(
     ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Handle app)>> outlet,
   ) {
@@ -390,6 +416,36 @@ class LibWidgeteer {
       _stateless_user_widget_proxy_releasePtr
           .asFunction<void Function(stateless_user_widget_proxy)>();
 
+  int handles_list_count(
+    handles_list list,
+  ) {
+    return _handles_list_count(
+      list,
+    );
+  }
+
+  late final _handles_list_countPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(handles_list)>>(
+          'widgeteer_handles_list_count');
+  late final _handles_list_count =
+      _handles_list_countPtr.asFunction<int Function(handles_list)>();
+
+  Object handles_list_get(
+    handles_list list,
+    int idx,
+  ) {
+    return _handles_list_get(
+      list,
+      idx,
+    );
+  }
+
+  late final _handles_list_getPtr =
+      _lookup<ffi.NativeFunction<ffi.Handle Function(handles_list, ffi.Int)>>(
+          'widgeteer_handles_list_get');
+  late final _handles_list_get =
+      _handles_list_getPtr.asFunction<Object Function(handles_list, int)>();
+
   late final addresses = _SymbolAddresses(this);
 }
 
@@ -405,6 +461,7 @@ class _SymbolAddresses {
           _library._stateless_user_widget_proxy_releasePtr;
 }
 
+typedef handles_list = ffi.Pointer<ffi.Void>;
 typedef stateless_user_widget_proxy = ffi.Pointer<ffi.Void>;
 typedef void_callback_proxy = ffi.Pointer<ffi.Void>;
 typedef user_widget_proxy = ffi.Pointer<ffi.Void>;

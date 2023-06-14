@@ -23,13 +23,14 @@ public struct TextButton<Child: SingleWidget>: BuiltinWidget {
         } else {
             onPressedValue = nil
         }
-        // 🍞 bin/widgeteer/bindings/widget.dart:539
+        // 🍞 bin/widgeteer/bindings/widget.dart:608
         let childValue = self.child.reduce(parentKey: parentKey.joined("child")).handle
         let localHandle = Flutter_NewTextButton(
             parentKey.joined(String(describing: Self.self)),
             onPressedValue,
             childValue
         )
-        return ReducedWidget(handle: localHandle)
+        let reducedWidget = ReducedWidget(handle: localHandle)
+        return reducedWidget
     }
 }
