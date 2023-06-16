@@ -4,17 +4,17 @@
 // 🍞 bin/widgeteer/bindings/widget.dart:156
 // 🍞 bin/widgeteer/bindings/widget.dart:238
 public struct AppBar<Title: OptionalSingleWidget>: PreferredSizeWidget {
-    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:160
+    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:165
     let title: Title
 
-    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:173
+    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:178
     public init(title: (() -> Title) = { EmptyWidget() }) {
         self.title = title()
     }
 
     // 🍞 bin/widgeteer/bindings/widget.dart:261
     public func reduce(parentKey: WidgetKey) -> ReducedWidget {
-        // 🍞 bin/widgeteer/bindings/widget.dart:608
+        // 🍞 bin/widgeteer/bindings/widget.dart:619
         let titleValue = self.title.reduce(parentKey: parentKey.joined("title")).handle
         let localHandle = Flutter_NewAppBar(
             parentKey.joined(String(describing: Self.self)),

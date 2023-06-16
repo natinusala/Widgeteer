@@ -4,11 +4,11 @@
 // 🍞 bin/widgeteer/bindings/widget.dart:156
 // 🍞 bin/widgeteer/bindings/widget.dart:238
 public struct TextButton<Child: SingleWidget>: BuiltinWidget {
-    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:160
+    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:165
     let onPressed: VoidCallback?
     let child: Child
 
-    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:173
+    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:178
     public init(onPressed: VoidCallback? = nil, _ child: () -> Child) {
         self.onPressed = onPressed
         self.child = child()
@@ -23,7 +23,7 @@ public struct TextButton<Child: SingleWidget>: BuiltinWidget {
         } else {
             onPressedValue = nil
         }
-        // 🍞 bin/widgeteer/bindings/widget.dart:608
+        // 🍞 bin/widgeteer/bindings/widget.dart:619
         let childValue = self.child.reduce(parentKey: parentKey.joined("child")).handle
         let localHandle = Flutter_NewTextButton(
             parentKey.joined(String(describing: Self.self)),

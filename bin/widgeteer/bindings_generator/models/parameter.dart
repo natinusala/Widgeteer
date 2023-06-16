@@ -143,6 +143,11 @@ class ParametersList with IterableMixin<Parameter> {
       final resolvedType = context.resolveType(parameter.type);
 
       var str = "";
+
+      for (final attribute in resolvedType.swiftType.initAttributes) {
+        str += "$attribute ";
+      }
+
       if (parameter.swiftLabel != null) {
         str += "${parameter.swiftLabel} ";
       }

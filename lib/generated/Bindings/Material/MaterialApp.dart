@@ -22,7 +22,7 @@ Object newMaterialAppImpl(Pointer<Char> key, Pointer<Char> title, Object? theme,
     final titleValue = title.cast<Utf8>().toDartString();
     // 🍞 bin/widgeteer/bindings/persistent_object.dart:239
     final themeValue = theme as ThemeData?;
-    // 🍞 bin/widgeteer/bindings/widget.dart:591
+    // 🍞 bin/widgeteer/bindings/widget.dart:602
     final homeValue = home as Widget;
     
     return MaterialApp(key: keyValue, title: titleValue, theme: themeValue, home: homeValue);

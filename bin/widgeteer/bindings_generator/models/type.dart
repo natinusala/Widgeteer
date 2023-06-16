@@ -45,8 +45,13 @@ abstract class SwiftType {
   /// in regular Swift code.
   String get name;
 
-  /// Name of the type inside the initializer.
+  /// Name of the type inside the initializer of types
+  /// using a property of this type.
   String get initType => name;
+
+  /// List of additional attributes to use when inside an initializer,
+  /// such as result builders.
+  List<String> get initAttributes => [];
 
   /// Value to use for the property in the initializer.
   String initSetterValue(String source) {

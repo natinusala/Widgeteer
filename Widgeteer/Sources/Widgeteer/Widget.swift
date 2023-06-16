@@ -37,7 +37,7 @@ public protocol OptionalSingleWidget {
 
 /// A widget that's reduced to a single Flutter widget.
 /// ``Dart_Null`` is NOT allowed as a return value.
-public protocol SingleWidget: OptionalSingleWidget {}
+public protocol SingleWidget: OptionalSingleWidget, MultiWidget {}
 
 /// A widget that's reduced to multiple Flutter widgets.
 public protocol MultiWidget: IsPodable {

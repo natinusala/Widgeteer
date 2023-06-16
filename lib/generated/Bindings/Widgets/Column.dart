@@ -18,8 +18,8 @@ Object newColumnImpl(Pointer<Char> key, handles_list children) {
     // 🍞 bin/widgeteer/bindings/widget_key.dart:43
     final keyString = key.cast<Utf8>().toDartString();
     final keyValue = ValueKey(keyString);
-    // 🍞 bin/widgeteer/bindings/widget.dart:528
-    final childrenValue = consumeHandlesList(children) as List<Widget>;
+    // 🍞 bin/widgeteer/bindings/widget.dart:539
+    final childrenValue = consumeHandlesList<Widget>(children);
     
     return Column(key: keyValue, children: childrenValue);
 }

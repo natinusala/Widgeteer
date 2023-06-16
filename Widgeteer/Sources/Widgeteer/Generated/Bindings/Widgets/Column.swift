@@ -4,17 +4,17 @@
 // 🍞 bin/widgeteer/bindings/widget.dart:156
 // 🍞 bin/widgeteer/bindings/widget.dart:238
 public struct Column<Children: MultiWidget>: BuiltinWidget {
-    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:160
+    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:165
     let children: Children
 
-    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:173
-    public init(_ children: Children) {
-        self.children = children
+    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:178
+    public init(@MultiWidgetBuilder _ children: () -> Children) {
+        self.children = children()
     }
 
     // 🍞 bin/widgeteer/bindings/widget.dart:261
     public func reduce(parentKey: WidgetKey) -> ReducedWidget {
-        // 🍞 bin/widgeteer/bindings/widget.dart:547
+        // 🍞 bin/widgeteer/bindings/widget.dart:558
         let childrenList = HandlesList(handles: self.children.reduce(parentKey: parentKey.joined("children")).map(\.handle))
         let childrenUnmanaged = Unmanaged<HandlesList>.passRetained(childrenList)
         let childrenValue = childrenUnmanaged.toOpaque()
@@ -23,7 +23,7 @@ public struct Column<Children: MultiWidget>: BuiltinWidget {
             childrenValue
         )
         let reducedWidget = ReducedWidget(handle: localHandle)
-        // 🍞 bin/widgeteer/bindings/widget.dart:556
+        // 🍞 bin/widgeteer/bindings/widget.dart:567
         childrenUnmanaged.release()
         return reducedWidget
     }

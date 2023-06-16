@@ -516,6 +516,17 @@ class MultiSwiftWidgetContent extends SwiftType {
   @override
   String get name =>
       type.swiftGenericParameter; // should already conform to `MultiWidget`
+
+  @override
+  String get initType => "() -> Children";
+
+  @override
+  List<String> get initAttributes => ["@MultiWidgetBuilder"];
+
+  @override
+  String initSetterValue(String source) {
+    return "$source()";
+  }
 }
 
 class MultiDartWidgetContent extends DartType {
@@ -527,7 +538,7 @@ class MultiDartWidgetContent extends DartType {
   CodeUnit fromCValue(String sourceFfiValue, String variableName) {
     return CodeUnit(
         content:
-            "final ${variableName}Value = consumeHandlesList($sourceFfiValue) as List<${type.dartClass}>;");
+            "final ${variableName}Value = consumeHandlesList<${type.dartClass}>($sourceFfiValue);");
   }
 
   @override

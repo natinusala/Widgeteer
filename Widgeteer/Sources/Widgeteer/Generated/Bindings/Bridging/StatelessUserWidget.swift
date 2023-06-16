@@ -4,11 +4,11 @@
 // 🍞 bin/widgeteer/bindings/widget.dart:156
 // 🍞 bin/widgeteer/bindings/widget.dart:238
 public struct StatelessUserWidget: BuiltinWidget {
-    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:160
+    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:165
     let proxy: StatelessUserWidgetProxy
     let swiftWidgetName: String
 
-    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:173
+    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:178
     public init(proxy: StatelessUserWidgetProxy, swiftWidgetName: String) {
         self.proxy = proxy
         self.swiftWidgetName = swiftWidgetName

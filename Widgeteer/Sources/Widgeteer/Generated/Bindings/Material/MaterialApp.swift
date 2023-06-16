@@ -4,12 +4,12 @@
 // 🍞 bin/widgeteer/bindings/widget.dart:156
 // 🍞 bin/widgeteer/bindings/widget.dart:238
 public struct MaterialApp<Home: SingleWidget>: BuiltinWidget {
-    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:160
+    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:165
     let title: String
     let theme: ThemeData?
     let home: Home
 
-    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:173
+    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:178
     public init(title: String, theme: ThemeData?, home: () -> Home) {
         self.title = title
         self.theme = theme
@@ -22,7 +22,7 @@ public struct MaterialApp<Home: SingleWidget>: BuiltinWidget {
         let titleValue = self.title
         // 🍞 bin/widgeteer/bindings/persistent_object.dart:219
         let themeValue = self.theme?.handle ?? Dart_Null
-        // 🍞 bin/widgeteer/bindings/widget.dart:608
+        // 🍞 bin/widgeteer/bindings/widget.dart:619
         let homeValue = self.home.reduce(parentKey: parentKey.joined("home")).handle
         let localHandle = Flutter_NewMaterialApp(
             parentKey.joined(String(describing: Self.self)),

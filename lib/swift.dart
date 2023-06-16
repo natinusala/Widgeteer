@@ -100,9 +100,9 @@ void setNullHandle(DynamicLibrary lib) {
   _set_null_handle(nullHandle);
 }
 
-List<Object> consumeHandlesList(handles_list list) {
+List<T> consumeHandlesList<T>(handles_list list) {
   final count = libWidgeteer.handles_list_count(list);
 
-  return List<Object>.generate(
-      count, (idx) => libWidgeteer.handles_list_get(list, idx));
+  return List<T>.generate(
+      count, (idx) => libWidgeteer.handles_list_get(list, idx) as T);
 }
