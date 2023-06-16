@@ -12,29 +12,9 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-[widget]
-location = "package:flutter/widgets.dart"
-
-[[parameter]]
-name = "mainAxisAlignment"
-type = "MainAxisAlignment"
-default = ".start"
-dart_named = true
-
-[[parameter]]
-name = "mainAxisSize"
-type = "MainAxisSize"
-default = ".max"
-dart_named = true
-
-[[parameter]]
-name = "crossAxisAlignment"
-type = "CrossAxisAlignment"
-default = ".center"
-dart_named = true
-
-[[content]]
-name = "children"
-multi = true
-dart_named = true
-body = true
+[enum]
+location = "package:flutter/rendering.dart"
+cases = [
+    "min",
+    "max",
+]

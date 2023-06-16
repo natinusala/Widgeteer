@@ -50,7 +50,11 @@ class LibWidgeteer {
     ffi.Pointer<
             ffi.NativeFunction<
                 ffi.Handle Function(
-                    ffi.Pointer<ffi.Char> key, handles_list children)>>
+                    ffi.Pointer<ffi.Char> key,
+                    ffi.Int mainAxisAlignment,
+                    ffi.Int mainAxisSize,
+                    ffi.Int crossAxisAlignment,
+                    handles_list children)>>
         outlet,
   ) {
     return _register_new_column(
@@ -63,14 +67,22 @@ class LibWidgeteer {
           ffi.Void Function(
               ffi.Pointer<
                   ffi.NativeFunction<
-                      ffi.Handle Function(ffi.Pointer<ffi.Char> key,
+                      ffi.Handle Function(
+                          ffi.Pointer<ffi.Char> key,
+                          ffi.Int mainAxisAlignment,
+                          ffi.Int mainAxisSize,
+                          ffi.Int crossAxisAlignment,
                           handles_list children)>>)>>('register_new_column');
   late final _register_new_column = _register_new_columnPtr.asFunction<
       void Function(
           ffi.Pointer<
               ffi.NativeFunction<
                   ffi.Handle Function(
-                      ffi.Pointer<ffi.Char> key, handles_list children)>>)>();
+                      ffi.Pointer<ffi.Char> key,
+                      ffi.Int mainAxisAlignment,
+                      ffi.Int mainAxisSize,
+                      ffi.Int crossAxisAlignment,
+                      handles_list children)>>)>();
 
   void register_run_app(
     ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Handle app)>> outlet,

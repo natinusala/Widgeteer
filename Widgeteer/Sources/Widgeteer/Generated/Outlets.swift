@@ -20,16 +20,16 @@ public func _registerNewText(_ outlet: _NewText_CFunctionPointer) {
 // MARK: NewColumn
 // Outlet emitted by 'Column' binding (Instance of 'WidgetBinding')
 // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:86
-public typealias _NewColumn_CFunctionPointer = @convention(c) (_ key: UnsafePointer<CChar>?, _ children: UnsafeRawPointer) -> Dart_Handle
-public typealias _NewColumn = (_ key: UnsafePointer<CChar>?, _ children: UnsafeRawPointer) -> Dart_Handle
+public typealias _NewColumn_CFunctionPointer = @convention(c) (_ key: UnsafePointer<CChar>?, _ mainAxisAlignment: Int, _ mainAxisSize: Int, _ crossAxisAlignment: Int, _ children: UnsafeRawPointer) -> Dart_Handle
+public typealias _NewColumn = (_ key: UnsafePointer<CChar>?, _ mainAxisAlignment: Int, _ mainAxisSize: Int, _ crossAxisAlignment: Int, _ children: UnsafeRawPointer) -> Dart_Handle
 
-public var Flutter_NewColumn: _NewColumn = { (_, _) in fatalError("'NewColumn' called before it was registered") }
+public var Flutter_NewColumn: _NewColumn = { (_, _, _, _, _) in fatalError("'NewColumn' called before it was registered") }
 
 @_cdecl("register_new_column")
 public func _registerNewColumn(_ outlet: _NewColumn_CFunctionPointer) {
     assertIsOnFlutterThread()
     trace("Registering 'NewColumn'")
-    Flutter_NewColumn = { (p0, p1) in assertIsOnFlutterThread(); return outlet(p0, p1) }
+    Flutter_NewColumn = { (p0, p1, p2, p3, p4) in assertIsOnFlutterThread(); return outlet(p0, p1, p2, p3, p4) }
 }
 // MARK: RunApp
 // Outlet emitted by 'RunApp' binding (Instance of 'FunctionBinding')
