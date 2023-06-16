@@ -59,6 +59,20 @@ public func _registerNewDirectionality(_ outlet: _NewDirectionality_CFunctionPoi
     trace("Registering 'NewDirectionality'")
     Flutter_NewDirectionality = { (p0, p1, p2) in assertIsOnFlutterThread(); return outlet(p0, p1, p2) }
 }
+// MARK: NewRow
+// Outlet emitted by 'Row' binding (Instance of 'WidgetBinding')
+// 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:86
+public typealias _NewRow_CFunctionPointer = @convention(c) (_ key: UnsafePointer<CChar>?, _ mainAxisAlignment: Int, _ children: UnsafeRawPointer) -> Dart_Handle
+public typealias _NewRow = (_ key: UnsafePointer<CChar>?, _ mainAxisAlignment: Int, _ children: UnsafeRawPointer) -> Dart_Handle
+
+public var Flutter_NewRow: _NewRow = { (_, _, _) in fatalError("'NewRow' called before it was registered") }
+
+@_cdecl("register_new_row")
+public func _registerNewRow(_ outlet: _NewRow_CFunctionPointer) {
+    assertIsOnFlutterThread()
+    trace("Registering 'NewRow'")
+    Flutter_NewRow = { (p0, p1, p2) in assertIsOnFlutterThread(); return outlet(p0, p1, p2) }
+}
 // MARK: NewCenter
 // Outlet emitted by 'Center' binding (Instance of 'WidgetBinding')
 // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:86

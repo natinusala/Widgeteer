@@ -3,18 +3,14 @@
 // === Follow the breadcrumbs to find what code generated what you're reading ===
 // 🍞 bin/widgeteer/bindings/widget.dart:157
 // 🍞 bin/widgeteer/bindings/widget.dart:239
-public struct Column<Children: MultiWidget>: BuiltinWidget {
+public struct Row<Children: MultiWidget>: BuiltinWidget {
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:175
     let mainAxisAlignment: MainAxisAlignment
-    let mainAxisSize: MainAxisSize
-    let crossAxisAlignment: CrossAxisAlignment
     let children: Children
 
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:188
-    public init(mainAxisAlignment: MainAxisAlignment = .start, mainAxisSize: MainAxisSize = .max, crossAxisAlignment: CrossAxisAlignment = .center, @MultiWidgetBuilder _ children: () -> Children) {
+    public init(mainAxisAlignment: MainAxisAlignment = .start, @MultiWidgetBuilder _ children: () -> Children) {
         self.mainAxisAlignment = mainAxisAlignment
-        self.mainAxisSize = mainAxisSize
-        self.crossAxisAlignment = crossAxisAlignment
         self.children = children()
     }
 
@@ -22,19 +18,13 @@ public struct Column<Children: MultiWidget>: BuiltinWidget {
     public func reduce(parentKey: WidgetKey) -> ReducedWidget {
         // 🍞 bin/widgeteer/bindings/enum.dart:119
         let mainAxisAlignmentValue = self.mainAxisAlignment.rawValue
-        // 🍞 bin/widgeteer/bindings/enum.dart:119
-        let mainAxisSizeValue = self.mainAxisSize.rawValue
-        // 🍞 bin/widgeteer/bindings/enum.dart:119
-        let crossAxisAlignmentValue = self.crossAxisAlignment.rawValue
         // 🍞 bin/widgeteer/bindings/widget.dart:560
         let childrenList = HandlesList(handles: self.children.reduce(parentKey: parentKey.joined("children")).map(\.handle))
         let childrenUnmanaged = Unmanaged<HandlesList>.passRetained(childrenList)
         let childrenValue = childrenUnmanaged.toOpaque()
-        let localHandle = Flutter_NewColumn(
+        let localHandle = Flutter_NewRow(
             parentKey.joined(String(describing: Self.self)),
             mainAxisAlignmentValue,
-            mainAxisSizeValue,
-            crossAxisAlignmentValue,
             childrenValue
         )
         let reducedWidget = ReducedWidget(handle: localHandle)

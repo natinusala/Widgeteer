@@ -132,6 +132,34 @@ class LibWidgeteer {
                       ffi.Handle Function(ffi.Pointer<ffi.Char> key,
                           ffi.Int textDirection, ffi.Handle child)>>)>();
 
+  void register_new_row(
+    ffi.Pointer<
+            ffi.NativeFunction<
+                ffi.Handle Function(ffi.Pointer<ffi.Char> key,
+                    ffi.Int mainAxisAlignment, handles_list children)>>
+        outlet,
+  ) {
+    return _register_new_row(
+      outlet,
+    );
+  }
+
+  late final _register_new_rowPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      ffi.Handle Function(
+                          ffi.Pointer<ffi.Char> key,
+                          ffi.Int mainAxisAlignment,
+                          handles_list children)>>)>>('register_new_row');
+  late final _register_new_row = _register_new_rowPtr.asFunction<
+      void Function(
+          ffi.Pointer<
+              ffi.NativeFunction<
+                  ffi.Handle Function(ffi.Pointer<ffi.Char> key,
+                      ffi.Int mainAxisAlignment, handles_list children)>>)>();
+
   void register_new_center(
     ffi.Pointer<
             ffi.NativeFunction<

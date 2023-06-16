@@ -18,19 +18,19 @@ location = "package:flutter/widgets.dart"
 [[parameter]]
 name = "mainAxisAlignment"
 type = "MainAxisAlignment"
-default = ".start"
+default_value = ".start"
 dart_named = true
 
 [[parameter]]
 name = "mainAxisSize"
 type = "MainAxisSize"
-default = ".max"
+default_value = ".max"
 dart_named = true
 
 [[parameter]]
 name = "crossAxisAlignment"
 type = "CrossAxisAlignment"
-default = ".center"
+default_value = ".center"
 dart_named = true
 
 [[content]]

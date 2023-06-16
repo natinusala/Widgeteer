@@ -29,11 +29,16 @@ class Parameter {
   final String type;
   final bool dartNamed;
 
+  /// Default value to use when having this parameter in
+  /// a Swift initializer, making the parameter optional.
+  final String? defaultValue;
+
   Parameter({
     required this.name,
     required this.type,
     required this.swiftLabel,
     required this.dartNamed,
+    required this.defaultValue,
   });
 
   factory Parameter.fromTOML(Map toml) {
@@ -42,6 +47,7 @@ class Parameter {
       swiftLabel: toml["swift_label"],
       type: toml["type"],
       dartNamed: toml["dart_named"] ?? false,
+      defaultValue: toml["default_value"],
     );
   }
 }
@@ -153,6 +159,10 @@ class ParametersList with IterableMixin<Parameter> {
       }
 
       str += "${parameter.name}: ${resolvedType.swiftType.initType}";
+
+      if (parameter.defaultValue != null) {
+        str += " = ${parameter.defaultValue}";
+      }
 
       parameters.add(str);
     }

@@ -12,14 +12,25 @@ import 'package:widgeteer/generated/lib_widgeteer.dart';
 import 'package:widgeteer/swift.dart';
 import 'package:flutter/foundation.dart';
 // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:89
-Object newCenterImpl(Pointer<Char> key, Object child) {
+Object newRowImpl(Pointer<Char> key, int mainAxisAlignment, handles_list children) {
     // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:79
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:111
     // 🍞 bin/widgeteer/bindings/widget_key.dart:43
     final keyString = key.cast<Utf8>().toDartString();
     final keyValue = ValueKey(keyString);
-    // 🍞 bin/widgeteer/bindings/widget.dart:604
-    final childValue = child as Widget;
+    // 🍞 bin/widgeteer/bindings/enum.dart:137
+    late final MainAxisAlignment mainAxisAlignmentValue;
+    switch (mainAxisAlignment) {
+        case 0: mainAxisAlignmentValue = MainAxisAlignment.start; break;
+        case 1: mainAxisAlignmentValue = MainAxisAlignment.end; break;
+        case 2: mainAxisAlignmentValue = MainAxisAlignment.center; break;
+        case 3: mainAxisAlignmentValue = MainAxisAlignment.spaceBetween; break;
+        case 4: mainAxisAlignmentValue = MainAxisAlignment.spaceAround; break;
+        case 5: mainAxisAlignmentValue = MainAxisAlignment.spaceEvenly; break;
+        default: throw "Received invalid index '$mainAxisAlignment' for value of enum 'MainAxisAlignment'";
+    }
+    // 🍞 bin/widgeteer/bindings/widget.dart:541
+    final childrenValue = consumeHandlesList<Widget>(children);
     
-    return Center(key: keyValue, child: childValue);
+    return Row(key: keyValue, mainAxisAlignment: mainAxisAlignmentValue, children: childrenValue);
 }

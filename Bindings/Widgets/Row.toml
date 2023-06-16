@@ -13,20 +13,16 @@
 #   limitations under the License.
 
 [widget]
-location = "package:flutter/material.dart"
+location = "package:flutter/widgets.dart"
 
 [[parameter]]
-name = "title"
-type = "String"
-dart_named = true
-default_value = '""'
-
-[[parameter]]
-name = "theme"
-type = "ThemeData?"
+name = "mainAxisAlignment"
+type = "MainAxisAlignment"
+default_value = ".start"
 dart_named = true
 
 [[content]]
-name = "home"
-multi = false
+name = "children"
+multi = true
 dart_named = true
+body = true

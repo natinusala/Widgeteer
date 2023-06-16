@@ -11,6 +11,8 @@ extern void register_new_column(Dart_Handle (*outlet)(char* key, int mainAxisAli
 extern void register_run_app(void (*outlet)(Dart_Handle app));
 // Outlet emitted by 'Directionality' binding (Instance of 'WidgetBinding')
 extern void register_new_directionality(Dart_Handle (*outlet)(char* key, int textDirection, Dart_Handle child));
+// Outlet emitted by 'Row' binding (Instance of 'WidgetBinding')
+extern void register_new_row(Dart_Handle (*outlet)(char* key, int mainAxisAlignment, widgeteer_handles_list children));
 // Outlet emitted by 'Center' binding (Instance of 'WidgetBinding')
 extern void register_new_center(Dart_Handle (*outlet)(char* key, Dart_Handle child));
 // Outlet emitted by 'MaterialApp' binding (Instance of 'WidgetBinding')

@@ -14,7 +14,7 @@ import 'package:flutter/foundation.dart';
 // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:89
 Object newThemeDataImpl(int primarySwatch) {
     // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:79
-    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:105
+    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:111
     // 🍞 bin/widgeteer/bindings/enum.dart:194
     late final MaterialColor? primarySwatchValue;
     switch (primarySwatch) {
