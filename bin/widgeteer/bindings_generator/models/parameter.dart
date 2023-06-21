@@ -18,7 +18,6 @@ import 'dart:collection';
 
 import 'package:collection/collection.dart';
 
-import '../../bindings/widget.dart';
 import '../code_unit.dart';
 import 'binding.dart';
 
@@ -27,6 +26,7 @@ class Parameter {
   final String? swiftLabel;
   final String name;
   final String type;
+  final String? initType;
   final bool dartNamed;
 
   /// Default value to use when having this parameter in
@@ -39,6 +39,7 @@ class Parameter {
     required this.swiftLabel,
     required this.dartNamed,
     required this.defaultValue,
+    required this.initType,
   });
 
   factory Parameter.fromTOML(Map toml) {
@@ -48,6 +49,7 @@ class Parameter {
       type: toml["type"],
       dartNamed: toml["dart_named"] ?? false,
       defaultValue: toml["default_value"],
+      initType: toml["init_type"],
     );
   }
 }
@@ -146,7 +148,8 @@ class ParametersList with IterableMixin<Parameter> {
     List<String> parameters = [];
 
     for (final parameter in this) {
-      final resolvedType = context.resolveType(parameter.type);
+      final resolvedType =
+          context.resolveType(parameter.initType ?? parameter.type);
 
       var str = "";
 

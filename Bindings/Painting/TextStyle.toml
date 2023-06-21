@@ -15,35 +15,7 @@
 [class]
 location = "package:flutter/material.dart"
 
-[[parameter]]
-name = "primarySwatch"
-type = "MaterialColor?"
-dart_dart_named = true
-
 [[property]]
-name = "textTheme"
-init_type = "TextTheme?"
-type = "TextTheme"
-default_value = "nil"
+name = "color"
+type = "Color?"
 dart_named = true
-
-[[property]]
-name = "scaffoldBackgroundColor"
-type = "Color"
-init_type = "Color?"
-dart_named = true
-default_value = "nil"
-
-[[property]]
-name = "hintColor"
-type = "Color"
-init_type = "Color?"
-dart_named = true
-default_value = "nil"
-
-[[property]]
-name = "primaryTextTheme"
-type = "TextTheme"
-init_type = "TextTheme?"
-dart_named = true
-default_value = "nil"

@@ -19,3 +19,9 @@ location = "package:flutter/widgets.dart"
 swift_label = "_"
 name = "data"
 type = "String"
+
+[[parameter]]
+name = "style"
+type = "TextStyle?"
+dart_named = true
+default_value = "nil"

@@ -3,7 +3,7 @@
 // === Follow the breadcrumbs to find what code generated what you're reading ===
 // 🍞 bin/widgeteer/bindings_generator/bindings_generator.dart:45
 import 'package:widgeteer/generated/Bindings/Callback/VoidCallback.dart';
-// 🍞 bin/widgeteer/bindings/widget.dart:138
+// 🍞 bin/widgeteer/bindings/widget.dart:139
 // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:57
 import 'package:flutter/widgets.dart';
 import 'dart:ffi';
@@ -12,14 +12,16 @@ import 'package:widgeteer/generated/lib_widgeteer.dart';
 import 'package:widgeteer/swift.dart';
 import 'package:flutter/foundation.dart';
 // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:89
-Object newTextImpl(Pointer<Char> key, Pointer<Char> data) {
+Object newTextImpl(Pointer<Char> key, Pointer<Char> data, Object? style) {
     // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:79
-    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:111
+    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:113
     // 🍞 bin/widgeteer/bindings/widget_key.dart:43
     final keyString = key.cast<Utf8>().toDartString();
     final keyValue = ValueKey(keyString);
     // 🍞 bin/widgeteer/bindings/string.dart:56
     final dataValue = data.cast<Utf8>().toDartString();
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:293
+    final styleValue = style as TextStyle?;
     
-    return Text(key: keyValue, dataValue);
+    return Text(key: keyValue, dataValue, style: styleValue);
 }

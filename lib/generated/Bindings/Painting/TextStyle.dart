@@ -3,23 +3,22 @@
 // === Follow the breadcrumbs to find what code generated what you're reading ===
 // 🍞 bin/widgeteer/bindings_generator/bindings_generator.dart:45
 import 'package:widgeteer/generated/Bindings/Callback/VoidCallback.dart';
-// 🍞 bin/widgeteer/bindings/widget.dart:139
+// 🍞 bin/widgeteer/bindings/persistent_object.dart:166
 // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:57
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
 import 'package:widgeteer/generated/lib_widgeteer.dart';
 import 'package:widgeteer/swift.dart';
 import 'package:flutter/foundation.dart';
 // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:89
-Object newCenterImpl(Pointer<Char> key, Object child) {
+Object newTextStyleImpl(int color) {
     // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:79
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:113
-    // 🍞 bin/widgeteer/bindings/widget_key.dart:43
-    final keyString = key.cast<Utf8>().toDartString();
-    final keyValue = ValueKey(keyString);
-    // 🍞 bin/widgeteer/bindings/widget.dart:606
-    final childValue = child as Widget;
+    // 🍞 bin/widgeteer/bindings/color.dart:55
+    late final Color? colorValue;
+    if (color == -1) { colorValue = null; }
+    else { colorValue = Color(color); }
     
-    return Center(key: keyValue, child: childValue);
+    return TextStyle(color: colorValue);
 }

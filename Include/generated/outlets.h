@@ -4,7 +4,7 @@
 #import "../types.h"
 
 // Outlet emitted by 'Text' binding (Instance of 'WidgetBinding')
-extern void register_new_text(Dart_Handle (*outlet)(char* key, char* data));
+extern void register_new_text(Dart_Handle (*outlet)(char* key, char* data, Dart_PersistentHandle style));
 // Outlet emitted by 'Column' binding (Instance of 'WidgetBinding')
 extern void register_new_column(Dart_Handle (*outlet)(char* key, int mainAxisAlignment, int mainAxisSize, int crossAxisAlignment, widgeteer_handles_list children));
 // Outlet emitted by 'RunApp' binding (Instance of 'FunctionBinding')
@@ -17,11 +17,17 @@ extern void register_new_row(Dart_Handle (*outlet)(char* key, int mainAxisAlignm
 extern void register_new_center(Dart_Handle (*outlet)(char* key, Dart_Handle child));
 // Outlet emitted by 'MaterialApp' binding (Instance of 'WidgetBinding')
 extern void register_new_material_app(Dart_Handle (*outlet)(char* key, char* title, Dart_PersistentHandle theme, Dart_Handle home));
+// Outlet emitted by 'ThemeOf' binding (Instance of 'FunctionBinding')
+extern void register_theme_of(Dart_PersistentHandle (*outlet)(Dart_Handle buildContext));
+// Outlet emitted by 'TextTheme' binding (Instance of 'PersistentObjectBinding')
+extern void register_new_text_theme(Dart_Handle (*outlet)(Dart_PersistentHandle headlineLarge, Dart_PersistentHandle headlineMedium, Dart_PersistentHandle headlineSmall, Dart_PersistentHandle titleLarge, Dart_PersistentHandle titleMedium, Dart_PersistentHandle titleSmall, Dart_PersistentHandle labelLarge, Dart_PersistentHandle labelMedium, Dart_PersistentHandle labelSmall, Dart_PersistentHandle bodyLarge, Dart_PersistentHandle bodyMedium, Dart_PersistentHandle bodySmall));
 // Outlet emitted by 'ThemeData' binding (Instance of 'PersistentObjectBinding')
-extern void register_new_theme_data(Dart_Handle (*outlet)(int primarySwatch));
+extern void register_new_theme_data(Dart_Handle (*outlet)(int primarySwatch, Dart_PersistentHandle textTheme, int scaffoldBackgroundColor, int hintColor, Dart_PersistentHandle primaryTextTheme));
 // Outlet emitted by 'TextButton' binding (Instance of 'WidgetBinding')
 extern void register_new_text_button(Dart_Handle (*outlet)(char* key, void* onPressed, Dart_Handle child));
 // Outlet emitted by 'AppBar' binding (Instance of 'WidgetBinding')
 extern void register_new_app_bar(Dart_Handle (*outlet)(char* key, Dart_Handle title));
+// Outlet emitted by 'TextStyle' binding (Instance of 'PersistentObjectBinding')
+extern void register_new_text_style(Dart_Handle (*outlet)(int color));
 // Outlet emitted by 'StatelessUserWidget' binding (Instance of 'WidgetBinding')
 extern void register_new_stateless_user_widget(Dart_Handle (*outlet)(char* key, widgeteer_stateless_user_widget_proxy proxy, char* swiftWidgetName));

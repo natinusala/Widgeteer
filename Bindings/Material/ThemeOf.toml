@@ -12,38 +12,10 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-[class]
-location = "package:flutter/material.dart"
+[function]
+location = "package:widgeteer/functions/theme_of.dart"
+return_type = "ThemeData"
 
 [[parameter]]
-name = "primarySwatch"
-type = "MaterialColor?"
-dart_dart_named = true
-
-[[property]]
-name = "textTheme"
-init_type = "TextTheme?"
-type = "TextTheme"
-default_value = "nil"
-dart_named = true
-
-[[property]]
-name = "scaffoldBackgroundColor"
-type = "Color"
-init_type = "Color?"
-dart_named = true
-default_value = "nil"
-
-[[property]]
-name = "hintColor"
-type = "Color"
-init_type = "Color?"
-dart_named = true
-default_value = "nil"
-
-[[property]]
-name = "primaryTextTheme"
-type = "TextTheme"
-init_type = "TextTheme?"
-dart_named = true
-default_value = "nil"
+name = "buildContext"
+type = "BuildContext"

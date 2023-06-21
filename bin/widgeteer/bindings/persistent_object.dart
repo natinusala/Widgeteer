@@ -104,6 +104,16 @@ class PersistentObjectBinding extends Binding {
         indentedBy: 4);
     initializer.appendLine("}");
 
+    initializer.appendEmptyLine();
+    initializer
+        .appendLine("public init(persisting localHandle: Dart_Handle) {");
+
+    initializer.appendLine(
+        "self.handle = Dart_NewPersistentHandle_DL(localHandle)!",
+        indentedBy: 4);
+
+    initializer.appendLine("}");
+
     return initializer;
   }
 
@@ -167,16 +177,60 @@ class PersistentObjectType extends BoundType {
   PersistentObjectType(this.binding);
 
   @override
-  CType get cType => throw UnimplementedError();
+  CType get cType => CPersistentObject(this);
 
   @override
-  DartType get dartType => throw UnimplementedError();
+  DartType get dartType => DartPersistentObject(this);
 
   @override
   String get name => binding.className;
 
   @override
-  SwiftType get swiftType => throw UnimplementedError();
+  SwiftType get swiftType => SwiftPersistentObject(this);
+}
+
+class SwiftPersistentObject extends SwiftType {
+  final PersistentObjectType type;
+
+  SwiftPersistentObject(this.type);
+
+  @override
+  String get name => type.name;
+}
+
+class DartPersistentObject extends DartType {
+  final PersistentObjectType type;
+
+  DartPersistentObject(this.type);
+
+  @override
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+    return CodeUnit(
+        content: "final ${variableName}Value = $sourceFfiValue as $name;");
+  }
+
+  @override
+  String get name => type.name;
+}
+
+class CPersistentObject extends CType {
+  final PersistentObjectType type;
+
+  CPersistentObject(this.type);
+
+  @override
+  String get dartFfiMapping => "Object";
+
+  @override
+  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+    return CodeUnit(content: "let ${variableName}Value = $sourceValue.handle");
+  }
+
+  @override
+  String get name => "Dart_PersistentHandle";
+
+  @override
+  String get swiftCInteropMapping => "Dart_PersistentHandle";
 }
 
 class OptionalPersistentObjectType extends BoundType {

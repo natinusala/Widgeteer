@@ -122,27 +122,30 @@ class Outlet {
 
     // Translate all properties from Swift to C
     for (final property in parameters) {
-      final resolvedType = context.resolveType(property.type);
+      final resolvedType =
+          context.resolveType(property.initType ?? property.type);
 
       call.appendUnit(
           resolvedType.cType.fromSwiftValue(property.name, property.name));
 
-      // Call
-      call.appendLine("let $destination = $swiftFunctionName(");
-      call.appendLines(
-          parameters
-              .map((element) => "${element.name}Value")
-              .join(",\n")
-              .split("\n"),
-          indentedBy: 4);
-      call.appendLine(")");
-
       final cleanup = resolvedType.cType
           .fromSwiftValueCleanup(property.name, property.name);
       if (cleanup != null) {
-        call.appendUnit(cleanup);
+        call.appendLine("defer {");
+        call.appendUnit(cleanup, indentedBy: 4);
+        call.appendLine("}");
       }
     }
+
+    // Call
+    call.appendLine("let $destination = $swiftFunctionName(");
+    call.appendLines(
+        parameters
+            .map((element) => "${element.name}Value")
+            .join(",\n")
+            .split("\n"),
+        indentedBy: 4);
+    call.appendLine(")");
 
     return call;
   }

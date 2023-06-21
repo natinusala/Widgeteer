@@ -6,16 +6,16 @@ import DartApiDl
 // MARK: NewText
 // Outlet emitted by 'Text' binding (Instance of 'WidgetBinding')
 // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:86
-public typealias _NewText_CFunctionPointer = @convention(c) (_ key: UnsafePointer<CChar>?, _ data: UnsafePointer<CChar>?) -> Dart_Handle
-public typealias _NewText = (_ key: UnsafePointer<CChar>?, _ data: UnsafePointer<CChar>?) -> Dart_Handle
+public typealias _NewText_CFunctionPointer = @convention(c) (_ key: UnsafePointer<CChar>?, _ data: UnsafePointer<CChar>?, _ style: Dart_PersistentHandle) -> Dart_Handle
+public typealias _NewText = (_ key: UnsafePointer<CChar>?, _ data: UnsafePointer<CChar>?, _ style: Dart_PersistentHandle) -> Dart_Handle
 
-public var Flutter_NewText: _NewText = { (_, _) in fatalError("'NewText' called before it was registered") }
+public var Flutter_NewText: _NewText = { (_, _, _) in fatalError("'NewText' called before it was registered") }
 
 @_cdecl("register_new_text")
 public func _registerNewText(_ outlet: _NewText_CFunctionPointer) {
     assertIsOnFlutterThread()
     trace("Registering 'NewText'")
-    Flutter_NewText = { (p0, p1) in assertIsOnFlutterThread(); return outlet(p0, p1) }
+    Flutter_NewText = { (p0, p1, p2) in assertIsOnFlutterThread(); return outlet(p0, p1, p2) }
 }
 // MARK: NewColumn
 // Outlet emitted by 'Column' binding (Instance of 'WidgetBinding')
@@ -101,19 +101,47 @@ public func _registerNewMaterialApp(_ outlet: _NewMaterialApp_CFunctionPointer) 
     trace("Registering 'NewMaterialApp'")
     Flutter_NewMaterialApp = { (p0, p1, p2, p3) in assertIsOnFlutterThread(); return outlet(p0, p1, p2, p3) }
 }
+// MARK: ThemeOf
+// Outlet emitted by 'ThemeOf' binding (Instance of 'FunctionBinding')
+// 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:86
+public typealias _ThemeOf_CFunctionPointer = @convention(c) (_ buildContext: Dart_Handle) -> Dart_PersistentHandle
+public typealias _ThemeOf = (_ buildContext: Dart_Handle) -> Dart_PersistentHandle
+
+public var Flutter_ThemeOf: _ThemeOf = { (_) in fatalError("'ThemeOf' called before it was registered") }
+
+@_cdecl("register_theme_of")
+public func _registerThemeOf(_ outlet: _ThemeOf_CFunctionPointer) {
+    assertIsOnFlutterThread()
+    trace("Registering 'ThemeOf'")
+    Flutter_ThemeOf = { (p0) in assertIsOnFlutterThread(); return outlet(p0) }
+}
+// MARK: NewTextTheme
+// Outlet emitted by 'TextTheme' binding (Instance of 'PersistentObjectBinding')
+// 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:86
+public typealias _NewTextTheme_CFunctionPointer = @convention(c) (_ headlineLarge: Dart_PersistentHandle, _ headlineMedium: Dart_PersistentHandle, _ headlineSmall: Dart_PersistentHandle, _ titleLarge: Dart_PersistentHandle, _ titleMedium: Dart_PersistentHandle, _ titleSmall: Dart_PersistentHandle, _ labelLarge: Dart_PersistentHandle, _ labelMedium: Dart_PersistentHandle, _ labelSmall: Dart_PersistentHandle, _ bodyLarge: Dart_PersistentHandle, _ bodyMedium: Dart_PersistentHandle, _ bodySmall: Dart_PersistentHandle) -> Dart_Handle
+public typealias _NewTextTheme = (_ headlineLarge: Dart_PersistentHandle, _ headlineMedium: Dart_PersistentHandle, _ headlineSmall: Dart_PersistentHandle, _ titleLarge: Dart_PersistentHandle, _ titleMedium: Dart_PersistentHandle, _ titleSmall: Dart_PersistentHandle, _ labelLarge: Dart_PersistentHandle, _ labelMedium: Dart_PersistentHandle, _ labelSmall: Dart_PersistentHandle, _ bodyLarge: Dart_PersistentHandle, _ bodyMedium: Dart_PersistentHandle, _ bodySmall: Dart_PersistentHandle) -> Dart_Handle
+
+public var Flutter_NewTextTheme: _NewTextTheme = { (_, _, _, _, _, _, _, _, _, _, _, _) in fatalError("'NewTextTheme' called before it was registered") }
+
+@_cdecl("register_new_text_theme")
+public func _registerNewTextTheme(_ outlet: _NewTextTheme_CFunctionPointer) {
+    assertIsOnFlutterThread()
+    trace("Registering 'NewTextTheme'")
+    Flutter_NewTextTheme = { (p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11) in assertIsOnFlutterThread(); return outlet(p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11) }
+}
 // MARK: NewThemeData
 // Outlet emitted by 'ThemeData' binding (Instance of 'PersistentObjectBinding')
 // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:86
-public typealias _NewThemeData_CFunctionPointer = @convention(c) (_ primarySwatch: Int) -> Dart_Handle
-public typealias _NewThemeData = (_ primarySwatch: Int) -> Dart_Handle
+public typealias _NewThemeData_CFunctionPointer = @convention(c) (_ primarySwatch: Int, _ textTheme: Dart_PersistentHandle, _ scaffoldBackgroundColor: Int, _ hintColor: Int, _ primaryTextTheme: Dart_PersistentHandle) -> Dart_Handle
+public typealias _NewThemeData = (_ primarySwatch: Int, _ textTheme: Dart_PersistentHandle, _ scaffoldBackgroundColor: Int, _ hintColor: Int, _ primaryTextTheme: Dart_PersistentHandle) -> Dart_Handle
 
-public var Flutter_NewThemeData: _NewThemeData = { (_) in fatalError("'NewThemeData' called before it was registered") }
+public var Flutter_NewThemeData: _NewThemeData = { (_, _, _, _, _) in fatalError("'NewThemeData' called before it was registered") }
 
 @_cdecl("register_new_theme_data")
 public func _registerNewThemeData(_ outlet: _NewThemeData_CFunctionPointer) {
     assertIsOnFlutterThread()
     trace("Registering 'NewThemeData'")
-    Flutter_NewThemeData = { (p0) in assertIsOnFlutterThread(); return outlet(p0) }
+    Flutter_NewThemeData = { (p0, p1, p2, p3, p4) in assertIsOnFlutterThread(); return outlet(p0, p1, p2, p3, p4) }
 }
 // MARK: NewTextButton
 // Outlet emitted by 'TextButton' binding (Instance of 'WidgetBinding')
@@ -142,6 +170,20 @@ public func _registerNewAppBar(_ outlet: _NewAppBar_CFunctionPointer) {
     assertIsOnFlutterThread()
     trace("Registering 'NewAppBar'")
     Flutter_NewAppBar = { (p0, p1) in assertIsOnFlutterThread(); return outlet(p0, p1) }
+}
+// MARK: NewTextStyle
+// Outlet emitted by 'TextStyle' binding (Instance of 'PersistentObjectBinding')
+// 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:86
+public typealias _NewTextStyle_CFunctionPointer = @convention(c) (_ color: Int) -> Dart_Handle
+public typealias _NewTextStyle = (_ color: Int) -> Dart_Handle
+
+public var Flutter_NewTextStyle: _NewTextStyle = { (_) in fatalError("'NewTextStyle' called before it was registered") }
+
+@_cdecl("register_new_text_style")
+public func _registerNewTextStyle(_ outlet: _NewTextStyle_CFunctionPointer) {
+    assertIsOnFlutterThread()
+    trace("Registering 'NewTextStyle'")
+    Flutter_NewTextStyle = { (p0) in assertIsOnFlutterThread(); return outlet(p0) }
 }
 // MARK: NewStatelessUserWidget
 // Outlet emitted by 'StatelessUserWidget' binding (Instance of 'WidgetBinding')

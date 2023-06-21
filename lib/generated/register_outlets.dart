@@ -12,9 +12,12 @@ import 'package:widgeteer/generated/Bindings/Widgets/Directionality.dart';
 import 'package:widgeteer/generated/Bindings/Widgets/Row.dart';
 import 'package:widgeteer/generated/Bindings/Widgets/Center.dart';
 import 'package:widgeteer/generated/Bindings/Material/MaterialApp.dart';
+import 'package:widgeteer/generated/Bindings/Material/ThemeOf.dart';
+import 'package:widgeteer/generated/Bindings/Material/TextTheme.dart';
 import 'package:widgeteer/generated/Bindings/Material/ThemeData.dart';
 import 'package:widgeteer/generated/Bindings/Material/TextButton.dart';
 import 'package:widgeteer/generated/Bindings/Material/AppBar.dart';
+import 'package:widgeteer/generated/Bindings/Painting/TextStyle.dart';
 import 'package:widgeteer/generated/Bindings/Bridging/StatelessUserWidget.dart';
 import 'package:widgeteer/generated/Bindings/Callback/VoidCallback.dart';
 
@@ -40,6 +43,12 @@ void registerOutlets(LibWidgeteer widgeteer) {
     // Outlet emitted by 'MaterialApp' binding (Instance of 'WidgetBinding')
     // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
     widgeteer.register_new_material_app(Pointer.fromFunction(newMaterialAppImpl));
+    // Outlet emitted by 'ThemeOf' binding (Instance of 'FunctionBinding')
+    // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
+    widgeteer.register_theme_of(Pointer.fromFunction(ThemeOfImpl));
+    // Outlet emitted by 'TextTheme' binding (Instance of 'PersistentObjectBinding')
+    // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
+    widgeteer.register_new_text_theme(Pointer.fromFunction(newTextThemeImpl));
     // Outlet emitted by 'ThemeData' binding (Instance of 'PersistentObjectBinding')
     // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
     widgeteer.register_new_theme_data(Pointer.fromFunction(newThemeDataImpl));
@@ -49,6 +58,9 @@ void registerOutlets(LibWidgeteer widgeteer) {
     // Outlet emitted by 'AppBar' binding (Instance of 'WidgetBinding')
     // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
     widgeteer.register_new_app_bar(Pointer.fromFunction(newAppBarImpl));
+    // Outlet emitted by 'TextStyle' binding (Instance of 'PersistentObjectBinding')
+    // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
+    widgeteer.register_new_text_style(Pointer.fromFunction(newTextStyleImpl));
     // Outlet emitted by 'StatelessUserWidget' binding (Instance of 'WidgetBinding')
     // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
     widgeteer.register_new_stateless_user_widget(Pointer.fromFunction(newStatelessUserWidgetImpl));

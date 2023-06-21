@@ -5,31 +5,19 @@
 import DartApiDl
 
 // 🍞 bin/widgeteer/bindings/persistent_object.dart:133
-public class ThemeData {
+public class TextStyle {
     /// Persistent handle to the Dart object.
     let handle: Dart_PersistentHandle
 
     // 🍞 bin/widgeteer/bindings/persistent_object.dart:96
-    public init(primarySwatch: MaterialColor?, textTheme: TextTheme? = nil, scaffoldBackgroundColor: Color? = nil, hintColor: Color? = nil, primaryTextTheme: TextTheme? = nil) {
+    public init(color: Color?) {
         // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:118
         assertIsOnFlutterThread()
         
-        // 🍞 bin/widgeteer/bindings/enum.dart:230
-        let primarySwatchValue = primarySwatch?.rawValue ?? -1
-        // 🍞 bin/widgeteer/bindings/persistent_object.dart:273
-        let textThemeValue = textTheme?.handle ?? Dart_Null
         // 🍞 bin/widgeteer/bindings/color.dart:72
-        let scaffoldBackgroundColorValue = scaffoldBackgroundColor?.value ?? -1
-        // 🍞 bin/widgeteer/bindings/color.dart:72
-        let hintColorValue = hintColor?.value ?? -1
-        // 🍞 bin/widgeteer/bindings/persistent_object.dart:273
-        let primaryTextThemeValue = primaryTextTheme?.handle ?? Dart_Null
-        let localHandle = Flutter_NewThemeData(
-            primarySwatchValue,
-            textThemeValue,
-            scaffoldBackgroundColorValue,
-            hintColorValue,
-            primaryTextThemeValue
+        let colorValue = color?.value ?? -1
+        let localHandle = Flutter_NewTextStyle(
+            colorValue
         )
         self.handle = Dart_NewPersistentHandle_DL(localHandle)!
     }

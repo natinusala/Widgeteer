@@ -3,23 +3,20 @@
 // === Follow the breadcrumbs to find what code generated what you're reading ===
 // 🍞 bin/widgeteer/bindings_generator/bindings_generator.dart:45
 import 'package:widgeteer/generated/Bindings/Callback/VoidCallback.dart';
-// 🍞 bin/widgeteer/bindings/widget.dart:139
+// 🍞 bin/widgeteer/bindings/function.dart:80
 // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:57
-import 'package:flutter/widgets.dart';
+import 'package:widgeteer/functions/theme_of.dart';
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
 import 'package:widgeteer/generated/lib_widgeteer.dart';
 import 'package:widgeteer/swift.dart';
 import 'package:flutter/foundation.dart';
 // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:89
-Object newCenterImpl(Pointer<Char> key, Object child) {
+Object ThemeOfImpl(Object buildContext) {
     // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:79
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:113
-    // 🍞 bin/widgeteer/bindings/widget_key.dart:43
-    final keyString = key.cast<Utf8>().toDartString();
-    final keyValue = ValueKey(keyString);
-    // 🍞 bin/widgeteer/bindings/widget.dart:606
-    final childValue = child as Widget;
+    // 🍞 bin/widgeteer/bindings/bridging.dart:118
+    final buildContextValue = buildContext as BuildContext;
     
-    return Center(key: keyValue, child: childValue);
+    return ThemeOf(buildContextValue);
 }

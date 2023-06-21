@@ -3,7 +3,7 @@
 // === Follow the breadcrumbs to find what code generated what you're reading ===
 // 🍞 bin/widgeteer/bindings_generator/bindings_generator.dart:45
 import 'package:widgeteer/generated/Bindings/Callback/VoidCallback.dart';
-// 🍞 bin/widgeteer/bindings/widget.dart:138
+// 🍞 bin/widgeteer/bindings/widget.dart:139
 // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:57
 import 'package:flutter/widgets.dart';
 import 'dart:ffi';
@@ -14,7 +14,7 @@ import 'package:flutter/foundation.dart';
 // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:89
 Object newRowImpl(Pointer<Char> key, int mainAxisAlignment, handles_list children) {
     // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:79
-    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:111
+    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:113
     // 🍞 bin/widgeteer/bindings/widget_key.dart:43
     final keyString = key.cast<Utf8>().toDartString();
     final keyValue = ValueKey(keyString);
@@ -29,7 +29,7 @@ Object newRowImpl(Pointer<Char> key, int mainAxisAlignment, handles_list childre
         case 5: mainAxisAlignmentValue = MainAxisAlignment.spaceEvenly; break;
         default: throw "Received invalid index '$mainAxisAlignment' for value of enum 'MainAxisAlignment'";
     }
-    // 🍞 bin/widgeteer/bindings/widget.dart:541
+    // 🍞 bin/widgeteer/bindings/widget.dart:543
     final childrenValue = consumeHandlesList<Widget>(children);
     
     return Row(key: keyValue, mainAxisAlignment: mainAxisAlignmentValue, children: childrenValue);

@@ -82,6 +82,7 @@ class WidgetBinding extends Binding {
           swiftLabel: null,
           dartNamed: true,
           defaultValue: null,
+          initType: null,
         ));
 
     // Parse content
@@ -506,6 +507,7 @@ class WidgetContentType extends BoundType {
       swiftLabel: body ? "_" : null,
       dartNamed: dartNamed,
       defaultValue: null,
+      initType: null,
     );
   }
 }

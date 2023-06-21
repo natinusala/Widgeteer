@@ -15,35 +15,62 @@
 [class]
 location = "package:flutter/material.dart"
 
-[[parameter]]
-name = "primarySwatch"
-type = "MaterialColor?"
-dart_dart_named = true
-
 [[property]]
-name = "textTheme"
-init_type = "TextTheme?"
-type = "TextTheme"
-default_value = "nil"
+name = "headlineLarge"
+type = "TextStyle?"
 dart_named = true
 
 [[property]]
-name = "scaffoldBackgroundColor"
-type = "Color"
-init_type = "Color?"
+name = "headlineMedium"
+type = "TextStyle?"
 dart_named = true
-default_value = "nil"
 
 [[property]]
-name = "hintColor"
-type = "Color"
-init_type = "Color?"
+name = "headlineSmall"
+type = "TextStyle?"
 dart_named = true
-default_value = "nil"
 
 [[property]]
-name = "primaryTextTheme"
-type = "TextTheme"
-init_type = "TextTheme?"
+name = "titleLarge"
+type = "TextStyle?"
 dart_named = true
-default_value = "nil"
+
+[[property]]
+name = "titleMedium"
+type = "TextStyle?"
+dart_named = true
+
+[[property]]
+name = "titleSmall"
+type = "TextStyle?"
+dart_named = true
+
+[[property]]
+name = "labelLarge"
+type = "TextStyle?"
+dart_named = true
+
+[[property]]
+name = "labelMedium"
+type = "TextStyle?"
+dart_named = true
+
+[[property]]
+name = "labelSmall"
+type = "TextStyle?"
+dart_named = true
+
+[[property]]
+name = "bodyLarge"
+type = "TextStyle?"
+dart_named = true
+
+[[property]]
+name = "bodyMedium"
+type = "TextStyle?"
+dart_named = true
+
+[[property]]
+name = "bodySmall"
+type = "TextStyle?"
+dart_named = true

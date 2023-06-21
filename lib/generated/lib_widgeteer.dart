@@ -23,8 +23,8 @@ class LibWidgeteer {
   void register_new_text(
     ffi.Pointer<
             ffi.NativeFunction<
-                ffi.Handle Function(
-                    ffi.Pointer<ffi.Char> key, ffi.Pointer<ffi.Char> data)>>
+                ffi.Handle Function(ffi.Pointer<ffi.Char> key,
+                    ffi.Pointer<ffi.Char> data, ffi.Handle style)>>
         outlet,
   ) {
     return _register_new_text(
@@ -37,14 +37,16 @@ class LibWidgeteer {
           ffi.Void Function(
               ffi.Pointer<
                   ffi.NativeFunction<
-                      ffi.Handle Function(ffi.Pointer<ffi.Char> key,
-                          ffi.Pointer<ffi.Char> data)>>)>>('register_new_text');
+                      ffi.Handle Function(
+                          ffi.Pointer<ffi.Char> key,
+                          ffi.Pointer<ffi.Char> data,
+                          ffi.Handle style)>>)>>('register_new_text');
   late final _register_new_text = _register_new_textPtr.asFunction<
       void Function(
           ffi.Pointer<
               ffi.NativeFunction<
                   ffi.Handle Function(ffi.Pointer<ffi.Char> key,
-                      ffi.Pointer<ffi.Char> data)>>)>();
+                      ffi.Pointer<ffi.Char> data, ffi.Handle style)>>)>();
 
   void register_new_column(
     ffi.Pointer<
@@ -222,8 +224,97 @@ class LibWidgeteer {
                           ffi.Handle theme,
                           ffi.Handle home)>>)>();
 
+  void register_theme_of(
+    ffi.Pointer<
+            ffi.NativeFunction<ffi.Handle Function(ffi.Handle buildContext)>>
+        outlet,
+  ) {
+    return _register_theme_of(
+      outlet,
+    );
+  }
+
+  late final _register_theme_ofPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      ffi.Handle Function(
+                          ffi.Handle buildContext)>>)>>('register_theme_of');
+  late final _register_theme_of = _register_theme_ofPtr.asFunction<
+      void Function(
+          ffi.Pointer<
+              ffi.NativeFunction<
+                  ffi.Handle Function(ffi.Handle buildContext)>>)>();
+
+  void register_new_text_theme(
+    ffi.Pointer<
+            ffi.NativeFunction<
+                ffi.Handle Function(
+                    ffi.Handle headlineLarge,
+                    ffi.Handle headlineMedium,
+                    ffi.Handle headlineSmall,
+                    ffi.Handle titleLarge,
+                    ffi.Handle titleMedium,
+                    ffi.Handle titleSmall,
+                    ffi.Handle labelLarge,
+                    ffi.Handle labelMedium,
+                    ffi.Handle labelSmall,
+                    ffi.Handle bodyLarge,
+                    ffi.Handle bodyMedium,
+                    ffi.Handle bodySmall)>>
+        outlet,
+  ) {
+    return _register_new_text_theme(
+      outlet,
+    );
+  }
+
+  late final _register_new_text_themePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      ffi.Handle Function(
+                          ffi.Handle headlineLarge,
+                          ffi.Handle headlineMedium,
+                          ffi.Handle headlineSmall,
+                          ffi.Handle titleLarge,
+                          ffi.Handle titleMedium,
+                          ffi.Handle titleSmall,
+                          ffi.Handle labelLarge,
+                          ffi.Handle labelMedium,
+                          ffi.Handle labelSmall,
+                          ffi.Handle bodyLarge,
+                          ffi.Handle bodyMedium,
+                          ffi.Handle bodySmall)>>)>>('register_new_text_theme');
+  late final _register_new_text_theme = _register_new_text_themePtr.asFunction<
+      void Function(
+          ffi.Pointer<
+              ffi.NativeFunction<
+                  ffi.Handle Function(
+                      ffi.Handle headlineLarge,
+                      ffi.Handle headlineMedium,
+                      ffi.Handle headlineSmall,
+                      ffi.Handle titleLarge,
+                      ffi.Handle titleMedium,
+                      ffi.Handle titleSmall,
+                      ffi.Handle labelLarge,
+                      ffi.Handle labelMedium,
+                      ffi.Handle labelSmall,
+                      ffi.Handle bodyLarge,
+                      ffi.Handle bodyMedium,
+                      ffi.Handle bodySmall)>>)>();
+
   void register_new_theme_data(
-    ffi.Pointer<ffi.NativeFunction<ffi.Handle Function(ffi.Int primarySwatch)>>
+    ffi.Pointer<
+            ffi.NativeFunction<
+                ffi.Handle Function(
+                    ffi.Int primarySwatch,
+                    ffi.Handle textTheme,
+                    ffi.Int scaffoldBackgroundColor,
+                    ffi.Int hintColor,
+                    ffi.Handle primaryTextTheme)>>
         outlet,
   ) {
     return _register_new_theme_data(
@@ -236,13 +327,23 @@ class LibWidgeteer {
               ffi.Void Function(
                   ffi.Pointer<
                       ffi.NativeFunction<
-                          ffi.Handle Function(ffi.Int primarySwatch)>>)>>(
+                          ffi.Handle Function(
+                              ffi.Int primarySwatch,
+                              ffi.Handle textTheme,
+                              ffi.Int scaffoldBackgroundColor,
+                              ffi.Int hintColor,
+                              ffi.Handle primaryTextTheme)>>)>>(
       'register_new_theme_data');
   late final _register_new_theme_data = _register_new_theme_dataPtr.asFunction<
       void Function(
           ffi.Pointer<
               ffi.NativeFunction<
-                  ffi.Handle Function(ffi.Int primarySwatch)>>)>();
+                  ffi.Handle Function(
+                      ffi.Int primarySwatch,
+                      ffi.Handle textTheme,
+                      ffi.Int scaffoldBackgroundColor,
+                      ffi.Int hintColor,
+                      ffi.Handle primaryTextTheme)>>)>();
 
   void register_new_text_button(
     ffi.Pointer<
@@ -300,6 +401,26 @@ class LibWidgeteer {
               ffi.NativeFunction<
                   ffi.Handle Function(
                       ffi.Pointer<ffi.Char> key, ffi.Handle title)>>)>();
+
+  void register_new_text_style(
+    ffi.Pointer<ffi.NativeFunction<ffi.Handle Function(ffi.Int color)>> outlet,
+  ) {
+    return _register_new_text_style(
+      outlet,
+    );
+  }
+
+  late final _register_new_text_stylePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      ffi.Handle Function(
+                          ffi.Int color)>>)>>('register_new_text_style');
+  late final _register_new_text_style = _register_new_text_stylePtr.asFunction<
+      void Function(
+          ffi.Pointer<
+              ffi.NativeFunction<ffi.Handle Function(ffi.Int color)>>)>();
 
   void register_new_stateless_user_widget(
     ffi.Pointer<
