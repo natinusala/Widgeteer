@@ -129,6 +129,174 @@ public func _registerNewTextTheme(_ outlet: _NewTextTheme_CFunctionPointer) {
     trace("Registering 'NewTextTheme'")
     Flutter_NewTextTheme = { (p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11) in assertIsOnFlutterThread(); return outlet(p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11) }
 }
+// MARK: TextThemeGetHeadlineLarge
+// Outlet emitted by 'TextTheme' binding (Instance of 'PersistentObjectBinding')
+// 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:86
+public typealias _TextThemeGetHeadlineLarge_CFunctionPointer = @convention(c) (_ instance: Dart_PersistentHandle) -> Dart_PersistentHandle
+public typealias _TextThemeGetHeadlineLarge = (_ instance: Dart_PersistentHandle) -> Dart_PersistentHandle
+
+public var Flutter_TextThemeGetHeadlineLarge: _TextThemeGetHeadlineLarge = { (_) in fatalError("'TextThemeGetHeadlineLarge' called before it was registered") }
+
+@_cdecl("register_text_theme_get_headline_large")
+public func _registerTextThemeGetHeadlineLarge(_ outlet: _TextThemeGetHeadlineLarge_CFunctionPointer) {
+    assertIsOnFlutterThread()
+    trace("Registering 'TextThemeGetHeadlineLarge'")
+    Flutter_TextThemeGetHeadlineLarge = { (p0) in assertIsOnFlutterThread(); return outlet(p0) }
+}
+// MARK: TextThemeGetHeadlineMedium
+// Outlet emitted by 'TextTheme' binding (Instance of 'PersistentObjectBinding')
+// 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:86
+public typealias _TextThemeGetHeadlineMedium_CFunctionPointer = @convention(c) (_ instance: Dart_PersistentHandle) -> Dart_PersistentHandle
+public typealias _TextThemeGetHeadlineMedium = (_ instance: Dart_PersistentHandle) -> Dart_PersistentHandle
+
+public var Flutter_TextThemeGetHeadlineMedium: _TextThemeGetHeadlineMedium = { (_) in fatalError("'TextThemeGetHeadlineMedium' called before it was registered") }
+
+@_cdecl("register_text_theme_get_headline_medium")
+public func _registerTextThemeGetHeadlineMedium(_ outlet: _TextThemeGetHeadlineMedium_CFunctionPointer) {
+    assertIsOnFlutterThread()
+    trace("Registering 'TextThemeGetHeadlineMedium'")
+    Flutter_TextThemeGetHeadlineMedium = { (p0) in assertIsOnFlutterThread(); return outlet(p0) }
+}
+// MARK: TextThemeGetHeadlineSmall
+// Outlet emitted by 'TextTheme' binding (Instance of 'PersistentObjectBinding')
+// 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:86
+public typealias _TextThemeGetHeadlineSmall_CFunctionPointer = @convention(c) (_ instance: Dart_PersistentHandle) -> Dart_PersistentHandle
+public typealias _TextThemeGetHeadlineSmall = (_ instance: Dart_PersistentHandle) -> Dart_PersistentHandle
+
+public var Flutter_TextThemeGetHeadlineSmall: _TextThemeGetHeadlineSmall = { (_) in fatalError("'TextThemeGetHeadlineSmall' called before it was registered") }
+
+@_cdecl("register_text_theme_get_headline_small")
+public func _registerTextThemeGetHeadlineSmall(_ outlet: _TextThemeGetHeadlineSmall_CFunctionPointer) {
+    assertIsOnFlutterThread()
+    trace("Registering 'TextThemeGetHeadlineSmall'")
+    Flutter_TextThemeGetHeadlineSmall = { (p0) in assertIsOnFlutterThread(); return outlet(p0) }
+}
+// MARK: TextThemeGetTitleLarge
+// Outlet emitted by 'TextTheme' binding (Instance of 'PersistentObjectBinding')
+// 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:86
+public typealias _TextThemeGetTitleLarge_CFunctionPointer = @convention(c) (_ instance: Dart_PersistentHandle) -> Dart_PersistentHandle
+public typealias _TextThemeGetTitleLarge = (_ instance: Dart_PersistentHandle) -> Dart_PersistentHandle
+
+public var Flutter_TextThemeGetTitleLarge: _TextThemeGetTitleLarge = { (_) in fatalError("'TextThemeGetTitleLarge' called before it was registered") }
+
+@_cdecl("register_text_theme_get_title_large")
+public func _registerTextThemeGetTitleLarge(_ outlet: _TextThemeGetTitleLarge_CFunctionPointer) {
+    assertIsOnFlutterThread()
+    trace("Registering 'TextThemeGetTitleLarge'")
+    Flutter_TextThemeGetTitleLarge = { (p0) in assertIsOnFlutterThread(); return outlet(p0) }
+}
+// MARK: TextThemeGetTitleMedium
+// Outlet emitted by 'TextTheme' binding (Instance of 'PersistentObjectBinding')
+// 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:86
+public typealias _TextThemeGetTitleMedium_CFunctionPointer = @convention(c) (_ instance: Dart_PersistentHandle) -> Dart_PersistentHandle
+public typealias _TextThemeGetTitleMedium = (_ instance: Dart_PersistentHandle) -> Dart_PersistentHandle
+
+public var Flutter_TextThemeGetTitleMedium: _TextThemeGetTitleMedium = { (_) in fatalError("'TextThemeGetTitleMedium' called before it was registered") }
+
+@_cdecl("register_text_theme_get_title_medium")
+public func _registerTextThemeGetTitleMedium(_ outlet: _TextThemeGetTitleMedium_CFunctionPointer) {
+    assertIsOnFlutterThread()
+    trace("Registering 'TextThemeGetTitleMedium'")
+    Flutter_TextThemeGetTitleMedium = { (p0) in assertIsOnFlutterThread(); return outlet(p0) }
+}
+// MARK: TextThemeGetTitleSmall
+// Outlet emitted by 'TextTheme' binding (Instance of 'PersistentObjectBinding')
+// 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:86
+public typealias _TextThemeGetTitleSmall_CFunctionPointer = @convention(c) (_ instance: Dart_PersistentHandle) -> Dart_PersistentHandle
+public typealias _TextThemeGetTitleSmall = (_ instance: Dart_PersistentHandle) -> Dart_PersistentHandle
+
+public var Flutter_TextThemeGetTitleSmall: _TextThemeGetTitleSmall = { (_) in fatalError("'TextThemeGetTitleSmall' called before it was registered") }
+
+@_cdecl("register_text_theme_get_title_small")
+public func _registerTextThemeGetTitleSmall(_ outlet: _TextThemeGetTitleSmall_CFunctionPointer) {
+    assertIsOnFlutterThread()
+    trace("Registering 'TextThemeGetTitleSmall'")
+    Flutter_TextThemeGetTitleSmall = { (p0) in assertIsOnFlutterThread(); return outlet(p0) }
+}
+// MARK: TextThemeGetLabelLarge
+// Outlet emitted by 'TextTheme' binding (Instance of 'PersistentObjectBinding')
+// 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:86
+public typealias _TextThemeGetLabelLarge_CFunctionPointer = @convention(c) (_ instance: Dart_PersistentHandle) -> Dart_PersistentHandle
+public typealias _TextThemeGetLabelLarge = (_ instance: Dart_PersistentHandle) -> Dart_PersistentHandle
+
+public var Flutter_TextThemeGetLabelLarge: _TextThemeGetLabelLarge = { (_) in fatalError("'TextThemeGetLabelLarge' called before it was registered") }
+
+@_cdecl("register_text_theme_get_label_large")
+public func _registerTextThemeGetLabelLarge(_ outlet: _TextThemeGetLabelLarge_CFunctionPointer) {
+    assertIsOnFlutterThread()
+    trace("Registering 'TextThemeGetLabelLarge'")
+    Flutter_TextThemeGetLabelLarge = { (p0) in assertIsOnFlutterThread(); return outlet(p0) }
+}
+// MARK: TextThemeGetLabelMedium
+// Outlet emitted by 'TextTheme' binding (Instance of 'PersistentObjectBinding')
+// 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:86
+public typealias _TextThemeGetLabelMedium_CFunctionPointer = @convention(c) (_ instance: Dart_PersistentHandle) -> Dart_PersistentHandle
+public typealias _TextThemeGetLabelMedium = (_ instance: Dart_PersistentHandle) -> Dart_PersistentHandle
+
+public var Flutter_TextThemeGetLabelMedium: _TextThemeGetLabelMedium = { (_) in fatalError("'TextThemeGetLabelMedium' called before it was registered") }
+
+@_cdecl("register_text_theme_get_label_medium")
+public func _registerTextThemeGetLabelMedium(_ outlet: _TextThemeGetLabelMedium_CFunctionPointer) {
+    assertIsOnFlutterThread()
+    trace("Registering 'TextThemeGetLabelMedium'")
+    Flutter_TextThemeGetLabelMedium = { (p0) in assertIsOnFlutterThread(); return outlet(p0) }
+}
+// MARK: TextThemeGetLabelSmall
+// Outlet emitted by 'TextTheme' binding (Instance of 'PersistentObjectBinding')
+// 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:86
+public typealias _TextThemeGetLabelSmall_CFunctionPointer = @convention(c) (_ instance: Dart_PersistentHandle) -> Dart_PersistentHandle
+public typealias _TextThemeGetLabelSmall = (_ instance: Dart_PersistentHandle) -> Dart_PersistentHandle
+
+public var Flutter_TextThemeGetLabelSmall: _TextThemeGetLabelSmall = { (_) in fatalError("'TextThemeGetLabelSmall' called before it was registered") }
+
+@_cdecl("register_text_theme_get_label_small")
+public func _registerTextThemeGetLabelSmall(_ outlet: _TextThemeGetLabelSmall_CFunctionPointer) {
+    assertIsOnFlutterThread()
+    trace("Registering 'TextThemeGetLabelSmall'")
+    Flutter_TextThemeGetLabelSmall = { (p0) in assertIsOnFlutterThread(); return outlet(p0) }
+}
+// MARK: TextThemeGetBodyLarge
+// Outlet emitted by 'TextTheme' binding (Instance of 'PersistentObjectBinding')
+// 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:86
+public typealias _TextThemeGetBodyLarge_CFunctionPointer = @convention(c) (_ instance: Dart_PersistentHandle) -> Dart_PersistentHandle
+public typealias _TextThemeGetBodyLarge = (_ instance: Dart_PersistentHandle) -> Dart_PersistentHandle
+
+public var Flutter_TextThemeGetBodyLarge: _TextThemeGetBodyLarge = { (_) in fatalError("'TextThemeGetBodyLarge' called before it was registered") }
+
+@_cdecl("register_text_theme_get_body_large")
+public func _registerTextThemeGetBodyLarge(_ outlet: _TextThemeGetBodyLarge_CFunctionPointer) {
+    assertIsOnFlutterThread()
+    trace("Registering 'TextThemeGetBodyLarge'")
+    Flutter_TextThemeGetBodyLarge = { (p0) in assertIsOnFlutterThread(); return outlet(p0) }
+}
+// MARK: TextThemeGetBodyMedium
+// Outlet emitted by 'TextTheme' binding (Instance of 'PersistentObjectBinding')
+// 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:86
+public typealias _TextThemeGetBodyMedium_CFunctionPointer = @convention(c) (_ instance: Dart_PersistentHandle) -> Dart_PersistentHandle
+public typealias _TextThemeGetBodyMedium = (_ instance: Dart_PersistentHandle) -> Dart_PersistentHandle
+
+public var Flutter_TextThemeGetBodyMedium: _TextThemeGetBodyMedium = { (_) in fatalError("'TextThemeGetBodyMedium' called before it was registered") }
+
+@_cdecl("register_text_theme_get_body_medium")
+public func _registerTextThemeGetBodyMedium(_ outlet: _TextThemeGetBodyMedium_CFunctionPointer) {
+    assertIsOnFlutterThread()
+    trace("Registering 'TextThemeGetBodyMedium'")
+    Flutter_TextThemeGetBodyMedium = { (p0) in assertIsOnFlutterThread(); return outlet(p0) }
+}
+// MARK: TextThemeGetBodySmall
+// Outlet emitted by 'TextTheme' binding (Instance of 'PersistentObjectBinding')
+// 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:86
+public typealias _TextThemeGetBodySmall_CFunctionPointer = @convention(c) (_ instance: Dart_PersistentHandle) -> Dart_PersistentHandle
+public typealias _TextThemeGetBodySmall = (_ instance: Dart_PersistentHandle) -> Dart_PersistentHandle
+
+public var Flutter_TextThemeGetBodySmall: _TextThemeGetBodySmall = { (_) in fatalError("'TextThemeGetBodySmall' called before it was registered") }
+
+@_cdecl("register_text_theme_get_body_small")
+public func _registerTextThemeGetBodySmall(_ outlet: _TextThemeGetBodySmall_CFunctionPointer) {
+    assertIsOnFlutterThread()
+    trace("Registering 'TextThemeGetBodySmall'")
+    Flutter_TextThemeGetBodySmall = { (p0) in assertIsOnFlutterThread(); return outlet(p0) }
+}
 // MARK: NewThemeData
 // Outlet emitted by 'ThemeData' binding (Instance of 'PersistentObjectBinding')
 // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:86
@@ -142,6 +310,62 @@ public func _registerNewThemeData(_ outlet: _NewThemeData_CFunctionPointer) {
     assertIsOnFlutterThread()
     trace("Registering 'NewThemeData'")
     Flutter_NewThemeData = { (p0, p1, p2, p3, p4) in assertIsOnFlutterThread(); return outlet(p0, p1, p2, p3, p4) }
+}
+// MARK: ThemeDataGetTextTheme
+// Outlet emitted by 'ThemeData' binding (Instance of 'PersistentObjectBinding')
+// 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:86
+public typealias _ThemeDataGetTextTheme_CFunctionPointer = @convention(c) (_ instance: Dart_PersistentHandle) -> Dart_PersistentHandle
+public typealias _ThemeDataGetTextTheme = (_ instance: Dart_PersistentHandle) -> Dart_PersistentHandle
+
+public var Flutter_ThemeDataGetTextTheme: _ThemeDataGetTextTheme = { (_) in fatalError("'ThemeDataGetTextTheme' called before it was registered") }
+
+@_cdecl("register_theme_data_get_text_theme")
+public func _registerThemeDataGetTextTheme(_ outlet: _ThemeDataGetTextTheme_CFunctionPointer) {
+    assertIsOnFlutterThread()
+    trace("Registering 'ThemeDataGetTextTheme'")
+    Flutter_ThemeDataGetTextTheme = { (p0) in assertIsOnFlutterThread(); return outlet(p0) }
+}
+// MARK: ThemeDataGetScaffoldBackgroundColor
+// Outlet emitted by 'ThemeData' binding (Instance of 'PersistentObjectBinding')
+// 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:86
+public typealias _ThemeDataGetScaffoldBackgroundColor_CFunctionPointer = @convention(c) (_ instance: Dart_PersistentHandle) -> Int
+public typealias _ThemeDataGetScaffoldBackgroundColor = (_ instance: Dart_PersistentHandle) -> Int
+
+public var Flutter_ThemeDataGetScaffoldBackgroundColor: _ThemeDataGetScaffoldBackgroundColor = { (_) in fatalError("'ThemeDataGetScaffoldBackgroundColor' called before it was registered") }
+
+@_cdecl("register_theme_data_get_scaffold_background_color")
+public func _registerThemeDataGetScaffoldBackgroundColor(_ outlet: _ThemeDataGetScaffoldBackgroundColor_CFunctionPointer) {
+    assertIsOnFlutterThread()
+    trace("Registering 'ThemeDataGetScaffoldBackgroundColor'")
+    Flutter_ThemeDataGetScaffoldBackgroundColor = { (p0) in assertIsOnFlutterThread(); return outlet(p0) }
+}
+// MARK: ThemeDataGetHintColor
+// Outlet emitted by 'ThemeData' binding (Instance of 'PersistentObjectBinding')
+// 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:86
+public typealias _ThemeDataGetHintColor_CFunctionPointer = @convention(c) (_ instance: Dart_PersistentHandle) -> Int
+public typealias _ThemeDataGetHintColor = (_ instance: Dart_PersistentHandle) -> Int
+
+public var Flutter_ThemeDataGetHintColor: _ThemeDataGetHintColor = { (_) in fatalError("'ThemeDataGetHintColor' called before it was registered") }
+
+@_cdecl("register_theme_data_get_hint_color")
+public func _registerThemeDataGetHintColor(_ outlet: _ThemeDataGetHintColor_CFunctionPointer) {
+    assertIsOnFlutterThread()
+    trace("Registering 'ThemeDataGetHintColor'")
+    Flutter_ThemeDataGetHintColor = { (p0) in assertIsOnFlutterThread(); return outlet(p0) }
+}
+// MARK: ThemeDataGetPrimaryTextTheme
+// Outlet emitted by 'ThemeData' binding (Instance of 'PersistentObjectBinding')
+// 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:86
+public typealias _ThemeDataGetPrimaryTextTheme_CFunctionPointer = @convention(c) (_ instance: Dart_PersistentHandle) -> Dart_PersistentHandle
+public typealias _ThemeDataGetPrimaryTextTheme = (_ instance: Dart_PersistentHandle) -> Dart_PersistentHandle
+
+public var Flutter_ThemeDataGetPrimaryTextTheme: _ThemeDataGetPrimaryTextTheme = { (_) in fatalError("'ThemeDataGetPrimaryTextTheme' called before it was registered") }
+
+@_cdecl("register_theme_data_get_primary_text_theme")
+public func _registerThemeDataGetPrimaryTextTheme(_ outlet: _ThemeDataGetPrimaryTextTheme_CFunctionPointer) {
+    assertIsOnFlutterThread()
+    trace("Registering 'ThemeDataGetPrimaryTextTheme'")
+    Flutter_ThemeDataGetPrimaryTextTheme = { (p0) in assertIsOnFlutterThread(); return outlet(p0) }
 }
 // MARK: NewTextButton
 // Outlet emitted by 'TextButton' binding (Instance of 'WidgetBinding')
@@ -184,6 +408,20 @@ public func _registerNewTextStyle(_ outlet: _NewTextStyle_CFunctionPointer) {
     assertIsOnFlutterThread()
     trace("Registering 'NewTextStyle'")
     Flutter_NewTextStyle = { (p0) in assertIsOnFlutterThread(); return outlet(p0) }
+}
+// MARK: TextStyleGetColor
+// Outlet emitted by 'TextStyle' binding (Instance of 'PersistentObjectBinding')
+// 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:86
+public typealias _TextStyleGetColor_CFunctionPointer = @convention(c) (_ instance: Dart_PersistentHandle) -> Int
+public typealias _TextStyleGetColor = (_ instance: Dart_PersistentHandle) -> Int
+
+public var Flutter_TextStyleGetColor: _TextStyleGetColor = { (_) in fatalError("'TextStyleGetColor' called before it was registered") }
+
+@_cdecl("register_text_style_get_color")
+public func _registerTextStyleGetColor(_ outlet: _TextStyleGetColor_CFunctionPointer) {
+    assertIsOnFlutterThread()
+    trace("Registering 'TextStyleGetColor'")
+    Flutter_TextStyleGetColor = { (p0) in assertIsOnFlutterThread(); return outlet(p0) }
 }
 // MARK: NewStatelessUserWidget
 // Outlet emitted by 'StatelessUserWidget' binding (Instance of 'WidgetBinding')

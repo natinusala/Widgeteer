@@ -57,6 +57,10 @@ abstract class SwiftType {
   String initSetterValue(String source) {
     return source;
   }
+
+  /// Swift code that takes [sourceFfiValue] and turns it into a value of
+  /// the target Swift type inside a variable called `${variableName}Value`.
+  CodeUnit fromDartValue(String sourceFfiValue, String variableName);
 }
 
 abstract class DartType {

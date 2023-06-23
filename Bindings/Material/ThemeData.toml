@@ -18,7 +18,7 @@ location = "package:flutter/material.dart"
 [[parameter]]
 name = "primarySwatch"
 type = "MaterialColor?"
-dart_dart_named = true
+dart_named = true
 
 [[property]]
 name = "textTheme"

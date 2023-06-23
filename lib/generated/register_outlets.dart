@@ -49,9 +49,57 @@ void registerOutlets(LibWidgeteer widgeteer) {
     // Outlet emitted by 'TextTheme' binding (Instance of 'PersistentObjectBinding')
     // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
     widgeteer.register_new_text_theme(Pointer.fromFunction(newTextThemeImpl));
+    // Outlet emitted by 'TextTheme' binding (Instance of 'PersistentObjectBinding')
+    // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
+    widgeteer.register_text_theme_get_headline_large(Pointer.fromFunction(textThemeGetHeadlineLarge));
+    // Outlet emitted by 'TextTheme' binding (Instance of 'PersistentObjectBinding')
+    // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
+    widgeteer.register_text_theme_get_headline_medium(Pointer.fromFunction(textThemeGetHeadlineMedium));
+    // Outlet emitted by 'TextTheme' binding (Instance of 'PersistentObjectBinding')
+    // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
+    widgeteer.register_text_theme_get_headline_small(Pointer.fromFunction(textThemeGetHeadlineSmall));
+    // Outlet emitted by 'TextTheme' binding (Instance of 'PersistentObjectBinding')
+    // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
+    widgeteer.register_text_theme_get_title_large(Pointer.fromFunction(textThemeGetTitleLarge));
+    // Outlet emitted by 'TextTheme' binding (Instance of 'PersistentObjectBinding')
+    // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
+    widgeteer.register_text_theme_get_title_medium(Pointer.fromFunction(textThemeGetTitleMedium));
+    // Outlet emitted by 'TextTheme' binding (Instance of 'PersistentObjectBinding')
+    // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
+    widgeteer.register_text_theme_get_title_small(Pointer.fromFunction(textThemeGetTitleSmall));
+    // Outlet emitted by 'TextTheme' binding (Instance of 'PersistentObjectBinding')
+    // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
+    widgeteer.register_text_theme_get_label_large(Pointer.fromFunction(textThemeGetLabelLarge));
+    // Outlet emitted by 'TextTheme' binding (Instance of 'PersistentObjectBinding')
+    // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
+    widgeteer.register_text_theme_get_label_medium(Pointer.fromFunction(textThemeGetLabelMedium));
+    // Outlet emitted by 'TextTheme' binding (Instance of 'PersistentObjectBinding')
+    // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
+    widgeteer.register_text_theme_get_label_small(Pointer.fromFunction(textThemeGetLabelSmall));
+    // Outlet emitted by 'TextTheme' binding (Instance of 'PersistentObjectBinding')
+    // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
+    widgeteer.register_text_theme_get_body_large(Pointer.fromFunction(textThemeGetBodyLarge));
+    // Outlet emitted by 'TextTheme' binding (Instance of 'PersistentObjectBinding')
+    // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
+    widgeteer.register_text_theme_get_body_medium(Pointer.fromFunction(textThemeGetBodyMedium));
+    // Outlet emitted by 'TextTheme' binding (Instance of 'PersistentObjectBinding')
+    // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
+    widgeteer.register_text_theme_get_body_small(Pointer.fromFunction(textThemeGetBodySmall));
     // Outlet emitted by 'ThemeData' binding (Instance of 'PersistentObjectBinding')
     // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
     widgeteer.register_new_theme_data(Pointer.fromFunction(newThemeDataImpl));
+    // Outlet emitted by 'ThemeData' binding (Instance of 'PersistentObjectBinding')
+    // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
+    widgeteer.register_theme_data_get_text_theme(Pointer.fromFunction(themeDataGetTextTheme));
+    // Outlet emitted by 'ThemeData' binding (Instance of 'PersistentObjectBinding')
+    // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
+    widgeteer.register_theme_data_get_scaffold_background_color(Pointer.fromFunction(themeDataGetScaffoldBackgroundColor));
+    // Outlet emitted by 'ThemeData' binding (Instance of 'PersistentObjectBinding')
+    // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
+    widgeteer.register_theme_data_get_hint_color(Pointer.fromFunction(themeDataGetHintColor));
+    // Outlet emitted by 'ThemeData' binding (Instance of 'PersistentObjectBinding')
+    // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
+    widgeteer.register_theme_data_get_primary_text_theme(Pointer.fromFunction(themeDataGetPrimaryTextTheme));
     // Outlet emitted by 'TextButton' binding (Instance of 'WidgetBinding')
     // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
     widgeteer.register_new_text_button(Pointer.fromFunction(newTextButtonImpl));
@@ -61,6 +109,9 @@ void registerOutlets(LibWidgeteer widgeteer) {
     // Outlet emitted by 'TextStyle' binding (Instance of 'PersistentObjectBinding')
     // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
     widgeteer.register_new_text_style(Pointer.fromFunction(newTextStyleImpl));
+    // Outlet emitted by 'TextStyle' binding (Instance of 'PersistentObjectBinding')
+    // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
+    widgeteer.register_text_style_get_color(Pointer.fromFunction(textStyleGetColor));
     // Outlet emitted by 'StatelessUserWidget' binding (Instance of 'WidgetBinding')
     // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:74
     widgeteer.register_new_stateless_user_widget(Pointer.fromFunction(newStatelessUserWidgetImpl));

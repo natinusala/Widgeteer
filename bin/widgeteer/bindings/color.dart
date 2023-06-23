@@ -47,6 +47,13 @@ class OptionalColorType extends BoundType {
 class SwiftOptionalColor extends SwiftType {
   @override
   String get name => "Color?";
+
+  @override
+  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+    return CodeUnit(
+        content:
+            "let ${variableName}Value: Color? = $sourceFfiValue == -1 ? nil : Color($sourceFfiValue)");
+  }
 }
 
 class DartOptionalColor extends DartType {
@@ -97,6 +104,12 @@ class ColorType extends BoundType {
 class SwiftColor extends SwiftType {
   @override
   String get name => "Color";
+
+  @override
+  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+    return CodeUnit(
+        content: "let ${variableName}Value = Color($sourceFfiValue)");
+  }
 }
 
 class DartColor extends DartType {

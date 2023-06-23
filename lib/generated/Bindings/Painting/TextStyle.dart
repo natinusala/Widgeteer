@@ -3,7 +3,7 @@
 // === Follow the breadcrumbs to find what code generated what you're reading ===
 // 🍞 bin/widgeteer/bindings_generator/bindings_generator.dart:45
 import 'package:widgeteer/generated/Bindings/Callback/VoidCallback.dart';
-// 🍞 bin/widgeteer/bindings/persistent_object.dart:166
+// 🍞 bin/widgeteer/bindings/persistent_object.dart:202
 // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:57
 import 'package:flutter/material.dart';
 import 'dart:ffi';
@@ -14,8 +14,8 @@ import 'package:flutter/foundation.dart';
 // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:89
 Object newTextStyleImpl(int color) {
     // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:79
-    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:113
-    // 🍞 bin/widgeteer/bindings/color.dart:55
+    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:142
+    // 🍞 bin/widgeteer/bindings/color.dart:62
     late final Color? colorValue;
     if (color == -1) { colorValue = null; }
     else { colorValue = Color(color); }

@@ -73,6 +73,11 @@ class DartObject extends DartType {
 class SwiftObject extends SwiftType {
   @override
   String get name => "Dart_Handle";
+
+  @override
+  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+    throw UnimplementedError();
+  }
 }
 
 class OptionalObjectType extends BoundType {
@@ -103,6 +108,11 @@ class OptionalDartObject extends DartType {
 class OptionalSwiftObject extends SwiftType {
   @override
   String get name => "Dart_Handle?";
+
+  @override
+  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+    throw UnimplementedError();
+  }
 }
 
 class OptionalCObject extends CType {

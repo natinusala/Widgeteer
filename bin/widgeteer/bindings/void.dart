@@ -46,6 +46,11 @@ class VoidType extends BoundType {
 class SwiftVoid extends SwiftType {
   @override
   String get name => "Void";
+
+  @override
+  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+    throw UnimplementedError();
+  }
 }
 
 class DartVoid extends DartType {

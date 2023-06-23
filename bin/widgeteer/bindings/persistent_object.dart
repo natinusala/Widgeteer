@@ -76,7 +76,9 @@ class PersistentObjectBinding extends Binding {
       [PersistentObjectType(this), OptionalPersistentObjectType(this)];
 
   @override
-  List<Outlet> get outlets => [newFunction.callingOutlet];
+  List<Outlet> get outlets =>
+      [newFunction.callingOutlet] +
+      properties.map((element) => element.getterOutlet(name)).toList();
 
   ParametersList get initializerParams => parameters + properties;
 
@@ -144,9 +146,43 @@ class PersistentObjectBinding extends Binding {
     swiftClass.appendEmptyLine();
     swiftClass.appendUnit(swiftDeinitializer, indentedBy: 4);
 
+    // Properties
+    swiftClass.appendUnit(swiftProperties, indentedBy: 4);
+
     swiftClass.appendLine("}");
 
     return swiftClass;
+  }
+
+  /// Properties bridged from the Dart class.
+  CodeUnit get swiftProperties {
+    final getters = CodeUnit();
+
+    for (final property in properties) {
+      final resolvedType = context.resolveType(property.type);
+
+      getters.appendLine(
+          "public var ${property.name}: ${resolvedType.swiftType.name} {");
+
+      getters.appendLine(
+          "return Flutter_BlockingSchedule(scoped: false) { _ in",
+          indentedBy: 4);
+
+      getters.appendLine(
+          "let localHandle = ${property.getterOutlet(name).swiftFunctionName}(self.handle)",
+          indentedBy: 8);
+      getters.appendUnit(
+          resolvedType.swiftType.fromDartValue("localHandle", name),
+          indentedBy: 8);
+      getters.appendLine("return ${name}Value", indentedBy: 8);
+
+      getters.appendLine("}", indentedBy: 4);
+
+      getters.appendLine("}");
+      getters.appendEmptyLine();
+    }
+
+    return getters;
   }
 
   @override
@@ -196,6 +232,13 @@ class SwiftPersistentObject extends SwiftType {
 
   @override
   String get name => type.name;
+
+  @override
+  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+    return CodeUnit(
+        content:
+            "let ${variableName}Value = $name(persisting: $sourceFfiValue)");
+  }
 }
 
 class DartPersistentObject extends DartType {
@@ -258,6 +301,13 @@ class SwiftOptionalPersistentObject extends SwiftType {
 
   @override
   String get name => type.name;
+
+  @override
+  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+    return CodeUnit(
+        content:
+            "let ${variableName}Value: $name = $sourceFfiValue == Dart_Null ? nil : ${type.binding.className}(persisting: $sourceFfiValue)");
+  }
 }
 
 class COptionalPersistentObject extends CType {

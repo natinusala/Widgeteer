@@ -83,13 +83,14 @@ class WidgetBinding extends Binding {
           dartNamed: true,
           defaultValue: null,
           initType: null,
+          context: context,
         ));
 
     // Parse content
     final List<WidgetContentType> contentList = [];
 
     for (final Map<String, dynamic> content in toml["content"] ?? {}) {
-      contentList.add(WidgetContentType.fromTOML(fileStem, content));
+      contentList.add(WidgetContentType.fromTOML(context, fileStem, content));
     }
 
     // Create binding
@@ -353,6 +354,11 @@ class SwiftWidget extends SwiftType {
 
   @override
   String get name => type.name;
+
+  @override
+  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+    throw UnimplementedError();
+  }
 }
 
 class CWidget extends CType {
@@ -413,6 +419,11 @@ class OptionalSwiftWidget extends SwiftType {
 
   @override
   String get name => "${type.name}?";
+
+  @override
+  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+    throw UnimplementedError();
+  }
 }
 
 class OptionalCWidget extends CType {
@@ -435,6 +446,8 @@ class OptionalCWidget extends CType {
 
 /// Content of a widget.
 class WidgetContentType extends BoundType {
+  final BindingContext context;
+
   final String widgetName;
 
   /// Camel case name of the content property.
@@ -456,6 +469,7 @@ class WidgetContentType extends BoundType {
   final bool body;
 
   WidgetContentType({
+    required this.context,
     required this.contentName,
     required this.dartNamed,
     required this.multi,
@@ -464,8 +478,10 @@ class WidgetContentType extends BoundType {
     required this.body,
   });
 
-  factory WidgetContentType.fromTOML(String widgetName, Map toml) {
+  factory WidgetContentType.fromTOML(
+      BindingContext context, String widgetName, Map toml) {
     return WidgetContentType(
+      context: context,
       contentName: toml["name"],
       dartNamed: toml["dart_named"],
       multi: toml["multi"],
@@ -508,6 +524,7 @@ class WidgetContentType extends BoundType {
       dartNamed: dartNamed,
       defaultValue: null,
       initType: null,
+      context: context,
     );
   }
 }
@@ -530,6 +547,11 @@ class MultiSwiftWidgetContent extends SwiftType {
   @override
   String initSetterValue(String source) {
     return "$source()";
+  }
+
+  @override
+  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+    throw UnimplementedError();
   }
 }
 
@@ -594,6 +616,11 @@ class SwiftWidgetContent extends SwiftType {
   @override
   String initSetterValue(String source) {
     return "$source()";
+  }
+
+  @override
+  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+    throw UnimplementedError();
   }
 }
 

@@ -61,11 +61,21 @@ class OptionalAnyWidgetType extends BoundType {
 class SwiftAnyWidget extends SwiftType {
   @override
   String get name => "any Widget";
+
+  @override
+  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+    throw UnimplementedError();
+  }
 }
 
 class SwiftOptionalAnyWidget extends SwiftType {
   @override
   String get name => "(any Widget)?";
+
+  @override
+  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+    throw UnimplementedError();
+  }
 }
 
 class DartAnyWidget extends DartType {

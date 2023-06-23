@@ -46,6 +46,11 @@ class IntType extends BoundType {
 class SwiftInt extends SwiftType {
   @override
   String get name => "Int";
+
+  @override
+  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+    throw UnimplementedError();
+  }
 }
 
 class DartInt extends DartType {

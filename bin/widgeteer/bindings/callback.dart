@@ -284,6 +284,11 @@ class OptionalSwiftCallback extends SwiftType {
   @override
   String get initType =>
       "$name = nil"; // closure is already escaping in optional type argument
+
+  @override
+  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+    throw UnimplementedError();
+  }
 }
 
 class CallbackType extends BoundType {
@@ -356,4 +361,9 @@ class SwiftCallback extends SwiftType {
 
   @override
   String get initType => "@escaping $name";
+
+  @override
+  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+    throw UnimplementedError();
+  }
 }

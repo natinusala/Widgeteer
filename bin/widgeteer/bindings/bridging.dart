@@ -79,6 +79,11 @@ class CStatelessUserWidgetProxy extends CType {
 class SwiftStatelessUserWidgetProxy extends SwiftType {
   @override
   String get name => "StatelessUserWidgetProxy";
+
+  @override
+  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+    throw UnimplementedError();
+  }
 }
 
 class BuildContextType extends BoundType {
@@ -127,4 +132,9 @@ class DartBuildContext extends DartType {
 class SwiftBuildContext extends SwiftType {
   @override
   String get name => "BuildContext";
+
+  @override
+  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+    throw UnimplementedError();
+  }
 }

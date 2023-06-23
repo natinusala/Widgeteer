@@ -164,6 +164,11 @@ class SwiftEnum extends SwiftType {
 
   @override
   String get name => type.name;
+
+  @override
+  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+    throw UnimplementedError();
+  }
 }
 
 class OptionalEnumType extends BoundType {
@@ -245,4 +250,9 @@ class OptionalSwiftEnum extends SwiftType {
 
   @override
   String get name => type.name;
+
+  @override
+  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+    throw UnimplementedError();
+  }
 }

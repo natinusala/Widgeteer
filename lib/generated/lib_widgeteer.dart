@@ -306,6 +306,282 @@ class LibWidgeteer {
                       ffi.Handle bodyMedium,
                       ffi.Handle bodySmall)>>)>();
 
+  void register_text_theme_get_headline_large(
+    ffi.Pointer<ffi.NativeFunction<ffi.Handle Function(ffi.Handle instance)>>
+        outlet,
+  ) {
+    return _register_text_theme_get_headline_large(
+      outlet,
+    );
+  }
+
+  late final _register_text_theme_get_headline_largePtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Pointer<
+                      ffi.NativeFunction<
+                          ffi.Handle Function(ffi.Handle instance)>>)>>(
+      'register_text_theme_get_headline_large');
+  late final _register_text_theme_get_headline_large =
+      _register_text_theme_get_headline_largePtr.asFunction<
+          void Function(
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      ffi.Handle Function(ffi.Handle instance)>>)>();
+
+  void register_text_theme_get_headline_medium(
+    ffi.Pointer<ffi.NativeFunction<ffi.Handle Function(ffi.Handle instance)>>
+        outlet,
+  ) {
+    return _register_text_theme_get_headline_medium(
+      outlet,
+    );
+  }
+
+  late final _register_text_theme_get_headline_mediumPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Pointer<
+                      ffi.NativeFunction<
+                          ffi.Handle Function(ffi.Handle instance)>>)>>(
+      'register_text_theme_get_headline_medium');
+  late final _register_text_theme_get_headline_medium =
+      _register_text_theme_get_headline_mediumPtr.asFunction<
+          void Function(
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      ffi.Handle Function(ffi.Handle instance)>>)>();
+
+  void register_text_theme_get_headline_small(
+    ffi.Pointer<ffi.NativeFunction<ffi.Handle Function(ffi.Handle instance)>>
+        outlet,
+  ) {
+    return _register_text_theme_get_headline_small(
+      outlet,
+    );
+  }
+
+  late final _register_text_theme_get_headline_smallPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Pointer<
+                      ffi.NativeFunction<
+                          ffi.Handle Function(ffi.Handle instance)>>)>>(
+      'register_text_theme_get_headline_small');
+  late final _register_text_theme_get_headline_small =
+      _register_text_theme_get_headline_smallPtr.asFunction<
+          void Function(
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      ffi.Handle Function(ffi.Handle instance)>>)>();
+
+  void register_text_theme_get_title_large(
+    ffi.Pointer<ffi.NativeFunction<ffi.Handle Function(ffi.Handle instance)>>
+        outlet,
+  ) {
+    return _register_text_theme_get_title_large(
+      outlet,
+    );
+  }
+
+  late final _register_text_theme_get_title_largePtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Pointer<
+                      ffi.NativeFunction<
+                          ffi.Handle Function(ffi.Handle instance)>>)>>(
+      'register_text_theme_get_title_large');
+  late final _register_text_theme_get_title_large =
+      _register_text_theme_get_title_largePtr.asFunction<
+          void Function(
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      ffi.Handle Function(ffi.Handle instance)>>)>();
+
+  void register_text_theme_get_title_medium(
+    ffi.Pointer<ffi.NativeFunction<ffi.Handle Function(ffi.Handle instance)>>
+        outlet,
+  ) {
+    return _register_text_theme_get_title_medium(
+      outlet,
+    );
+  }
+
+  late final _register_text_theme_get_title_mediumPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Pointer<
+                      ffi.NativeFunction<
+                          ffi.Handle Function(ffi.Handle instance)>>)>>(
+      'register_text_theme_get_title_medium');
+  late final _register_text_theme_get_title_medium =
+      _register_text_theme_get_title_mediumPtr.asFunction<
+          void Function(
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      ffi.Handle Function(ffi.Handle instance)>>)>();
+
+  void register_text_theme_get_title_small(
+    ffi.Pointer<ffi.NativeFunction<ffi.Handle Function(ffi.Handle instance)>>
+        outlet,
+  ) {
+    return _register_text_theme_get_title_small(
+      outlet,
+    );
+  }
+
+  late final _register_text_theme_get_title_smallPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Pointer<
+                      ffi.NativeFunction<
+                          ffi.Handle Function(ffi.Handle instance)>>)>>(
+      'register_text_theme_get_title_small');
+  late final _register_text_theme_get_title_small =
+      _register_text_theme_get_title_smallPtr.asFunction<
+          void Function(
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      ffi.Handle Function(ffi.Handle instance)>>)>();
+
+  void register_text_theme_get_label_large(
+    ffi.Pointer<ffi.NativeFunction<ffi.Handle Function(ffi.Handle instance)>>
+        outlet,
+  ) {
+    return _register_text_theme_get_label_large(
+      outlet,
+    );
+  }
+
+  late final _register_text_theme_get_label_largePtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Pointer<
+                      ffi.NativeFunction<
+                          ffi.Handle Function(ffi.Handle instance)>>)>>(
+      'register_text_theme_get_label_large');
+  late final _register_text_theme_get_label_large =
+      _register_text_theme_get_label_largePtr.asFunction<
+          void Function(
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      ffi.Handle Function(ffi.Handle instance)>>)>();
+
+  void register_text_theme_get_label_medium(
+    ffi.Pointer<ffi.NativeFunction<ffi.Handle Function(ffi.Handle instance)>>
+        outlet,
+  ) {
+    return _register_text_theme_get_label_medium(
+      outlet,
+    );
+  }
+
+  late final _register_text_theme_get_label_mediumPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Pointer<
+                      ffi.NativeFunction<
+                          ffi.Handle Function(ffi.Handle instance)>>)>>(
+      'register_text_theme_get_label_medium');
+  late final _register_text_theme_get_label_medium =
+      _register_text_theme_get_label_mediumPtr.asFunction<
+          void Function(
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      ffi.Handle Function(ffi.Handle instance)>>)>();
+
+  void register_text_theme_get_label_small(
+    ffi.Pointer<ffi.NativeFunction<ffi.Handle Function(ffi.Handle instance)>>
+        outlet,
+  ) {
+    return _register_text_theme_get_label_small(
+      outlet,
+    );
+  }
+
+  late final _register_text_theme_get_label_smallPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Pointer<
+                      ffi.NativeFunction<
+                          ffi.Handle Function(ffi.Handle instance)>>)>>(
+      'register_text_theme_get_label_small');
+  late final _register_text_theme_get_label_small =
+      _register_text_theme_get_label_smallPtr.asFunction<
+          void Function(
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      ffi.Handle Function(ffi.Handle instance)>>)>();
+
+  void register_text_theme_get_body_large(
+    ffi.Pointer<ffi.NativeFunction<ffi.Handle Function(ffi.Handle instance)>>
+        outlet,
+  ) {
+    return _register_text_theme_get_body_large(
+      outlet,
+    );
+  }
+
+  late final _register_text_theme_get_body_largePtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Pointer<
+                      ffi.NativeFunction<
+                          ffi.Handle Function(ffi.Handle instance)>>)>>(
+      'register_text_theme_get_body_large');
+  late final _register_text_theme_get_body_large =
+      _register_text_theme_get_body_largePtr.asFunction<
+          void Function(
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      ffi.Handle Function(ffi.Handle instance)>>)>();
+
+  void register_text_theme_get_body_medium(
+    ffi.Pointer<ffi.NativeFunction<ffi.Handle Function(ffi.Handle instance)>>
+        outlet,
+  ) {
+    return _register_text_theme_get_body_medium(
+      outlet,
+    );
+  }
+
+  late final _register_text_theme_get_body_mediumPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Pointer<
+                      ffi.NativeFunction<
+                          ffi.Handle Function(ffi.Handle instance)>>)>>(
+      'register_text_theme_get_body_medium');
+  late final _register_text_theme_get_body_medium =
+      _register_text_theme_get_body_mediumPtr.asFunction<
+          void Function(
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      ffi.Handle Function(ffi.Handle instance)>>)>();
+
+  void register_text_theme_get_body_small(
+    ffi.Pointer<ffi.NativeFunction<ffi.Handle Function(ffi.Handle instance)>>
+        outlet,
+  ) {
+    return _register_text_theme_get_body_small(
+      outlet,
+    );
+  }
+
+  late final _register_text_theme_get_body_smallPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Pointer<
+                      ffi.NativeFunction<
+                          ffi.Handle Function(ffi.Handle instance)>>)>>(
+      'register_text_theme_get_body_small');
+  late final _register_text_theme_get_body_small =
+      _register_text_theme_get_body_smallPtr.asFunction<
+          void Function(
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      ffi.Handle Function(ffi.Handle instance)>>)>();
+
   void register_new_theme_data(
     ffi.Pointer<
             ffi.NativeFunction<
@@ -344,6 +620,98 @@ class LibWidgeteer {
                       ffi.Int scaffoldBackgroundColor,
                       ffi.Int hintColor,
                       ffi.Handle primaryTextTheme)>>)>();
+
+  void register_theme_data_get_text_theme(
+    ffi.Pointer<ffi.NativeFunction<ffi.Handle Function(ffi.Handle instance)>>
+        outlet,
+  ) {
+    return _register_theme_data_get_text_theme(
+      outlet,
+    );
+  }
+
+  late final _register_theme_data_get_text_themePtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Pointer<
+                      ffi.NativeFunction<
+                          ffi.Handle Function(ffi.Handle instance)>>)>>(
+      'register_theme_data_get_text_theme');
+  late final _register_theme_data_get_text_theme =
+      _register_theme_data_get_text_themePtr.asFunction<
+          void Function(
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      ffi.Handle Function(ffi.Handle instance)>>)>();
+
+  void register_theme_data_get_scaffold_background_color(
+    ffi.Pointer<ffi.NativeFunction<ffi.Int Function(ffi.Handle instance)>>
+        outlet,
+  ) {
+    return _register_theme_data_get_scaffold_background_color(
+      outlet,
+    );
+  }
+
+  late final _register_theme_data_get_scaffold_background_colorPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Pointer<
+                      ffi.NativeFunction<
+                          ffi.Int Function(ffi.Handle instance)>>)>>(
+      'register_theme_data_get_scaffold_background_color');
+  late final _register_theme_data_get_scaffold_background_color =
+      _register_theme_data_get_scaffold_background_colorPtr.asFunction<
+          void Function(
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      ffi.Int Function(ffi.Handle instance)>>)>();
+
+  void register_theme_data_get_hint_color(
+    ffi.Pointer<ffi.NativeFunction<ffi.Int Function(ffi.Handle instance)>>
+        outlet,
+  ) {
+    return _register_theme_data_get_hint_color(
+      outlet,
+    );
+  }
+
+  late final _register_theme_data_get_hint_colorPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Pointer<
+                      ffi.NativeFunction<
+                          ffi.Int Function(ffi.Handle instance)>>)>>(
+      'register_theme_data_get_hint_color');
+  late final _register_theme_data_get_hint_color =
+      _register_theme_data_get_hint_colorPtr.asFunction<
+          void Function(
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      ffi.Int Function(ffi.Handle instance)>>)>();
+
+  void register_theme_data_get_primary_text_theme(
+    ffi.Pointer<ffi.NativeFunction<ffi.Handle Function(ffi.Handle instance)>>
+        outlet,
+  ) {
+    return _register_theme_data_get_primary_text_theme(
+      outlet,
+    );
+  }
+
+  late final _register_theme_data_get_primary_text_themePtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Pointer<
+                      ffi.NativeFunction<
+                          ffi.Handle Function(ffi.Handle instance)>>)>>(
+      'register_theme_data_get_primary_text_theme');
+  late final _register_theme_data_get_primary_text_theme =
+      _register_theme_data_get_primary_text_themePtr.asFunction<
+          void Function(
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      ffi.Handle Function(ffi.Handle instance)>>)>();
 
   void register_new_text_button(
     ffi.Pointer<
@@ -421,6 +789,29 @@ class LibWidgeteer {
       void Function(
           ffi.Pointer<
               ffi.NativeFunction<ffi.Handle Function(ffi.Int color)>>)>();
+
+  void register_text_style_get_color(
+    ffi.Pointer<ffi.NativeFunction<ffi.Int Function(ffi.Handle instance)>>
+        outlet,
+  ) {
+    return _register_text_style_get_color(
+      outlet,
+    );
+  }
+
+  late final _register_text_style_get_colorPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Pointer<
+                      ffi.NativeFunction<
+                          ffi.Int Function(ffi.Handle instance)>>)>>(
+      'register_text_style_get_color');
+  late final _register_text_style_get_color =
+      _register_text_style_get_colorPtr.asFunction<
+          void Function(
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      ffi.Int Function(ffi.Handle instance)>>)>();
 
   void register_new_stateless_user_widget(
     ffi.Pointer<

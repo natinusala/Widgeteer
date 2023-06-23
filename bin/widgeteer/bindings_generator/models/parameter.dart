@@ -17,12 +17,16 @@
 import 'dart:collection';
 
 import 'package:collection/collection.dart';
+import 'package:recase/recase.dart';
 
 import '../code_unit.dart';
 import 'binding.dart';
+import 'outlet.dart';
 
 /// A parameter of a function call.
 class Parameter {
+  final BindingContext context;
+
   final String? swiftLabel;
   final String name;
   final String type;
@@ -40,9 +44,10 @@ class Parameter {
     required this.dartNamed,
     required this.defaultValue,
     required this.initType,
+    required this.context,
   });
 
-  factory Parameter.fromTOML(Map toml) {
+  factory Parameter.fromTOML(BindingContext context, Map toml) {
     return Parameter(
       name: toml["name"],
       swiftLabel: toml["swift_label"],
@@ -50,8 +55,32 @@ class Parameter {
       dartNamed: toml["dart_named"] ?? false,
       defaultValue: toml["default_value"],
       initType: toml["init_type"],
+      context: context,
     );
   }
+
+  /// When the parameters is also a property, this outlet allows Swift to
+  /// read its value from Dart.
+  ///
+  /// [containerType] is the name of the type containing the
+  /// property, used to strongly type the target instance.
+  Outlet getterOutlet(String containerType) => Outlet(
+        context: context,
+        implementationName: "${containerType.camelCase}Get${name.pascalCase}",
+        parameters: ParametersList(context, [
+          Parameter(
+            context: context,
+            dartNamed: false,
+            defaultValue: null,
+            initType: null,
+            name: "instance",
+            swiftLabel: "_",
+            type: containerType,
+          ),
+        ]),
+        name: "${containerType}Get${name.pascalCase}",
+        returnType: type,
+      );
 }
 
 class ParametersList with IterableMixin<Parameter> {
@@ -63,7 +92,7 @@ class ParametersList with IterableMixin<Parameter> {
   factory ParametersList.fromTOML(
       List<Map<String, dynamic>> toml, BindingContext context) {
     return ParametersList(
-        context, toml.map((e) => Parameter.fromTOML(e)).toList());
+        context, toml.map((e) => Parameter.fromTOML(context, e)).toList());
   }
 
   /// Parameters list as Dart function parameters (to be used in the function signature).

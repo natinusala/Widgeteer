@@ -3,7 +3,7 @@
 // === Follow the breadcrumbs to find what code generated what you're reading ===
 // 🍞 bin/widgeteer/bindings_generator/bindings_generator.dart:45
 import 'package:widgeteer/generated/Bindings/Callback/VoidCallback.dart';
-// 🍞 bin/widgeteer/bindings/persistent_object.dart:166
+// 🍞 bin/widgeteer/bindings/persistent_object.dart:202
 // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:57
 import 'package:flutter/material.dart';
 import 'dart:ffi';
@@ -14,8 +14,8 @@ import 'package:flutter/foundation.dart';
 // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:89
 Object newThemeDataImpl(int primarySwatch, Object textTheme, int scaffoldBackgroundColor, int hintColor, Object primaryTextTheme) {
     // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:79
-    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:113
-    // 🍞 bin/widgeteer/bindings/enum.dart:194
+    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:142
+    // 🍞 bin/widgeteer/bindings/enum.dart:199
     late final MaterialColor? primarySwatchValue;
     switch (primarySwatch) {
         case -1: primarySwatchValue = null; break;
@@ -23,14 +23,14 @@ Object newThemeDataImpl(int primarySwatch, Object textTheme, int scaffoldBackgro
         case 1: primarySwatchValue = Colors.green; break;
         default: throw "Received invalid index '$primarySwatch' for value of enum 'MaterialColor?'";
     }
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:208
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:251
     final textThemeValue = textTheme as TextTheme;
-    // 🍞 bin/widgeteer/bindings/color.dart:105
+    // 🍞 bin/widgeteer/bindings/color.dart:118
     final scaffoldBackgroundColorValue = Color(scaffoldBackgroundColor);
-    // 🍞 bin/widgeteer/bindings/color.dart:105
+    // 🍞 bin/widgeteer/bindings/color.dart:118
     final hintColorValue = Color(hintColor);
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:208
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:251
     final primaryTextThemeValue = primaryTextTheme as TextTheme;
     
-    return ThemeData(primarySwatchValue, textTheme: textThemeValue, scaffoldBackgroundColor: scaffoldBackgroundColorValue, hintColor: hintColorValue, primaryTextTheme: primaryTextThemeValue);
+    return ThemeData(primarySwatch: primarySwatchValue, textTheme: textThemeValue, scaffoldBackgroundColor: scaffoldBackgroundColorValue, hintColor: hintColorValue, primaryTextTheme: primaryTextThemeValue);
 }

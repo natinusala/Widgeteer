@@ -14,8 +14,8 @@ import 'package:flutter/foundation.dart';
 // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:89
 Object ThemeOfImpl(Object buildContext) {
     // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:79
-    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:113
-    // 🍞 bin/widgeteer/bindings/bridging.dart:118
+    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:142
+    // 🍞 bin/widgeteer/bindings/bridging.dart:123
     final buildContextValue = buildContext as BuildContext;
     
     return ThemeOf(buildContextValue);
