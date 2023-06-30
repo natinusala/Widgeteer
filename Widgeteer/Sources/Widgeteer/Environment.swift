@@ -20,14 +20,24 @@
 /// or a user-defined one.
 @propertyWrapper
 public struct Environment<Value> {
-    let keyPath: KeyPath<EnvironmentValues, Value>
+    enum Storage {
+        /// Built in environment values using a custom getter
+        /// function from ``BuiltInEnvironmentValues``.
+        case builtIn(keyPath: KeyPath<BuiltInEnvironmentValues, Value>)
+
+        /// User defined environment values using an ``InheritedWidget``
+        /// behind the scenes.
+        case user
+    }
+
+    let storage: Storage
 
     /// Current value.
     /// May be `nil` if the property hasn't been installed yet.
     let value: Value?
 
-    public init(_ keyPath: KeyPath<EnvironmentValues, Value>) {
-        self.keyPath = keyPath
+    public init(_ keyPath: KeyPath<BuiltInEnvironmentValues, Value>) {
+        self.storage = .builtIn(keyPath: keyPath)
         self.value = nil
     }
 
@@ -40,9 +50,9 @@ public struct Environment<Value> {
     }
 }
 
-/// Proxy to get environment values from a build context using
+/// Proxy to get built in environment values from a build context using
 /// a key path as accessor.
-public struct EnvironmentValues {
+public struct BuiltInEnvironmentValues {
     let buildContext: BuildContext
 
     public var theme: ThemeData {
