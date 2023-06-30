@@ -60,7 +60,7 @@ abstract class SwiftType {
 
   /// Swift code that takes [sourceFfiValue] and turns it into a value of
   /// the target Swift type inside a variable called `${variableName}Value`.
-  CodeUnit fromDartValue(String sourceFfiValue, String variableName);
+  CodeUnit fromCValue(String sourceFfiValue, String variableName);
 }
 
 abstract class DartType {
@@ -95,9 +95,20 @@ abstract class CType {
   /// interop C type inside a variable called `${variableName}Value`.
   CodeUnit fromSwiftValue(String sourceValue, String variableName);
 
+  /// Dart code that takes [sourceValue] and turns it unto a value of the
+  /// Dart FFI C type inside a variable called `${variableName}Value`.
+  CodeUnit fromDartValue(String sourceValue, String variableName);
+
   /// Optional Swift code to run after the values from [fromSwiftValue] are about
   /// to go out of scope.
   CodeUnit? fromSwiftValueCleanup(String sourceValue, String variableName) {
     return null;
   }
+
+  /// Some types need an "exceptional return value" when using `Pointer.fromFunction`.
+  /// If this type is one of them, override this property to give the exceptional value.
+  ///
+  /// As literas do not apparently count as constants, any new value needs to be declared as
+  /// const at the very top of `register_outlets.dart`.
+  String? get exceptionalReturnValue => null;
 }

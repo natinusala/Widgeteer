@@ -356,7 +356,7 @@ class SwiftWidget extends SwiftType {
   String get name => type.name;
 
   @override
-  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
     throw UnimplementedError();
   }
 }
@@ -377,6 +377,11 @@ class CWidget extends CType {
 
   @override
   String get swiftCInteropMapping => "Dart_Handle";
+
+  @override
+  CodeUnit fromDartValue(String sourceValue, String variableName) {
+    throw UnimplementedError();
+  }
 }
 
 class OptionalWidgetType extends BoundType {
@@ -421,7 +426,7 @@ class OptionalSwiftWidget extends SwiftType {
   String get name => "${type.name}?";
 
   @override
-  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
     throw UnimplementedError();
   }
 }
@@ -442,6 +447,11 @@ class OptionalCWidget extends CType {
 
   @override
   String get swiftCInteropMapping => "Dart_Handle?";
+
+  @override
+  CodeUnit fromDartValue(String sourceValue, String variableName) {
+    throw UnimplementedError();
+  }
 }
 
 /// Content of a widget.
@@ -550,7 +560,7 @@ class MultiSwiftWidgetContent extends SwiftType {
   }
 
   @override
-  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
     throw UnimplementedError();
   }
 }
@@ -598,6 +608,11 @@ class MultiCWidgetContent extends CType {
 
   @override
   String get swiftCInteropMapping => "UnsafeRawPointer";
+
+  @override
+  CodeUnit fromDartValue(String sourceValue, String variableName) {
+    throw UnimplementedError();
+  }
 }
 
 class SwiftWidgetContent extends SwiftType {
@@ -619,7 +634,7 @@ class SwiftWidgetContent extends SwiftType {
   }
 
   @override
-  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
     throw UnimplementedError();
   }
 }
@@ -656,4 +671,9 @@ class CWidgetContent extends CType {
 
   @override
   String get swiftCInteropMapping => "Dart_Handle";
+
+  @override
+  CodeUnit fromDartValue(String sourceValue, String variableName) {
+    throw UnimplementedError();
+  }
 }

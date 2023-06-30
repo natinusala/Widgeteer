@@ -63,7 +63,7 @@ class SwiftAnyWidget extends SwiftType {
   String get name => "any Widget";
 
   @override
-  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
     throw UnimplementedError();
   }
 }
@@ -73,7 +73,7 @@ class SwiftOptionalAnyWidget extends SwiftType {
   String get name => "(any Widget)?";
 
   @override
-  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
     throw UnimplementedError();
   }
 }
@@ -112,6 +112,11 @@ class CAnyWidget extends CType {
         content:
             "let ${variableName}Value = $sourceValue.reduce(parentKey: parentKey.joined(\"$variableName\")).handle");
   }
+
+  @override
+  CodeUnit fromDartValue(String sourceValue, String variableName) {
+    throw UnimplementedError();
+  }
 }
 
 class COptionalAnyWidget extends CType {
@@ -130,5 +135,10 @@ class COptionalAnyWidget extends CType {
     return CodeUnit(
         content:
             "let ${variableName}Value = $sourceValue?.reduce(parentKey: parentKey.joined(\"$variableName\")).handle");
+  }
+
+  @override
+  CodeUnit fromDartValue(String sourceValue, String variableName) {
+    throw UnimplementedError();
   }
 }

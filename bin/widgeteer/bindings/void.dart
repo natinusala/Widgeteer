@@ -48,7 +48,7 @@ class SwiftVoid extends SwiftType {
   String get name => "Void";
 
   @override
-  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
     throw UnimplementedError();
   }
 }
@@ -75,6 +75,11 @@ class CVoid extends CType {
 
   @override
   CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+    throw UnimplementedError();
+  }
+
+  @override
+  CodeUnit fromDartValue(String sourceValue, String variableName) {
     throw UnimplementedError();
   }
 }

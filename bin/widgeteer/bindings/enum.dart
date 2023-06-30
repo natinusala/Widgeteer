@@ -125,6 +125,12 @@ class CEnum extends CType {
 
   @override
   String get swiftCInteropMapping => "Int";
+
+  @override
+  CodeUnit fromDartValue(String sourceValue, String variableName) {
+    // TODO: implement fromDartValue
+    throw UnimplementedError();
+  }
 }
 
 class DartEnum extends DartType {
@@ -166,7 +172,7 @@ class SwiftEnum extends SwiftType {
   String get name => type.name;
 
   @override
-  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
     throw UnimplementedError();
   }
 }
@@ -241,6 +247,11 @@ class OptionalCEnum extends CType {
 
   @override
   String get swiftCInteropMapping => "Int";
+
+  @override
+  CodeUnit fromDartValue(String sourceValue, String variableName) {
+    throw UnimplementedError();
+  }
 }
 
 class OptionalSwiftEnum extends SwiftType {
@@ -252,7 +263,7 @@ class OptionalSwiftEnum extends SwiftType {
   String get name => type.name;
 
   @override
-  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
     throw UnimplementedError();
   }
 }

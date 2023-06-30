@@ -48,7 +48,7 @@ class SwiftInt extends SwiftType {
   String get name => "Int";
 
   @override
-  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
     throw UnimplementedError();
   }
 }
@@ -77,4 +77,9 @@ class CInt extends CType {
 
   @override
   String get swiftCInteropMapping => "Int";
+
+  @override
+  CodeUnit fromDartValue(String sourceValue, String variableName) {
+    throw UnimplementedError();
+  }
 }

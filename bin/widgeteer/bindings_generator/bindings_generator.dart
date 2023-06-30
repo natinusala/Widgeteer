@@ -42,7 +42,7 @@ Future<void> generateBindings(String workingDirectory) async {
   final bindings = await parseBindings(workingDirectory);
 
   // Prepare a list of imports to blindly give to every generated Dart file
-  final imports = CodeUnit();
+  final imports = CodeUnit(content: "import 'package:flutter/widgets.dart';");
   for (final binding in bindings) {
     if (!binding.binding.importBody) {
       continue;
@@ -142,6 +142,10 @@ Future<void> generateBindings(String workingDirectory) async {
         p.relative(dartFile, from: p.join(workingDirectory, "lib"));
     registerOutletsFile.appendLine("import 'package:widgeteer/$relativePath';");
   }
+
+  // Constants for exceptional values
+  registerOutletsFile.appendEmptyLine();
+  registerOutletsFile.appendLine("const int _minusOne = -1;");
 
   registerOutletsFile.appendEmptyLine();
   registerOutletsFile

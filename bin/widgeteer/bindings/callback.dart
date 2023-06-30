@@ -245,6 +245,11 @@ class OptionalCCallback extends CType {
 
   @override
   String get swiftCInteropMapping => "UnsafeRawPointer?";
+
+  @override
+  CodeUnit fromDartValue(String sourceValue, String variableName) {
+    throw UnimplementedError();
+  }
 }
 
 class OptionalDartCallback extends DartType {
@@ -286,7 +291,7 @@ class OptionalSwiftCallback extends SwiftType {
       "$name = nil"; // closure is already escaping in optional type argument
 
   @override
-  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
     throw UnimplementedError();
   }
 }
@@ -329,6 +334,11 @@ class CCallback extends CType {
 
   @override
   String get swiftCInteropMapping => "UnsafeRawPointer";
+
+  @override
+  CodeUnit fromDartValue(String sourceValue, String variableName) {
+    throw UnimplementedError();
+  }
 }
 
 class DartCallback extends DartType {
@@ -363,7 +373,7 @@ class SwiftCallback extends SwiftType {
   String get initType => "@escaping $name";
 
   @override
-  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
     throw UnimplementedError();
   }
 }

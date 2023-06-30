@@ -71,9 +71,19 @@ class Outlet {
 
   /// Dart code to call to register the outlet to Swift.
   /// Assuming the library binding is available under the `widgeteer` name.
-  CodeUnit get dartRegistrationCall => CodeUnit(
-      content:
-          "widgeteer.$cRegistrationDeclarationName(Pointer.fromFunction($implementationName));");
+  CodeUnit get dartRegistrationCall {
+    final resolvedReturnType = context.resolveType(returnType);
+
+    if (resolvedReturnType.cType.exceptionalReturnValue != null) {
+      return CodeUnit(
+          content:
+              "widgeteer.$cRegistrationDeclarationName(Pointer.fromFunction($implementationName, ${resolvedReturnType.cType.exceptionalReturnValue}));");
+    } else {
+      return CodeUnit(
+          content:
+              "widgeteer.$cRegistrationDeclarationName(Pointer.fromFunction($implementationName));");
+    }
+  }
 
   /// Swift closure type aliases, registration function and function to call
   /// in the rest of the program.

@@ -49,7 +49,7 @@ class SwiftOptionalColor extends SwiftType {
   String get name => "Color?";
 
   @override
-  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
     return CodeUnit(
         content:
             "let ${variableName}Value: Color? = $sourceFfiValue == -1 ? nil : Color($sourceFfiValue)");
@@ -85,6 +85,15 @@ class COptionalColor extends CType {
 
   @override
   String get swiftCInteropMapping => "Int";
+
+  @override
+  CodeUnit fromDartValue(String sourceValue, String variableName) {
+    return CodeUnit(
+        content: "final ${variableName}Value = $sourceValue?.value ?? -1;");
+  }
+
+  @override
+  String? get exceptionalReturnValue => "_minusOne";
 }
 
 class ColorType extends BoundType {
@@ -106,7 +115,7 @@ class SwiftColor extends SwiftType {
   String get name => "Color";
 
   @override
-  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
     return CodeUnit(
         content: "let ${variableName}Value = Color($sourceFfiValue)");
   }
@@ -137,4 +146,13 @@ class CColor extends CType {
 
   @override
   String get swiftCInteropMapping => "Int";
+
+  @override
+  CodeUnit fromDartValue(String sourceValue, String variableName) {
+    return CodeUnit(
+        content: "final ${variableName}Value = $sourceValue.value;");
+  }
+
+  @override
+  String? get exceptionalReturnValue => "_minusOne";
 }

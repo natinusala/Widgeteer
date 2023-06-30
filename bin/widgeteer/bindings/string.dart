@@ -48,7 +48,7 @@ class SwiftString extends SwiftType {
   String get name => "String";
 
   @override
-  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
     throw UnimplementedError();
   }
 }
@@ -77,5 +77,10 @@ class CString extends CType {
   CodeUnit fromSwiftValue(String sourceValue, String variableName) {
     // Use Swift implicit conversion from String to CChar* in function calls
     return CodeUnit(content: "let ${variableName}Value = $sourceValue");
+  }
+
+  @override
+  CodeUnit fromDartValue(String sourceValue, String variableName) {
+    throw UnimplementedError();
   }
 }

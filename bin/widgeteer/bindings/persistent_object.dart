@@ -171,8 +171,7 @@ class PersistentObjectBinding extends Binding {
       getters.appendLine(
           "let localHandle = ${property.getterOutlet(name).swiftFunctionName}(self.handle)",
           indentedBy: 8);
-      getters.appendUnit(
-          resolvedType.swiftType.fromDartValue("localHandle", name),
+      getters.appendUnit(resolvedType.swiftType.fromCValue("localHandle", name),
           indentedBy: 8);
       getters.appendLine("return ${name}Value", indentedBy: 8);
 
@@ -201,9 +200,41 @@ class PersistentObjectBinding extends Binding {
   CodeUnit get dartBody {
     final body = CodeUnit();
 
+    // new function outlet implementation
     body.appendUnit(newFunction.outletImplementation);
+    body.appendEmptyLine();
+
+    // properties getters implementations
+    for (final property in properties) {
+      body.appendUnit(getterOutletImplementation(property));
+      body.appendEmptyLine();
+    }
 
     return body;
+  }
+
+  CodeUnit getterOutletImplementation(Parameter property) {
+    final implementation = CodeUnit();
+
+    final resolvedType = context.resolveType(property.type);
+    final outlet = property.getterOutlet(name);
+
+    implementation.appendLine(
+        "${resolvedType.cType.dartFfiMapping} ${outlet.implementationName}(Object target) {");
+    implementation.appendLine("final typedTarget = target as $name;",
+        indentedBy: 4);
+    implementation.appendLine("final value = typedTarget.${property.name};",
+        indentedBy: 4);
+
+    implementation.appendUnit(
+        resolvedType.cType.fromDartValue("value", "converted"),
+        indentedBy: 4);
+
+    implementation.appendLine("return convertedValue;", indentedBy: 4);
+
+    implementation.appendLine("}");
+
+    return implementation;
   }
 }
 
@@ -234,7 +265,7 @@ class SwiftPersistentObject extends SwiftType {
   String get name => type.name;
 
   @override
-  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
     return CodeUnit(
         content:
             "let ${variableName}Value = $name(persisting: $sourceFfiValue)");
@@ -274,6 +305,13 @@ class CPersistentObject extends CType {
 
   @override
   String get swiftCInteropMapping => "Dart_PersistentHandle";
+
+  @override
+  CodeUnit fromDartValue(String sourceValue, String variableName) {
+    return CodeUnit(
+        content:
+            "final Object ${variableName}Value = $sourceValue;"); // Object downcast is enough
+  }
 }
 
 class OptionalPersistentObjectType extends BoundType {
@@ -303,7 +341,7 @@ class SwiftOptionalPersistentObject extends SwiftType {
   String get name => type.name;
 
   @override
-  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
     return CodeUnit(
         content:
             "let ${variableName}Value: $name = $sourceFfiValue == Dart_Null ? nil : ${type.binding.className}(persisting: $sourceFfiValue)");
@@ -330,6 +368,13 @@ class COptionalPersistentObject extends CType {
 
   @override
   String get swiftCInteropMapping => "Dart_PersistentHandle";
+
+  @override
+  CodeUnit fromDartValue(String sourceValue, String variableName) {
+    return CodeUnit(
+        content:
+            "final Object? ${variableName}Value = $sourceValue;"); // Object? downcast is enough
+  }
 }
 
 class DartOptionalPersistentObject extends DartType {

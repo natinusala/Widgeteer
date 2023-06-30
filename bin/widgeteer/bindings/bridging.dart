@@ -74,6 +74,11 @@ class CStatelessUserWidgetProxy extends CType {
 
   @override
   String get swiftCInteropMapping => "UnsafeRawPointer";
+
+  @override
+  CodeUnit fromDartValue(String sourceValue, String variableName) {
+    throw UnimplementedError();
+  }
 }
 
 class SwiftStatelessUserWidgetProxy extends SwiftType {
@@ -81,7 +86,7 @@ class SwiftStatelessUserWidgetProxy extends SwiftType {
   String get name => "StatelessUserWidgetProxy";
 
   @override
-  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
     throw UnimplementedError();
   }
 }
@@ -115,6 +120,11 @@ class CBuildContext extends CType {
 
   @override
   String get swiftCInteropMapping => "Dart_Handle";
+
+  @override
+  CodeUnit fromDartValue(String sourceValue, String variableName) {
+    throw UnimplementedError();
+  }
 }
 
 class DartBuildContext extends DartType {
@@ -134,7 +144,7 @@ class SwiftBuildContext extends SwiftType {
   String get name => "BuildContext";
 
   @override
-  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
     throw UnimplementedError();
   }
 }

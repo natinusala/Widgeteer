@@ -16,6 +16,6 @@
 
 import 'package:flutter/material.dart';
 
-ThemeData themeOf(BuildContext buildContext) {
+ThemeData ThemeOf(BuildContext buildContext) {
   return Theme.of(buildContext);
 }

@@ -57,6 +57,11 @@ class CObject extends CType {
   CodeUnit fromSwiftValue(String sourceValue, String variableName) {
     throw UnimplementedError();
   }
+
+  @override
+  CodeUnit fromDartValue(String sourceValue, String variableName) {
+    throw UnimplementedError();
+  }
 }
 
 class DartObject extends DartType {
@@ -75,7 +80,7 @@ class SwiftObject extends SwiftType {
   String get name => "Dart_Handle";
 
   @override
-  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
     throw UnimplementedError();
   }
 }
@@ -110,7 +115,7 @@ class OptionalSwiftObject extends SwiftType {
   String get name => "Dart_Handle?";
 
   @override
-  CodeUnit fromDartValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
     throw UnimplementedError();
   }
 }
@@ -127,6 +132,11 @@ class OptionalCObject extends CType {
 
   @override
   CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+    throw UnimplementedError();
+  }
+
+  @override
+  CodeUnit fromDartValue(String sourceValue, String variableName) {
     throw UnimplementedError();
   }
 }

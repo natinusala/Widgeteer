@@ -20,9 +20,9 @@ public struct MaterialApp<Home: SingleWidget>: BuiltinWidget {
     public func reduce(parentKey: WidgetKey) -> ReducedWidget {
         // 🍞 bin/widgeteer/bindings/string.dart:79
         let titleValue = self.title
-        // 🍞 bin/widgeteer/bindings/persistent_object.dart:323
+        // 🍞 bin/widgeteer/bindings/persistent_object.dart:361
         let themeValue = self.theme?.handle ?? Dart_Null
-        // 🍞 bin/widgeteer/bindings/widget.dart:650
+        // 🍞 bin/widgeteer/bindings/widget.dart:665
         let homeValue = self.home.reduce(parentKey: parentKey.joined("home")).handle
         let localHandle = Flutter_NewMaterialApp(
             parentKey.joined(String(describing: Self.self)),
