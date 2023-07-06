@@ -78,7 +78,7 @@ class FunctionBinding extends Binding {
   @override
   CodeUnit get dartBody {
     final body = CodeUnit();
-    body.appendUnit(function.outletImplementation);
+    body.appendUnit(function.outletImplementation(false));
     return body;
   }
 }

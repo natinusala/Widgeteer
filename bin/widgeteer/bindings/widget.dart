@@ -140,7 +140,7 @@ class WidgetBinding extends Binding {
     final body = CodeUnit();
 
     // Both normal and optional types use the same creation outlet
-    body.appendUnit(newFunction.outletImplementation);
+    body.appendUnit(newFunction.outletImplementation(true));
 
     return body;
   }

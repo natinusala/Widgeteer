@@ -5,17 +5,17 @@
 import 'package:flutter/widgets.dart';
 import 'package:widgeteer/generated/Bindings/Callback/VoidCallback.dart';
 // 🍞 bin/widgeteer/bindings/persistent_object.dart:201
-// 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:57
+// 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:59
 import 'package:flutter/material.dart';
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
 import 'package:widgeteer/generated/lib_widgeteer.dart';
 import 'package:widgeteer/swift.dart';
 import 'package:flutter/foundation.dart';
-// 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:89
-Object newThemeDataImpl(int primarySwatch, Object textTheme, int scaffoldBackgroundColor, int hintColor, Object primaryTextTheme) {
-    // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:79
-    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:142
+// 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:91
+Object newThemeDataImpl(int primarySwatch, Object? textTheme, int scaffoldBackgroundColor, int hintColor, Object? primaryTextTheme) {
+    // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:81
+    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:143
     // 🍞 bin/widgeteer/bindings/enum.dart:205
     late final MaterialColor? primarySwatchValue;
     switch (primarySwatch) {
@@ -24,14 +24,18 @@ Object newThemeDataImpl(int primarySwatch, Object textTheme, int scaffoldBackgro
         case 1: primarySwatchValue = Colors.green; break;
         default: throw "Received invalid index '$primarySwatch' for value of enum 'MaterialColor?'";
     }
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:282
-    final textThemeValue = textTheme as TextTheme;
-    // 🍞 bin/widgeteer/bindings/color.dart:127
-    final scaffoldBackgroundColorValue = Color(scaffoldBackgroundColor);
-    // 🍞 bin/widgeteer/bindings/color.dart:127
-    final hintColorValue = Color(hintColor);
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:282
-    final primaryTextThemeValue = primaryTextTheme as TextTheme;
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:388
+    final textThemeValue = textTheme as TextTheme?;
+    // 🍞 bin/widgeteer/bindings/color.dart:62
+    late final Color? scaffoldBackgroundColorValue;
+    if (scaffoldBackgroundColor == -1) { scaffoldBackgroundColorValue = null; }
+    else { scaffoldBackgroundColorValue = Color(scaffoldBackgroundColor); }
+    // 🍞 bin/widgeteer/bindings/color.dart:62
+    late final Color? hintColorValue;
+    if (hintColor == -1) { hintColorValue = null; }
+    else { hintColorValue = Color(hintColor); }
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:388
+    final primaryTextThemeValue = primaryTextTheme as TextTheme?;
     
     return ThemeData(primarySwatch: primarySwatchValue, textTheme: textThemeValue, scaffoldBackgroundColor: scaffoldBackgroundColorValue, hintColor: hintColorValue, primaryTextTheme: primaryTextThemeValue);
 }

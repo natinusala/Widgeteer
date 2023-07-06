@@ -108,11 +108,12 @@ class ParametersList with IterableMixin<Parameter> {
   }
 
   /// Parameters list as Dart FFI function parameters (to be used in the FFI function signature).
-  String get dartFFIParameters {
+  String dartFFIParameters(bool isInit) {
     var parameters = [];
 
     for (final parameter in this.parameters) {
-      final type = context.resolveType(parameter.type);
+      final type = context.resolveType(
+          isInit ? (parameter.initType ?? parameter.type) : parameter.type);
       parameters.add("${type.cType.dartFfiMapping} ${parameter.name}");
     }
 
@@ -138,11 +139,12 @@ class ParametersList with IterableMixin<Parameter> {
   /// Creates a list of `${parameter.name}Value` Dart declarations
   /// that takes the parameters in their FFI form and turn them into their
   /// final Dart values.
-  CodeUnit dartValuesFromFFI(BindingContext context) {
+  CodeUnit dartValuesFromFFI(BindingContext context, bool isInit) {
     final values = CodeUnit();
 
     for (final parameter in this) {
-      final type = context.resolveType(parameter.type);
+      final type = context.resolveType(
+          isInit ? (parameter.initType ?? parameter.type) : parameter.type);
       values
           .appendUnit(type.dartType.fromCValue(parameter.name, parameter.name));
     }

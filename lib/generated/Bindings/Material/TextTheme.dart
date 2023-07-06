@@ -5,17 +5,17 @@
 import 'package:flutter/widgets.dart';
 import 'package:widgeteer/generated/Bindings/Callback/VoidCallback.dart';
 // 🍞 bin/widgeteer/bindings/persistent_object.dart:201
-// 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:57
+// 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:59
 import 'package:flutter/material.dart';
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
 import 'package:widgeteer/generated/lib_widgeteer.dart';
 import 'package:widgeteer/swift.dart';
 import 'package:flutter/foundation.dart';
-// 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:89
+// 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:91
 Object newTextThemeImpl(Object? headlineLarge, Object? headlineMedium, Object? headlineSmall, Object? titleLarge, Object? titleMedium, Object? titleSmall, Object? labelLarge, Object? labelMedium, Object? labelSmall, Object? bodyLarge, Object? bodyMedium, Object? bodySmall) {
-    // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:79
-    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:142
+    // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:81
+    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:143
     // 🍞 bin/widgeteer/bindings/persistent_object.dart:388
     final headlineLargeValue = headlineLarge as TextStyle?;
     // 🍞 bin/widgeteer/bindings/persistent_object.dart:388

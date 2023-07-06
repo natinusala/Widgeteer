@@ -4,10 +4,10 @@
 // 🍞 bin/widgeteer/bindings/widget.dart:159
 // 🍞 bin/widgeteer/bindings/widget.dart:241
 public struct AppBar<Title: OptionalSingleWidget>: PreferredSizeWidget {
-    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:207
+    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:209
     let title: Title
 
-    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:220
+    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:222
     public init(title: (() -> Title) = { EmptyWidget() }) {
         self.title = title()
     }

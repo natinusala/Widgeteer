@@ -4,12 +4,12 @@
 // 🍞 bin/widgeteer/bindings/widget.dart:159
 // 🍞 bin/widgeteer/bindings/widget.dart:241
 public struct MaterialApp<Home: SingleWidget>: BuiltinWidget {
-    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:207
+    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:209
     let title: String
     let theme: ThemeData?
     let home: Home
 
-    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:220
+    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:222
     public init(title: String = "", theme: ThemeData?, home: () -> Home) {
         self.title = title
         self.theme = theme

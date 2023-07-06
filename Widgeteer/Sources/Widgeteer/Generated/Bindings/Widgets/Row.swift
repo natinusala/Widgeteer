@@ -4,11 +4,11 @@
 // 🍞 bin/widgeteer/bindings/widget.dart:159
 // 🍞 bin/widgeteer/bindings/widget.dart:241
 public struct Row<Children: MultiWidget>: BuiltinWidget {
-    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:207
+    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:209
     let mainAxisAlignment: MainAxisAlignment
     let children: Children
 
-    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:220
+    // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:222
     public init(mainAxisAlignment: MainAxisAlignment = .start, @MultiWidgetBuilder _ children: () -> Children) {
         self.mainAxisAlignment = mainAxisAlignment
         self.children = children()

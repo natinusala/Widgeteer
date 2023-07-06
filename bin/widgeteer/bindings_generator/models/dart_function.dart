@@ -53,7 +53,9 @@ class DartFunction {
 
   /// Dart code containing some imports and the implementation function
   /// for the outlet.
-  CodeUnit get outletImplementation {
+  /// If `isInit` is specified, the outlet will be considered an "init" outlet
+  /// and the generated implementation will use `initType` when possible.
+  CodeUnit outletImplementation(bool isInit) {
     final outlet = CodeUnit();
 
     // Imports
@@ -67,19 +69,19 @@ class DartFunction {
     ]);
 
     // Function
-    outlet.appendUnit(_outletFunction);
+    outlet.appendUnit(outletFunction(isInit));
 
     return outlet;
   }
 
-  CodeUnit get _outletFunction {
+  CodeUnit outletFunction(bool isInit) {
     final returnType = context.resolveType(this.returnType);
 
     // Function body
     final body = CodeUnit();
 
     // C -> Dart parameters conversion
-    body.appendUnit(parameters.dartValuesFromFFI(context));
+    body.appendUnit(parameters.dartValuesFromFFI(context, isInit));
 
     // Return statement
     body.appendEmptyLine();
@@ -89,7 +91,7 @@ class DartFunction {
     final function = CodeUnit();
 
     function.appendLine(
-        "${returnType.cType.dartFfiMapping} $outletImplementationName(${parameters.dartFFIParameters}) {");
+        "${returnType.cType.dartFfiMapping} $outletImplementationName(${parameters.dartFFIParameters(isInit)}) {");
     function.appendUnit(body, indentedBy: 4);
     function.appendLine("}");
     return function;

@@ -201,7 +201,7 @@ class PersistentObjectBinding extends Binding {
     final body = CodeUnit();
 
     // new function outlet implementation
-    body.appendUnit(newFunction.outletImplementation);
+    body.appendUnit(newFunction.outletImplementation(true));
     body.appendEmptyLine();
 
     // properties getters implementations
