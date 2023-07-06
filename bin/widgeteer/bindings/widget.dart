@@ -463,6 +463,10 @@ class WidgetContentType extends BoundType {
   /// Camel case name of the content property.
   final String contentName;
 
+  /// What widget subclass to accept as content.
+  /// Defaults to `Widget`.
+  final String constraint;
+
   final bool multi;
   final bool dartNamed;
 
@@ -486,6 +490,7 @@ class WidgetContentType extends BoundType {
     required this.widgetName,
     required this.optional,
     required this.body,
+    required this.constraint,
   });
 
   factory WidgetContentType.fromTOML(
@@ -498,6 +503,7 @@ class WidgetContentType extends BoundType {
       widgetName: widgetName,
       optional: toml["optional"] ?? false,
       body: toml["body"] ?? false,
+      constraint: toml["constraint"] ?? "Widget",
     );
   }
 
@@ -509,7 +515,7 @@ class WidgetContentType extends BoundType {
       ? "MultiWidget"
       : (optional ? "OptionalSingleWidget" : "SingleWidget");
 
-  String get dartClass => optional ? "Widget?" : "Widget";
+  String get dartClass => optional ? "$constraint?" : constraint;
 
   @override
   String get name => "$widgetName/$swiftGenericParameter";

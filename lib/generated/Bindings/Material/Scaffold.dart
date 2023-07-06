@@ -6,32 +6,25 @@ import 'package:flutter/widgets.dart';
 import 'package:widgeteer/generated/Bindings/Callback/VoidCallback.dart';
 // 🍞 bin/widgeteer/bindings/widget.dart:140
 // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:59
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
 import 'package:widgeteer/generated/lib_widgeteer.dart';
 import 'package:widgeteer/swift.dart';
 import 'package:flutter/foundation.dart';
 // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:91
-Object newRowImpl(Pointer<Char> key, int mainAxisAlignment, handles_list children) {
+Object newScaffoldImpl(Pointer<Char> key, Object? appBar, Object? floatingActionButton, Object body) {
     // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:81
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:143
     // 🍞 bin/widgeteer/bindings/widget_key.dart:43
     final keyString = key.cast<Utf8>().toDartString();
     final keyValue = ValueKey(keyString);
-    // 🍞 bin/widgeteer/bindings/enum.dart:143
-    late final MainAxisAlignment mainAxisAlignmentValue;
-    switch (mainAxisAlignment) {
-        case 0: mainAxisAlignmentValue = MainAxisAlignment.start; break;
-        case 1: mainAxisAlignmentValue = MainAxisAlignment.end; break;
-        case 2: mainAxisAlignmentValue = MainAxisAlignment.center; break;
-        case 3: mainAxisAlignmentValue = MainAxisAlignment.spaceBetween; break;
-        case 4: mainAxisAlignmentValue = MainAxisAlignment.spaceAround; break;
-        case 5: mainAxisAlignmentValue = MainAxisAlignment.spaceEvenly; break;
-        default: throw "Received invalid index '$mainAxisAlignment' for value of enum 'MainAxisAlignment'";
-    }
-    // 🍞 bin/widgeteer/bindings/widget.dart:581
-    final childrenValue = consumeHandlesList<Widget>(children);
+    // 🍞 bin/widgeteer/bindings/widget.dart:654
+    final appBarValue = appBar as PreferredSizeWidget?;
+    // 🍞 bin/widgeteer/bindings/widget.dart:654
+    final floatingActionButtonValue = floatingActionButton as Widget?;
+    // 🍞 bin/widgeteer/bindings/widget.dart:654
+    final bodyValue = body as Widget;
     
-    return Row(key: keyValue, mainAxisAlignment: mainAxisAlignmentValue, children: childrenValue);
+    return Scaffold(key: keyValue, appBar: appBarValue, floatingActionButton: floatingActionButtonValue, body: bodyValue);
 }

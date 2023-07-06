@@ -115,6 +115,20 @@ public func _registerThemeOf(_ outlet: _ThemeOf_CFunctionPointer) {
     trace("Registering 'ThemeOf'")
     Flutter_ThemeOf = { (p0) in assertIsOnFlutterThread(); return outlet(p0) }
 }
+// MARK: NewScaffold
+// Outlet emitted by 'Scaffold' binding (Instance of 'WidgetBinding')
+// 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:96
+public typealias _NewScaffold_CFunctionPointer = @convention(c) (_ key: UnsafePointer<CChar>?, _ appBar: Dart_Handle, _ floatingActionButton: Dart_Handle, _ body: Dart_Handle) -> Dart_Handle
+public typealias _NewScaffold = (_ key: UnsafePointer<CChar>?, _ appBar: Dart_Handle, _ floatingActionButton: Dart_Handle, _ body: Dart_Handle) -> Dart_Handle
+
+public var Flutter_NewScaffold: _NewScaffold = { (_, _, _, _) in fatalError("'NewScaffold' called before it was registered") }
+
+@_cdecl("register_new_scaffold")
+public func _registerNewScaffold(_ outlet: _NewScaffold_CFunctionPointer) {
+    assertIsOnFlutterThread()
+    trace("Registering 'NewScaffold'")
+    Flutter_NewScaffold = { (p0, p1, p2, p3) in assertIsOnFlutterThread(); return outlet(p0, p1, p2, p3) }
+}
 // MARK: NewTextTheme
 // Outlet emitted by 'TextTheme' binding (Instance of 'PersistentObjectBinding')
 // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:96

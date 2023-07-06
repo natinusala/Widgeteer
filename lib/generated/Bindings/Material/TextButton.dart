@@ -27,7 +27,7 @@ Object newTextButtonImpl(Pointer<Char> key, Pointer<Void> onPressed, Object chil
         final onPressedProxy = VoidCallbackProxy(onPressed);
         onPressedValue = () { return onPressedProxy.call(); };
     }
-    // 🍞 bin/widgeteer/bindings/widget.dart:648
+    // 🍞 bin/widgeteer/bindings/widget.dart:654
     final childValue = child as Widget;
     
     return TextButton(key: keyValue, onPressed: onPressedValue, child: childValue);

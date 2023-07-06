@@ -19,6 +19,8 @@ extern void register_new_center(Dart_Handle (*outlet)(char* key, Dart_Handle chi
 extern void register_new_material_app(Dart_Handle (*outlet)(char* key, char* title, Dart_PersistentHandle theme, Dart_Handle home));
 // Outlet emitted by 'ThemeOf' binding (Instance of 'FunctionBinding')
 extern void register_theme_of(Dart_PersistentHandle (*outlet)(Dart_Handle buildContext));
+// Outlet emitted by 'Scaffold' binding (Instance of 'WidgetBinding')
+extern void register_new_scaffold(Dart_Handle (*outlet)(char* key, Dart_Handle appBar, Dart_Handle floatingActionButton, Dart_Handle body));
 // Outlet emitted by 'TextTheme' binding (Instance of 'PersistentObjectBinding')
 extern void register_new_text_theme(Dart_Handle (*outlet)(Dart_PersistentHandle headlineLarge, Dart_PersistentHandle headlineMedium, Dart_PersistentHandle headlineSmall, Dart_PersistentHandle titleLarge, Dart_PersistentHandle titleMedium, Dart_PersistentHandle titleSmall, Dart_PersistentHandle labelLarge, Dart_PersistentHandle labelMedium, Dart_PersistentHandle labelSmall, Dart_PersistentHandle bodyLarge, Dart_PersistentHandle bodyMedium, Dart_PersistentHandle bodySmall));
 // Outlet emitted by 'TextTheme' binding (Instance of 'PersistentObjectBinding')

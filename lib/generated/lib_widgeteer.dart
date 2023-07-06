@@ -247,6 +247,41 @@ class LibWidgeteer {
               ffi.NativeFunction<
                   ffi.Handle Function(ffi.Handle buildContext)>>)>();
 
+  void register_new_scaffold(
+    ffi.Pointer<
+            ffi.NativeFunction<
+                ffi.Handle Function(
+                    ffi.Pointer<ffi.Char> key,
+                    ffi.Handle appBar,
+                    ffi.Handle floatingActionButton,
+                    ffi.Handle body)>>
+        outlet,
+  ) {
+    return _register_new_scaffold(
+      outlet,
+    );
+  }
+
+  late final _register_new_scaffoldPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      ffi.Handle Function(
+                          ffi.Pointer<ffi.Char> key,
+                          ffi.Handle appBar,
+                          ffi.Handle floatingActionButton,
+                          ffi.Handle body)>>)>>('register_new_scaffold');
+  late final _register_new_scaffold = _register_new_scaffoldPtr.asFunction<
+      void Function(
+          ffi.Pointer<
+              ffi.NativeFunction<
+                  ffi.Handle Function(
+                      ffi.Pointer<ffi.Char> key,
+                      ffi.Handle appBar,
+                      ffi.Handle floatingActionButton,
+                      ffi.Handle body)>>)>();
+
   void register_new_text_theme(
     ffi.Pointer<
             ffi.NativeFunction<

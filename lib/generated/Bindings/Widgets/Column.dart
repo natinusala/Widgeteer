@@ -47,7 +47,7 @@ Object newColumnImpl(Pointer<Char> key, int mainAxisAlignment, int mainAxisSize,
         case 4: crossAxisAlignmentValue = CrossAxisAlignment.baseline; break;
         default: throw "Received invalid index '$crossAxisAlignment' for value of enum 'CrossAxisAlignment'";
     }
-    // 🍞 bin/widgeteer/bindings/widget.dart:575
+    // 🍞 bin/widgeteer/bindings/widget.dart:581
     final childrenValue = consumeHandlesList<Widget>(children);
     
     return Column(key: keyValue, mainAxisAlignment: mainAxisAlignmentValue, mainAxisSize: mainAxisSizeValue, crossAxisAlignment: crossAxisAlignmentValue, children: childrenValue);

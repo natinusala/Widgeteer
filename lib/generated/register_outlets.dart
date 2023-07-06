@@ -13,6 +13,7 @@ import 'package:widgeteer/generated/Bindings/Widgets/Row.dart';
 import 'package:widgeteer/generated/Bindings/Widgets/Center.dart';
 import 'package:widgeteer/generated/Bindings/Material/MaterialApp.dart';
 import 'package:widgeteer/generated/Bindings/Material/ThemeOf.dart';
+import 'package:widgeteer/generated/Bindings/Material/Scaffold.dart';
 import 'package:widgeteer/generated/Bindings/Material/TextTheme.dart';
 import 'package:widgeteer/generated/Bindings/Material/ThemeData.dart';
 import 'package:widgeteer/generated/Bindings/Material/TextButton.dart';
@@ -48,6 +49,9 @@ void registerOutlets(LibWidgeteer widgeteer) {
     // Outlet emitted by 'ThemeOf' binding (Instance of 'FunctionBinding')
     // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:82
     widgeteer.register_theme_of(Pointer.fromFunction(ThemeOfImpl));
+    // Outlet emitted by 'Scaffold' binding (Instance of 'WidgetBinding')
+    // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:82
+    widgeteer.register_new_scaffold(Pointer.fromFunction(newScaffoldImpl));
     // Outlet emitted by 'TextTheme' binding (Instance of 'PersistentObjectBinding')
     // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:82
     widgeteer.register_new_text_theme(Pointer.fromFunction(newTextThemeImpl));
