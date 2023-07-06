@@ -53,9 +53,9 @@ public protocol Widget: SingleWidget, BuildableWidget, InstallableWidget {
 }
 
 public protocol InstallableWidget {
-    // func installed(storage: StateStorage?, buildContext: BuildContext) -> Self
+    func installed(storage: StateStorage?, buildContext: BuildContext) -> Self
     // func isStateful() -> Bool
-    // func createStateStorage() -> StateStorage
+    //func createStateStorage() -> StateStorage
 }
 
 /// A widget that can be built by Flutter when needed.

@@ -35,7 +35,13 @@ public extension Widget {
 public extension InstallableWidget {
     // Default installation method: install the widget itself.
     func installed(storage: StateStorage?, buildContext: BuildContext) -> Self {
-        return self // TODO: restore
+        log("Installing '\(Self.self)'")
+
+        var installed = self
+
+        buildContext.installEnvironment(on: &installed)
+
+        return installed
     }
 }
 
