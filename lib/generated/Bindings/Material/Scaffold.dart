@@ -4,7 +4,7 @@
 // 🍞 bin/widgeteer/bindings_generator/bindings_generator.dart:45
 import 'package:flutter/widgets.dart';
 import 'package:widgeteer/generated/Bindings/Callback/VoidCallback.dart';
-// 🍞 bin/widgeteer/bindings/widget.dart:140
+// 🍞 bin/widgeteer/bindings/widget.dart:143
 // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:59
 import 'package:flutter/material.dart';
 import 'dart:ffi';
@@ -19,11 +19,11 @@ Object newScaffoldImpl(Pointer<Char> key, Object? appBar, Object? floatingAction
     // 🍞 bin/widgeteer/bindings/widget_key.dart:43
     final keyString = key.cast<Utf8>().toDartString();
     final keyValue = ValueKey(keyString);
-    // 🍞 bin/widgeteer/bindings/widget.dart:654
+    // 🍞 bin/widgeteer/bindings/widget.dart:684
     final appBarValue = appBar as PreferredSizeWidget?;
-    // 🍞 bin/widgeteer/bindings/widget.dart:654
+    // 🍞 bin/widgeteer/bindings/widget.dart:684
     final floatingActionButtonValue = floatingActionButton as Widget?;
-    // 🍞 bin/widgeteer/bindings/widget.dart:654
+    // 🍞 bin/widgeteer/bindings/widget.dart:684
     final bodyValue = body as Widget;
     
     return Scaffold(key: keyValue, appBar: appBarValue, floatingActionButton: floatingActionButtonValue, body: bodyValue);

@@ -4,7 +4,7 @@
 // 🍞 bin/widgeteer/bindings_generator/bindings_generator.dart:45
 import 'package:flutter/widgets.dart';
 import 'package:widgeteer/generated/Bindings/Callback/VoidCallback.dart';
-// 🍞 bin/widgeteer/bindings/widget.dart:140
+// 🍞 bin/widgeteer/bindings/widget.dart:143
 // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:59
 import 'package:flutter/material.dart';
 import 'dart:ffi';
@@ -27,7 +27,7 @@ Object newTextButtonImpl(Pointer<Char> key, Pointer<Void> onPressed, Object chil
         final onPressedProxy = VoidCallbackProxy(onPressed);
         onPressedValue = () { return onPressedProxy.call(); };
     }
-    // 🍞 bin/widgeteer/bindings/widget.dart:654
+    // 🍞 bin/widgeteer/bindings/widget.dart:684
     final childValue = child as Widget;
     
     return TextButton(key: keyValue, onPressed: onPressedValue, child: childValue);

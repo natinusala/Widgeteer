@@ -14,6 +14,7 @@
    limitations under the License.
 */
 
+import 'package:collection/collection.dart';
 import 'package:recase/recase.dart';
 
 import '../bindings_generator/models/binding.dart';
@@ -89,8 +90,10 @@ class WidgetBinding extends Binding {
     // Parse content
     final List<WidgetContentType> contentList = [];
 
-    for (final Map<String, dynamic> content in toml["content"] ?? {}) {
-      contentList.add(WidgetContentType.fromTOML(context, fileStem, content));
+    for (int i = 0; i < (toml["content"] ?? {}).length; i++) {
+      final Map<String, dynamic> content = toml["content"][i];
+      contentList
+          .add(WidgetContentType.fromTOML(context, fileStem, content, i));
     }
 
     // Create binding
@@ -223,6 +226,28 @@ class WidgetBinding extends Binding {
     return function;
   }
 
+  int sortContentProperties(Parameter a, Parameter b) {
+    // We want the init to have the following order to match SwiftUI's design:
+    //   - all parameters
+    //   - body content
+    //   - other content by order of apparition in TOML
+    // The intended usage is with multi trailing closures:
+    // Widget(params) { multi content } singleContent1: { ... } singleContent2: { ... }
+
+    final aType = context.resolveType(a.type) as WidgetContentType;
+    final bType = context.resolveType(b.type) as WidgetContentType;
+
+    if (aType.body) {
+      return -1;
+    }
+
+    if (bType.body) {
+      return 1;
+    }
+
+    return aType.position - bType.position;
+  }
+
   /// The Swift struct properties.
   /// Remove the first parameter that's always the key as it is computed
   /// during reduction and is invisible to the user
@@ -230,9 +255,8 @@ class WidgetBinding extends Binding {
     final parametersProperties =
         parameters.isNotEmpty ? parameters.sublist(1) : parameters;
 
-    // TODO: sort content
-    final contentProperties =
-        ParametersList(context, content.map((e) => e.parameter).toList());
+    final contentProperties = ParametersList(context,
+        content.map((e) => e.parameter).toList().sorted(sortContentProperties));
 
     return parametersProperties + contentProperties;
   }
@@ -458,6 +482,10 @@ class OptionalCWidget extends CType {
 class WidgetContentType extends BoundType {
   final BindingContext context;
 
+  /// Index of the content inside the source TOML.
+  /// Used for ordering generated properties and parameters.
+  final int position;
+
   final String widgetName;
 
   /// Camel case name of the content property.
@@ -491,10 +519,11 @@ class WidgetContentType extends BoundType {
     required this.optional,
     required this.body,
     required this.constraint,
+    required this.position,
   });
 
   factory WidgetContentType.fromTOML(
-      BindingContext context, String widgetName, Map toml) {
+      BindingContext context, String widgetName, Map toml, int position) {
     return WidgetContentType(
       context: context,
       contentName: toml["name"],
@@ -504,6 +533,7 @@ class WidgetContentType extends BoundType {
       optional: toml["optional"] ?? false,
       body: toml["body"] ?? false,
       constraint: toml["constraint"] ?? "Widget",
+      position: position,
     );
   }
 

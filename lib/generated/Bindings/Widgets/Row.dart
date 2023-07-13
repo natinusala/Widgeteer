@@ -4,7 +4,7 @@
 // 🍞 bin/widgeteer/bindings_generator/bindings_generator.dart:45
 import 'package:flutter/widgets.dart';
 import 'package:widgeteer/generated/Bindings/Callback/VoidCallback.dart';
-// 🍞 bin/widgeteer/bindings/widget.dart:140
+// 🍞 bin/widgeteer/bindings/widget.dart:143
 // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:59
 import 'package:flutter/widgets.dart';
 import 'dart:ffi';
@@ -30,7 +30,7 @@ Object newRowImpl(Pointer<Char> key, int mainAxisAlignment, handles_list childre
         case 5: mainAxisAlignmentValue = MainAxisAlignment.spaceEvenly; break;
         default: throw "Received invalid index '$mainAxisAlignment' for value of enum 'MainAxisAlignment'";
     }
-    // 🍞 bin/widgeteer/bindings/widget.dart:581
+    // 🍞 bin/widgeteer/bindings/widget.dart:611
     final childrenValue = consumeHandlesList<Widget>(children);
     
     return Row(key: keyValue, mainAxisAlignment: mainAxisAlignmentValue, children: childrenValue);

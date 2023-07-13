@@ -4,7 +4,7 @@
 // 🍞 bin/widgeteer/bindings_generator/bindings_generator.dart:45
 import 'package:flutter/widgets.dart';
 import 'package:widgeteer/generated/Bindings/Callback/VoidCallback.dart';
-// 🍞 bin/widgeteer/bindings/widget.dart:140
+// 🍞 bin/widgeteer/bindings/widget.dart:143
 // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:59
 import 'package:flutter/material.dart';
 import 'dart:ffi';
@@ -23,7 +23,7 @@ Object newMaterialAppImpl(Pointer<Char> key, Pointer<Char> title, Object? theme,
     final titleValue = title.cast<Utf8>().toDartString();
     // 🍞 bin/widgeteer/bindings/persistent_object.dart:388
     final themeValue = theme as ThemeData?;
-    // 🍞 bin/widgeteer/bindings/widget.dart:654
+    // 🍞 bin/widgeteer/bindings/widget.dart:684
     final homeValue = home as Widget;
     
     return MaterialApp(key: keyValue, title: titleValue, theme: themeValue, home: homeValue);
