@@ -145,4 +145,4 @@ public func _userWidgetProxyEquals(_ lhs: UnsafeRawPointer, _ rhs: UnsafeRawPoin
 
 // MARK: Constrained built in widget protocols
 
-protocol PreferredSizeWidget: BuiltinWidget {}
+public protocol PreferredSizeWidget: BuiltinWidget {}

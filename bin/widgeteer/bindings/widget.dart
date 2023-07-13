@@ -134,7 +134,12 @@ class WidgetBinding extends Binding {
     // widget constructor is just a function that has the widget name
     name: name,
     parameters: parameters +
-        ParametersList(context, content.map((e) => e.parameter).toList()),
+        ParametersList(
+            context,
+            content
+                .map((e) => e.parameter)
+                .toList()
+                .sorted(sortContentProperties)),
     returnType: 'Object',
   );
 
@@ -154,7 +159,7 @@ class WidgetBinding extends Binding {
       return "";
     }
 
-    return "<${content.map((e) => "${e.swiftGenericParameter}: ${e.swiftGenericConstraint}").join(", ")}>";
+    return "<${content.map((e) => "${e.swiftGenericParameter}: ${e.swiftGenericConstraint()}").join(", ")}>";
   }
 
   @override
@@ -493,7 +498,7 @@ class WidgetContentType extends BoundType {
 
   /// What widget subclass to accept as content.
   /// Defaults to `Widget`.
-  final String constraint;
+  final String? constraint;
 
   final bool multi;
   final bool dartNamed;
@@ -532,7 +537,7 @@ class WidgetContentType extends BoundType {
       widgetName: widgetName,
       optional: toml["optional"] ?? false,
       body: toml["body"] ?? false,
-      constraint: toml["constraint"] ?? "Widget",
+      constraint: toml["constraint"],
       position: position,
     );
   }
@@ -541,11 +546,20 @@ class WidgetContentType extends BoundType {
   String get swiftGenericParameter => contentName.pascalCase;
 
   /// Name of the Swift generic parameter contraint.
-  String get swiftGenericConstraint => multi
-      ? "MultiWidget"
-      : (optional ? "OptionalSingleWidget" : "SingleWidget");
+  String swiftGenericConstraint() {
+    if (constraint != null) {
+      return constraint!;
+    }
 
-  String get dartClass => optional ? "$constraint?" : constraint;
+    return multi
+        ? "MultiWidget"
+        : (optional ? "OptionalSingleWidget" : "SingleWidget");
+  }
+
+  String dartClass() {
+    final className = constraint ?? "Widget";
+    return optional ? "$className?" : className;
+  }
 
   @override
   String get name => "$widgetName/$swiftGenericParameter";
@@ -610,11 +624,11 @@ class MultiDartWidgetContent extends DartType {
   CodeUnit fromCValue(String sourceFfiValue, String variableName) {
     return CodeUnit(
         content:
-            "final ${variableName}Value = consumeHandlesList<${type.dartClass}>($sourceFfiValue);");
+            "final ${variableName}Value = consumeHandlesList<${type.dartClass()}>($sourceFfiValue);");
   }
 
   @override
-  String get name => "List<${type.dartClass}>";
+  String get name => "List<${type.dartClass()}>";
 }
 
 class MultiCWidgetContent extends CType {
@@ -683,10 +697,10 @@ class DartWidgetContent extends DartType {
   @override
   CodeUnit fromCValue(String sourceFfiValue, String variableName) => CodeUnit(
       content:
-          "final ${variableName}Value = $sourceFfiValue as ${type.dartClass};");
+          "final ${variableName}Value = $sourceFfiValue as ${type.dartClass()};");
 
   @override
-  String get name => type.dartClass;
+  String get name => type.dartClass();
 }
 
 class CWidgetContent extends CType {

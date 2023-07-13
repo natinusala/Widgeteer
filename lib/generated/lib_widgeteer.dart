@@ -250,11 +250,8 @@ class LibWidgeteer {
   void register_new_scaffold(
     ffi.Pointer<
             ffi.NativeFunction<
-                ffi.Handle Function(
-                    ffi.Pointer<ffi.Char> key,
-                    ffi.Handle appBar,
-                    ffi.Handle floatingActionButton,
-                    ffi.Handle body)>>
+                ffi.Handle Function(ffi.Pointer<ffi.Char> key, ffi.Handle body,
+                    ffi.Handle appBar, ffi.Handle floatingActionButton)>>
         outlet,
   ) {
     return _register_new_scaffold(
@@ -263,24 +260,25 @@ class LibWidgeteer {
   }
 
   late final _register_new_scaffoldPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<
-                  ffi.NativeFunction<
-                      ffi.Handle Function(
-                          ffi.Pointer<ffi.Char> key,
-                          ffi.Handle appBar,
-                          ffi.Handle floatingActionButton,
-                          ffi.Handle body)>>)>>('register_new_scaffold');
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Pointer<
+                      ffi.NativeFunction<
+                          ffi.Handle Function(
+                              ffi.Pointer<ffi.Char> key,
+                              ffi.Handle body,
+                              ffi.Handle appBar,
+                              ffi.Handle floatingActionButton)>>)>>(
+      'register_new_scaffold');
   late final _register_new_scaffold = _register_new_scaffoldPtr.asFunction<
       void Function(
           ffi.Pointer<
               ffi.NativeFunction<
                   ffi.Handle Function(
                       ffi.Pointer<ffi.Char> key,
+                      ffi.Handle body,
                       ffi.Handle appBar,
-                      ffi.Handle floatingActionButton,
-                      ffi.Handle body)>>)>();
+                      ffi.Handle floatingActionButton)>>)>();
 
   void register_new_text_theme(
     ffi.Pointer<

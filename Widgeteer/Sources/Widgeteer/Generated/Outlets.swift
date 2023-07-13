@@ -118,8 +118,8 @@ public func _registerThemeOf(_ outlet: _ThemeOf_CFunctionPointer) {
 // MARK: NewScaffold
 // Outlet emitted by 'Scaffold' binding (Instance of 'WidgetBinding')
 // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:96
-public typealias _NewScaffold_CFunctionPointer = @convention(c) (_ key: UnsafePointer<CChar>?, _ appBar: Dart_Handle, _ floatingActionButton: Dart_Handle, _ body: Dart_Handle) -> Dart_Handle
-public typealias _NewScaffold = (_ key: UnsafePointer<CChar>?, _ appBar: Dart_Handle, _ floatingActionButton: Dart_Handle, _ body: Dart_Handle) -> Dart_Handle
+public typealias _NewScaffold_CFunctionPointer = @convention(c) (_ key: UnsafePointer<CChar>?, _ body: Dart_Handle, _ appBar: Dart_Handle, _ floatingActionButton: Dart_Handle) -> Dart_Handle
+public typealias _NewScaffold = (_ key: UnsafePointer<CChar>?, _ body: Dart_Handle, _ appBar: Dart_Handle, _ floatingActionButton: Dart_Handle) -> Dart_Handle
 
 public var Flutter_NewScaffold: _NewScaffold = { (_, _, _, _) in fatalError("'NewScaffold' called before it was registered") }
 

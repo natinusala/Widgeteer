@@ -19,7 +19,7 @@
 ///
 /// This widget is the only one that conforms to ``OptionalSingleWidget`` and is
 /// allowed to return ``Dart_Null``.
-public struct EmptyWidget: OptionalSingleWidget {
+public struct EmptyWidget: OptionalSingleWidget, BuiltinWidget, PreferredSizeWidget {
     public init() {}
 
     public func reduce(parentKey: WidgetKey) -> ReducedWidget {
