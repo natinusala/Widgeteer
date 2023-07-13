@@ -3,24 +3,32 @@
 // === Follow the breadcrumbs to find what code generated what you're reading ===
 // 🍞 bin/widgeteer/bindings/widget.dart:167
 // 🍞 bin/widgeteer/bindings/widget.dart:270
-public struct AppBar<Title: OptionalSingleWidget>: PreferredSizeWidget {
+public struct Icon: BuiltinWidget {
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:209
-    let title: Title
+    let icon: IconData
+    let size: Double?
 
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:222
-    public init(title: (() -> Title) = { EmptyWidget() }) {
-        self.title = title()
+    public init(icon: IconData, size: Double?) {
+        self.icon = icon
+        self.size = size
     }
 
     // 🍞 bin/widgeteer/bindings/widget.dart:293
     public func reduce(parentKey: WidgetKey) -> ReducedWidget {
-        // 🍞 bin/widgeteer/bindings/widget.dart:715
-        let titleValue = self.title.reduce(parentKey: parentKey.joined("title")).handle
-        let localHandle = Flutter_NewAppBar(
+        // 🍞 bin/widgeteer/bindings/enum.dart:119
+        let iconValue = self.icon.rawValue
+        // 🍞 bin/widgeteer/bindings/double.dart:84
+        let sizeUnmanaged = Unmanaged<OptionalValue>.passRetained(OptionalValue(value: .double(self.size)))
+        let sizeValue = sizeUnmanaged.toOpaque()
+        let localHandle = Flutter_NewIcon(
             parentKey.joined(String(describing: Self.self)),
-            titleValue
+            iconValue,
+            sizeValue
         )
         let reducedWidget = ReducedWidget(handle: localHandle)
+        // 🍞 bin/widgeteer/bindings/double.dart:92
+        sizeUnmanaged.release()
         return reducedWidget
     }
 }

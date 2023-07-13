@@ -42,7 +42,11 @@ Future<void> generateBindings(String workingDirectory) async {
   final bindings = await parseBindings(workingDirectory);
 
   // Prepare a list of imports to blindly give to every generated Dart file
-  final imports = CodeUnit(content: "import 'package:flutter/widgets.dart';");
+  final imports = CodeUnit(initialLines: [
+    "import 'package:flutter/widgets.dart';",
+    "import 'package:widgeteer/dylib.dart';",
+    "import 'package:flutter/material.dart';"
+  ]);
   for (final binding in bindings) {
     if (!binding.binding.importBody) {
       continue;

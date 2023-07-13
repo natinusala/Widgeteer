@@ -19,6 +19,7 @@ import 'bindings/any_widget.dart';
 import 'bindings/bridging.dart';
 import 'bindings/callback.dart';
 import 'bindings/color.dart';
+import 'bindings/double.dart';
 import 'bindings/enum.dart';
 import 'bindings/function.dart';
 import 'bindings/int.dart';
@@ -42,6 +43,7 @@ final builtinBindings = [
   VoidBinding(),
   AnyWidgetBinding(),
   IntBinding(),
+  DoubleBinding(),
   BridgingBinding(),
   ColorBinding(),
 ];

@@ -40,3 +40,7 @@ extern void widgeteer_stateless_user_widget_proxy_release(widgeteer_stateless_us
 // widgeteer_handles_list: Dart handles list
 extern int widgeteer_handles_list_count(widgeteer_handles_list list);
 extern Dart_Handle widgeteer_handles_list_get(widgeteer_handles_list list, int idx);
+
+// widgeteer_optional_value: Optional values
+extern bool widgeteer_optional_value_is_set(widgeteer_optional_value value);
+extern double widgeteer_optional_value_get_double(widgeteer_optional_value value);
