@@ -44,3 +44,4 @@ extern Dart_Handle widgeteer_handles_list_get(widgeteer_handles_list list, int i
 // widgeteer_optional_value: Optional values
 extern bool widgeteer_optional_value_is_set(widgeteer_optional_value value);
 extern double widgeteer_optional_value_get_double(widgeteer_optional_value value);
+extern char* widgeteer_optional_value_get_string(widgeteer_optional_value value);

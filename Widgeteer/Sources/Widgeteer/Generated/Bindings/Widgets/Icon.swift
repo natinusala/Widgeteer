@@ -9,7 +9,7 @@ public struct Icon: BuiltinWidget {
     let size: Double?
 
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:222
-    public init(icon: IconData, size: Double?) {
+    public init(_ icon: IconData, size: Double? = nil) {
         self.icon = icon
         self.size = size
     }
@@ -19,7 +19,7 @@ public struct Icon: BuiltinWidget {
         // 🍞 bin/widgeteer/bindings/enum.dart:119
         let iconValue = self.icon.rawValue
         // 🍞 bin/widgeteer/bindings/double.dart:84
-        let sizeUnmanaged = Unmanaged<OptionalValue>.passRetained(OptionalValue(value: .double(self.size)))
+        let sizeUnmanaged = Unmanaged<OptionalValue>.passRetained(OptionalValue(double: self.size))
         let sizeValue = sizeUnmanaged.toOpaque()
         let localHandle = Flutter_NewIcon(
             parentKey.joined(String(describing: Self.self)),

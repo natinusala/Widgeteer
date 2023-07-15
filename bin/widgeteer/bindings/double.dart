@@ -82,7 +82,7 @@ class COptionalDouble extends CType {
   @override
   CodeUnit fromSwiftValue(String sourceValue, String variableName) {
     return CodeUnit(initialLines: [
-      "let ${variableName}Unmanaged = Unmanaged<OptionalValue>.passRetained(OptionalValue(value: .double($sourceValue)))",
+      "let ${variableName}Unmanaged = Unmanaged<OptionalValue>.passRetained(OptionalValue(double: $sourceValue))",
       "let ${variableName}Value = ${variableName}Unmanaged.toOpaque()",
     ]);
   }

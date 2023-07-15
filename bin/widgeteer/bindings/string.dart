@@ -26,7 +26,77 @@ class StringBinding extends Binding {
   String get origin => "built in";
 
   @override
-  List<BoundType> get types => [StringType()];
+  List<BoundType> get types => [StringType(), OptionalStringType()];
+}
+
+class OptionalStringType extends BoundType {
+  @override
+  CType get cType => COptionalString();
+
+  @override
+  DartType get dartType => DartOptionalString();
+
+  @override
+  String get name => "String?";
+
+  @override
+  SwiftType get swiftType => SwiftOptionalString();
+}
+
+class COptionalString extends CType {
+  @override
+  String get dartFfiMapping => "optional_value";
+
+  @override
+  CodeUnit fromDartValue(String sourceValue, String variableName) {
+    throw UnimplementedError();
+  }
+
+  @override
+  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+    return CodeUnit(initialLines: [
+      "let ${variableName}Unmanaged = Unmanaged<OptionalValue>.passRetained(OptionalValue(string: $sourceValue))",
+      "let ${variableName}Value = ${variableName}Unmanaged.toOpaque()",
+    ]);
+  }
+
+  @override
+  CodeUnit? fromSwiftValueCleanup(String sourceValue, String variableName) {
+    return CodeUnit(content: "${variableName}Unmanaged.release()");
+  }
+
+  @override
+  String get name => "widgeteer_optional_value";
+
+  @override
+  String get swiftCInteropMapping => "UnsafeRawPointer";
+}
+
+class SwiftOptionalString extends SwiftType {
+  @override
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+    throw UnimplementedError();
+  }
+
+  @override
+  String get name => "String?";
+}
+
+class DartOptionalString extends DartType {
+  @override
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+    return CodeUnit(initialLines: [
+      "late final String? ${variableName}Value;",
+      "if (libWidgeteer.optional_value_is_set($sourceFfiValue)) {",
+      "    ${variableName}Value = libWidgeteer.optional_value_get_string($sourceFfiValue).cast<Utf8>().toDartString();",
+      "} else {",
+      "    ${variableName}Value = null;",
+      "}",
+    ]);
+  }
+
+  @override
+  String get name => "String?";
 }
 
 class StringType extends BoundType {

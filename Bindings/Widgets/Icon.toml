@@ -16,7 +16,7 @@
 location = "package:flutter/widgets.dart"
 
 [[parameter]]
-label = "_"
+swift_label = "_"
 name = "icon"
 type = "IconData"
 dart_named = false
@@ -24,4 +24,5 @@ dart_named = false
 [[parameter]]
 name = "size"
 type = "Double?"
+default_value = "nil"
 dart_named = true

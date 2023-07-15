@@ -3,32 +3,27 @@
 // === Follow the breadcrumbs to find what code generated what you're reading ===
 // 🍞 bin/widgeteer/bindings/widget.dart:167
 // 🍞 bin/widgeteer/bindings/widget.dart:270
-public struct MaterialApp<Home: SingleWidget>: BuiltinWidget {
+public struct StatelessUserWidget: BuiltinWidget {
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:209
-    let title: String
-    let theme: ThemeData?
-    let home: Home
+    let proxy: StatelessUserWidgetProxy
+    let swiftWidgetName: String
 
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:222
-    public init(title: String = "", theme: ThemeData?, home: () -> Home) {
-        self.title = title
-        self.theme = theme
-        self.home = home()
+    public init(proxy: StatelessUserWidgetProxy, swiftWidgetName: String) {
+        self.proxy = proxy
+        self.swiftWidgetName = swiftWidgetName
     }
 
     // 🍞 bin/widgeteer/bindings/widget.dart:293
     public func reduce(parentKey: WidgetKey) -> ReducedWidget {
+        // 🍞 bin/widgeteer/bindings/bridging.dart:67
+        let proxyValue = Unmanaged<StatelessUserWidgetProxy>.passRetained(self.proxy).toOpaque()
         // 🍞 bin/widgeteer/bindings/string.dart:149
-        let titleValue = self.title
-        // 🍞 bin/widgeteer/bindings/persistent_object.dart:361
-        let themeValue = self.theme?.handle ?? Dart_Null
-        // 🍞 bin/widgeteer/bindings/widget.dart:715
-        let homeValue = self.home.reduce(parentKey: parentKey.joined("home")).handle
-        let localHandle = Flutter_NewMaterialApp(
+        let swiftWidgetNameValue = self.swiftWidgetName
+        let localHandle = Flutter_NewStatelessUserWidget(
             parentKey.joined(String(describing: Self.self)),
-            titleValue,
-            themeValue,
-            homeValue
+            proxyValue,
+            swiftWidgetNameValue
         )
         let reducedWidget = ReducedWidget(handle: localHandle)
         return reducedWidget

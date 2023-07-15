@@ -23,6 +23,7 @@ dart_named = true
 [[parameter]]
 name = "tooltip"
 type = "String?"
+default_value = "nil"
 dart_named = true
 
 [[content]]

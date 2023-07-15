@@ -8,23 +8,36 @@ import 'package:flutter/material.dart';
 import 'package:widgeteer/generated/Bindings/Callback/VoidCallback.dart';
 // 🍞 bin/widgeteer/bindings/widget.dart:148
 // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:59
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
 import 'package:widgeteer/generated/lib_widgeteer.dart';
 import 'package:widgeteer/swift.dart';
 import 'package:flutter/foundation.dart';
 // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:91
-Object newTextImpl(Pointer<Char> key, Pointer<Char> data, Object? style) {
+Object newFloatingActionButtonImpl(Pointer<Char> key, Pointer<Void> onPressed, optional_value tooltip, Object child) {
     // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:81
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:143
     // 🍞 bin/widgeteer/bindings/widget_key.dart:43
     final keyString = key.cast<Utf8>().toDartString();
     final keyValue = ValueKey(keyString);
-    // 🍞 bin/widgeteer/bindings/string.dart:131
-    final dataValue = data.cast<Utf8>().toDartString();
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:388
-    final styleValue = style as TextStyle?;
+    // 🍞 bin/widgeteer/bindings/callback.dart:262
+    late VoidCallback? onPressedValue;
+    if (onPressed == nullptr) {
+        onPressedValue = null;
+    } else {
+        final onPressedProxy = VoidCallbackProxy(onPressed);
+        onPressedValue = () { return onPressedProxy.call(); };
+    }
+    // 🍞 bin/widgeteer/bindings/string.dart:88
+    late final String? tooltipValue;
+    if (libWidgeteer.optional_value_is_set(tooltip)) {
+        tooltipValue = libWidgeteer.optional_value_get_string(tooltip).cast<Utf8>().toDartString();
+    } else {
+        tooltipValue = null;
+    }
+    // 🍞 bin/widgeteer/bindings/widget.dart:698
+    final childValue = child as Widget;
     
-    return Text(key: keyValue, dataValue, style: styleValue);
+    return FloatingActionButton(key: keyValue, onPressed: onPressedValue, tooltip: tooltipValue, child: childValue);
 }

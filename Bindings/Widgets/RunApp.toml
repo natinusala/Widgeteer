@@ -18,6 +18,6 @@ name = "runApp"
 return_type = "Void"
 
 [[parameter]]
-label = "_"
+swift_label = "_"
 name = "app"
 type = "Widget"

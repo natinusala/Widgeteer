@@ -21,7 +21,7 @@ Object newMaterialAppImpl(Pointer<Char> key, Pointer<Char> title, Object? theme,
     // 🍞 bin/widgeteer/bindings/widget_key.dart:43
     final keyString = key.cast<Utf8>().toDartString();
     final keyValue = ValueKey(keyString);
-    // 🍞 bin/widgeteer/bindings/string.dart:61
+    // 🍞 bin/widgeteer/bindings/string.dart:131
     final titleValue = title.cast<Utf8>().toDartString();
     // 🍞 bin/widgeteer/bindings/persistent_object.dart:388
     final themeValue = theme as ThemeData?;

@@ -14,6 +14,7 @@
    limitations under the License.
 */
 
+import Foundation
 import DartApiDl
 
 /// Allows passing an optional value from Swift to Dart for types that cannot
@@ -28,24 +29,41 @@ import DartApiDl
 class OptionalValue {
     enum Value: CustomStringConvertible {
         case double(Double?)
+        case string(UnsafeMutablePointer<CChar>?)
 
         var description: String {
             switch self {
                 case .double: return "Double?"
+                case .string: return "String?"
             }
         }
 
         var isSet: Bool {
             switch self {
                 case .double(let value): return value != nil
+                case .string(let value): return value != nil
             }
         }
     }
 
     let value: Value
 
-    init(value: Value) {
-        self.value = value
+    init(double: Double?) {
+        self.value = .double(double)
+    }
+
+    init(string: String?) {
+        if let string {
+            self.value = .string(strdup(string.cString(using: .utf8)!))
+        } else {
+            self.value = .string(nil)
+        }
+    }
+
+    deinit {
+        if case .string(let value) = self.value, let value {
+            free(value)
+        }
     }
 }
 
@@ -55,11 +73,23 @@ public func _optionalValueIsSet(_ value: UnsafeRawPointer) -> Bool {
     return value.value.isSet
 }
 
-@_cdecl("widgeteer_optional_value_get_double")*
+@_cdecl("widgeteer_optional_value_get_double")
 public func _optionalValueGetDouble(_ value: UnsafeRawPointer) -> Double {
     let value = Unmanaged<OptionalValue>.fromOpaque(value).takeUnretainedValue()
     guard case .double(let value) = value.value else {
         fatalError("Tried to get a value from an 'OptionalValue' of the wrong type (expected 'Double?', got '\(value.value.description)')")
+    }
+    guard let value else {
+        fatalError("Tried to get a value from an 'OptionalValue' without a value ('nil)")
+    }
+    return value
+}
+
+@_cdecl("widgeteer_optional_value_get_string")
+public func _optionalValueGetString(_ value: UnsafeRawPointer) -> UnsafeMutablePointer<CChar> {
+    let value = Unmanaged<OptionalValue>.fromOpaque(value).takeUnretainedValue()
+    guard case .string(let value) = value.value else {
+        fatalError("Tried to get a value from an 'OptionalValue' of the wrong type (expected 'String?', got '\(value.value.description)')")
     }
     guard let value else {
         fatalError("Tried to get a value from an 'OptionalValue' without a value ('nil)")

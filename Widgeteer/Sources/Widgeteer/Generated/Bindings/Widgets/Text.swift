@@ -16,7 +16,7 @@ public struct Text: BuiltinWidget {
 
     // 🍞 bin/widgeteer/bindings/widget.dart:293
     public func reduce(parentKey: WidgetKey) -> ReducedWidget {
-        // 🍞 bin/widgeteer/bindings/string.dart:79
+        // 🍞 bin/widgeteer/bindings/string.dart:149
         let dataValue = self.data
         // 🍞 bin/widgeteer/bindings/persistent_object.dart:361
         let styleValue = self.style?.handle ?? Dart_Null
