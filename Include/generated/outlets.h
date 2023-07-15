@@ -69,5 +69,7 @@ extern void register_new_floating_action_button(Dart_Handle (*outlet)(char* key,
 extern void register_new_text_style(Dart_Handle (*outlet)(int color));
 // Outlet emitted by 'TextStyle' binding (Instance of 'PersistentObjectBinding')
 extern void register_text_style_get_color(int (*outlet)(Dart_PersistentHandle instance));
+// Outlet emitted by 'TouchState' binding (Instance of 'FunctionBinding')
+extern void register_touch_state(void (*outlet)(Dart_Handle state));
 // Outlet emitted by 'StatelessUserWidget' binding (Instance of 'WidgetBinding')
 extern void register_new_stateless_user_widget(Dart_Handle (*outlet)(char* key, widgeteer_stateless_user_widget_proxy proxy, char* swiftWidgetName));

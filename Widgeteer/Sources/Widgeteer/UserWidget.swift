@@ -39,10 +39,14 @@ public extension InstallableWidget {
 
         var installed = self
 
+        storage?.installState(on: &installed)
         buildContext.installEnvironment(on: &installed)
 
         return installed
     }
-}
 
-public typealias StateStorage = String // TODO: remove
+    // Default state storage: get properties from self.
+    func createStateStorage() -> StateStorage {
+        return StateStorage(from: self)
+    }
+}

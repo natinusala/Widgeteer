@@ -21,6 +21,7 @@ import 'package:widgeteer/generated/Bindings/Material/TextButton.dart';
 import 'package:widgeteer/generated/Bindings/Material/AppBar.dart';
 import 'package:widgeteer/generated/Bindings/Material/FloatingActionButton.dart';
 import 'package:widgeteer/generated/Bindings/Painting/TextStyle.dart';
+import 'package:widgeteer/generated/Bindings/Bridging/TouchState.dart';
 import 'package:widgeteer/generated/Bindings/Bridging/StatelessUserWidget.dart';
 import 'package:widgeteer/generated/Bindings/Callback/VoidCallback.dart';
 
@@ -126,6 +127,9 @@ void registerOutlets(LibWidgeteer widgeteer) {
     // Outlet emitted by 'TextStyle' binding (Instance of 'PersistentObjectBinding')
     // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:78
     widgeteer.register_text_style_get_color(Pointer.fromFunction(textStyleGetColor, _minusOne));
+    // Outlet emitted by 'TouchState' binding (Instance of 'FunctionBinding')
+    // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:82
+    widgeteer.register_touch_state(Pointer.fromFunction(TouchStateImpl));
     // Outlet emitted by 'StatelessUserWidget' binding (Instance of 'WidgetBinding')
     // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:82
     widgeteer.register_new_stateless_user_widget(Pointer.fromFunction(newStatelessUserWidgetImpl));

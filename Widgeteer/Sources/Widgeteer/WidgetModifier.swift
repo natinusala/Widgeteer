@@ -69,7 +69,7 @@ public struct ModifiedWidget<Content: Widget, Modifier: WidgetModifier>: Widget,
     }
 
     public func createStateStorage() -> StateStorage {
-        fatalError("Unimplemented")
+        return StateStorage(from: self.modifier)
     }
 
     public var body: Never {

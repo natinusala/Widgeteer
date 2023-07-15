@@ -465,6 +465,20 @@ public func _registerTextStyleGetColor(_ outlet: _TextStyleGetColor_CFunctionPoi
     trace("Registering 'TextStyleGetColor'")
     Flutter_TextStyleGetColor = { (p0) in assertIsOnFlutterThread(); return outlet(p0) }
 }
+// MARK: TouchState
+// Outlet emitted by 'TouchState' binding (Instance of 'FunctionBinding')
+// 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:96
+public typealias _TouchState_CFunctionPointer = @convention(c) (_ state: Dart_Handle) -> Void
+public typealias _TouchState = (_ state: Dart_Handle) -> Void
+
+public var Flutter_TouchState: _TouchState = { (_) in fatalError("'TouchState' called before it was registered") }
+
+@_cdecl("register_touch_state")
+public func _registerTouchState(_ outlet: _TouchState_CFunctionPointer) {
+    assertIsOnFlutterThread()
+    trace("Registering 'TouchState'")
+    Flutter_TouchState = { (p0) in assertIsOnFlutterThread(); return outlet(p0) }
+}
 // MARK: NewStatelessUserWidget
 // Outlet emitted by 'StatelessUserWidget' binding (Instance of 'WidgetBinding')
 // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:96

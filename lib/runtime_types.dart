@@ -17,7 +17,7 @@
 /// The overridden runtime type for Widgeteer Swift widgets.
 /// Widgets would otherwise all have the same runtime type and nothing would ever work.
 class WidgetRuntimeType extends Type {
-  /// The full Swift widget name, including generic parameters (important for equality).
+  /// The full Swift widget name, including generic parameters and file name (important for equality).
   final String swiftWidgetName;
 
   WidgetRuntimeType({required this.swiftWidgetName});

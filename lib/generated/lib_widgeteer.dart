@@ -911,6 +911,26 @@ class LibWidgeteer {
                   ffi.NativeFunction<
                       ffi.Int Function(ffi.Handle instance)>>)>();
 
+  void register_touch_state(
+    ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Handle state)>> outlet,
+  ) {
+    return _register_touch_state(
+      outlet,
+    );
+  }
+
+  late final _register_touch_statePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(
+              ffi.Pointer<
+                  ffi.NativeFunction<
+                      ffi.Void Function(
+                          ffi.Handle state)>>)>>('register_touch_state');
+  late final _register_touch_state = _register_touch_statePtr.asFunction<
+      void Function(
+          ffi.Pointer<
+              ffi.NativeFunction<ffi.Void Function(ffi.Handle state)>>)>();
+
   void register_new_stateless_user_widget(
     ffi.Pointer<
             ffi.NativeFunction<
