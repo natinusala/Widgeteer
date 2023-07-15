@@ -85,7 +85,7 @@ struct StateLocation {
     }
 }
 
-/// Stores all state properties of a widget. Held by a `ChatterWidgetState` object
+/// Stores all state properties of a widget. Held by a `UserWidgetState` object
 /// on the Flutter side.
 public class StateStorage {
     struct Entry {
@@ -102,7 +102,7 @@ public class StateStorage {
     /// State properties tracked by this storage instance.
     private var entries: [Entry] = []
 
-    /// Weak persistent handle to the Flutter `ChatterWidgetState` counterpart.
+    /// Weak persistent handle to the Flutter `UserWidgetState` counterpart.
     var dartStateHandle: Dart_PersistentHandle?
 
     init<W: InstallableWidget>(from widget: W) {

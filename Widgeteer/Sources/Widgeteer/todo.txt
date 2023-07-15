@@ -3,6 +3,7 @@ renommer BuiltinWidget en DartWidget
 les TODO du codegen
 renommer variableName to "destination" to have "source" and "destination"
 réessayer / remettre les modifiers
+vérifier que le dev menu marche encore même si il est pourri (c'est bien pour la démo)
 restaurer hot restart
 restaurer les preview
 restaurer Android et au passage faire une extension kotlin propre

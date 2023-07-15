@@ -25,7 +25,8 @@ import '../dylib.dart';
 
 class StatelessUserWidget extends StatelessWidget {
   final StatelessUserWidgetProxy proxy;
-  late final WidgetRuntimeType _runtimeType;
+
+  late final UserWidgetRuntimeType _runtimeType;
 
   StatelessUserWidget(String swiftWidgetName,
       {super.key, required this.proxy}) {

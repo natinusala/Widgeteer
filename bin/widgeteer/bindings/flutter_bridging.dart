@@ -17,10 +17,9 @@
 import '../bindings_generator/code_unit.dart';
 import '../bindings_generator/models/binding.dart';
 import '../bindings_generator/models/type.dart';
-import 'object.dart';
 
-/// Binding for all "bridging" types such as widgets proxies, lists, wrappers...
-class BridgingBinding extends Binding {
+/// Binding for all Flutter "bridging" types such as widgets proxies, built in types...
+class FlutterBridgingBinding extends Binding {
   @override
   String get name => "Bridging";
 

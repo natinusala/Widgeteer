@@ -16,7 +16,7 @@
 
 import 'package:path/path.dart' as p;
 import 'bindings/any_widget.dart';
-import 'bindings/bridging.dart';
+import 'bindings/flutter_bridging.dart';
 import 'bindings/callback.dart';
 import 'bindings/color.dart';
 import 'bindings/double.dart';
@@ -44,7 +44,7 @@ final builtinBindings = [
   AnyWidgetBinding(),
   IntBinding(),
   DoubleBinding(),
-  BridgingBinding(),
+  FlutterBridgingBinding(),
   ColorBinding(),
 ];
 

@@ -16,18 +16,18 @@
 
 /// The overridden runtime type for Widgeteer Swift widgets.
 /// Widgets would otherwise all have the same runtime type and nothing would ever work.
-class WidgetRuntimeType extends Type {
+class UserWidgetRuntimeType extends Type {
   /// The full Swift widget name, including generic parameters and file name (important for equality).
   final String swiftWidgetName;
 
-  WidgetRuntimeType({required this.swiftWidgetName});
+  UserWidgetRuntimeType({required this.swiftWidgetName});
 
   @override
   int get hashCode => swiftWidgetName.hashCode;
 
   @override
   bool operator ==(Object other) {
-    if (other is WidgetRuntimeType) {
+    if (other is UserWidgetRuntimeType) {
       return swiftWidgetName == other.swiftWidgetName;
     }
 
