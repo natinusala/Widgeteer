@@ -3,7 +3,7 @@
 // === Follow the breadcrumbs to find what code generated what you're reading ===
 // 🍞 bin/widgeteer/bindings/widget.dart:167
 // 🍞 bin/widgeteer/bindings/widget.dart:270
-public struct StatelessUserWidget: BuiltinWidget {
+public struct StatelessUserWidget: DartWidget {
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:209
     let proxy: StatelessUserWidgetProxy
     let swiftWidgetName: String

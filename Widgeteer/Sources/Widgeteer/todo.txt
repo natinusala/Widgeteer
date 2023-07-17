@@ -1,11 +1,9 @@
-reinstate la demo en entier
-renommer BuiltinWidget en DartWidget et vérifier qu'il est appliqué partout dans la codegen
 les TODO du codegen
 renommer variableName to "destination" to have "source" and "destination"
 réessayer / remettre les modifiers
 vérifier que le dev menu marche encore même si il est pourri (c'est bien pour la démo)
 restaurer hot restart
 restaurer les preview
-restaurer Android et au passage faire une extension kotlin propre
-supprimer SIGUSR1 et watch le fichier plutôt
-séparer Properties et Parameters de persistent object, dire que Parameter peut correspondre à une property via son nom pour pas dupliquer (mais ça peut aussi être un param seul) - permet de sortir init_type par exemple, qui va override la property
+restaurer Android
+TODO: supprimer SIGUSR1 et watch le fichier plutôt
+TODO: séparer Properties et Parameters de persistent object, dire que Parameter peut correspondre à une property via son nom pour pas dupliquer (mais ça peut aussi être un param seul) - permet de sortir init_type par exemple, qui va override la property

@@ -64,8 +64,9 @@ public protocol BuildableWidget: IsPodable, InstallableWidget {
     func build(buildContext: BuildContext, parentKey: String) -> LocalWidgetHandle
 }
 
-/// A widget that's reduced to a built in Flutter widget.
-public protocol BuiltinWidget: Widget {}
+/// A Flutter widget that's defined in Dart, such as built in widgets
+/// or widgets coming from an external library.
+public protocol DartWidget: Widget {}
 
 public extension SingleWidget {
     func reduce(parentKey: WidgetKey) -> [ReducedWidget] {
@@ -73,7 +74,7 @@ public extension SingleWidget {
     }
 }
 
-public extension BuiltinWidget {
+public extension DartWidget {
     var body: Never {
         fatalError("Builtin widgets do not have a body")
     }
@@ -145,4 +146,4 @@ public func _userWidgetProxyEquals(_ lhs: UnsafeRawPointer, _ rhs: UnsafeRawPoin
 
 // MARK: Constrained built in widget protocols
 
-public protocol PreferredSizeWidget: BuiltinWidget {}
+public protocol PreferredSizeWidget: DartWidget {}

@@ -3,7 +3,7 @@
 // === Follow the breadcrumbs to find what code generated what you're reading ===
 // 🍞 bin/widgeteer/bindings/widget.dart:167
 // 🍞 bin/widgeteer/bindings/widget.dart:270
-public struct Scaffold<AppBar: PreferredSizeWidget, FloatingActionButton: OptionalSingleWidget, Body: SingleWidget>: BuiltinWidget {
+public struct Scaffold<AppBar: PreferredSizeWidget, FloatingActionButton: OptionalSingleWidget, Body: SingleWidget>: DartWidget {
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:209
     let body: Body
     let appBar: AppBar

@@ -3,7 +3,7 @@
 // === Follow the breadcrumbs to find what code generated what you're reading ===
 // 🍞 bin/widgeteer/bindings/widget.dart:167
 // 🍞 bin/widgeteer/bindings/widget.dart:270
-public struct Row<Children: MultiWidget>: BuiltinWidget {
+public struct Row<Children: MultiWidget>: DartWidget {
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:209
     let mainAxisAlignment: MainAxisAlignment
     let children: Children

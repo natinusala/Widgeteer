@@ -269,7 +269,7 @@ class WidgetBinding extends Binding {
   CodeUnit get swiftStruct {
     final struct = CodeUnit();
 
-    final protocol = superClass ?? "BuiltinWidget";
+    final protocol = superClass ?? "DartWidget";
 
     struct.appendLine(
         "public struct $widgetName$swiftGenericParameters: $protocol {");
