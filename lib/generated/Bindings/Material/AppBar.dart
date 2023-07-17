@@ -21,7 +21,7 @@ Object newAppBarImpl(Pointer<Char> key, Object? title) {
     // 🍞 bin/widgeteer/bindings/widget_key.dart:43
     final keyString = key.cast<Utf8>().toDartString();
     final keyValue = ValueKey(keyString);
-    // 🍞 bin/widgeteer/bindings/widget.dart:698
+    // 🍞 bin/widgeteer/bindings/widget.dart:688
     final titleValue = title as Widget?;
     
     return AppBar(key: keyValue, title: titleValue);

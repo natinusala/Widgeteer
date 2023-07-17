@@ -111,13 +111,12 @@ class Outlet {
     registration.appendEmptyLine();
     registration.appendLine('@_cdecl("$cRegistrationDeclarationName")');
     registration
-        .appendLine("public func _register$name(_ outlet: $cFuncTypealias) {");
-    registration.appendLine("assertIsOnFlutterThread()", indentedBy: 4);
-    registration.appendLine('trace("Registering \'$name\'")', indentedBy: 4);
+        .enterScope("public func _register$name(_ outlet: $cFuncTypealias) {");
+    registration.appendLine("assertIsOnFlutterThread()");
+    registration.appendLine('trace("Registering \'$name\'")');
     registration.appendLine(
-        "$swiftFunctionName = { (${parameters.swiftClosureNamedParameters}) in assertIsOnFlutterThread(); return outlet(${parameters.swiftClosureNamedParameters}) }",
-        indentedBy: 4);
-    registration.appendLine("}");
+        "$swiftFunctionName = { (${parameters.swiftClosureNamedParameters}) in assertIsOnFlutterThread(); return outlet(${parameters.swiftClosureNamedParameters}) }");
+    registration.exitScope("}");
 
     return registration;
   }
@@ -141,21 +140,19 @@ class Outlet {
       final cleanup = resolvedType.cType
           .fromSwiftValueCleanup(property.name, property.name);
       if (cleanup != null) {
-        call.appendLine("defer {");
-        call.appendUnit(cleanup, indentedBy: 4);
-        call.appendLine("}");
+        call.enterScope("defer {");
+        call.appendUnit(cleanup);
+        call.exitScope("}");
       }
     }
 
     // Call
-    call.appendLine("let $destination = $swiftFunctionName(");
-    call.appendLines(
-        parameters
-            .map((element) => "${element.name}Value")
-            .join(",\n")
-            .split("\n"),
-        indentedBy: 4);
-    call.appendLine(")");
+    call.enterScope("let $destination = $swiftFunctionName(");
+    call.appendLines(parameters
+        .map((element) => "${element.name}Value")
+        .join(",\n")
+        .split("\n"));
+    call.exitScope(")");
 
     return call;
   }

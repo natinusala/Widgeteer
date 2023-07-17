@@ -199,16 +199,15 @@ class WidgetBinding extends Binding {
   CodeUnit get swiftWrapperStruct {
     final struct = CodeUnit();
 
-    struct.appendLine("struct $wrapperStructName: WidgetWrapper {");
+    struct.enterScope("struct $wrapperStructName: WidgetWrapper {");
 
-    struct.appendLine("public func body(content: Content) -> $name<Content> {",
-        indentedBy: 4);
+    struct.enterScope("public func body(content: Content) -> $name<Content> {");
 
-    struct.appendLine("return $name() { content }", indentedBy: 8);
+    struct.appendLine("return $name() { content }");
 
-    struct.appendLine("}", indentedBy: 4);
+    struct.exitScope("}");
 
-    struct.appendLine("}");
+    struct.exitScope("}");
 
     return struct;
   }
@@ -216,17 +215,15 @@ class WidgetBinding extends Binding {
   CodeUnit get swiftWrapperFunction {
     final function = CodeUnit();
 
-    function.appendLine("public extension Widget {");
+    function.enterScope("public extension Widget {");
 
-    function.appendLine("func $wrapperFunction() -> some Widget {",
-        indentedBy: 4);
+    function.enterScope("func $wrapperFunction() -> some Widget {");
 
-    function.appendLine("return self.wrapped(in: $wrapperStructName())",
-        indentedBy: 8);
+    function.appendLine("return self.wrapped(in: $wrapperStructName())");
 
-    function.appendLine("}", indentedBy: 4);
+    function.exitScope("}");
 
-    function.appendLine("}");
+    function.exitScope("}");
 
     return function;
   }
@@ -271,59 +268,52 @@ class WidgetBinding extends Binding {
 
     final protocol = superClass ?? "DartWidget";
 
-    struct.appendLine(
+    struct.enterScope(
         "public struct $widgetName$swiftGenericParameters: $protocol {");
 
     // Properties
-    struct.appendUnit(swiftProperties.swiftProperties, indentedBy: 4);
+    struct.appendUnit(swiftProperties.swiftProperties);
 
     // Initializer
     struct.appendEmptyLine();
-    struct.appendUnit(swiftProperties.swiftInitializer, indentedBy: 4);
+    struct.appendUnit(swiftProperties.swiftInitializer);
 
     // Reduction function
     struct.appendEmptyLine();
-    struct.appendUnit(reductionFunction, indentedBy: 4);
+    struct.appendUnit(reductionFunction);
 
-    struct.appendLine("}");
+    struct.exitScope("}");
     return struct;
   }
 
   CodeUnit get reductionFunction {
     final reduce = CodeUnit();
 
-    reduce.appendLine(
+    reduce.enterScope(
         "public func reduce(parentKey: WidgetKey) -> ReducedWidget {");
 
     // Translate all properties from Swift to C
     for (final property in swiftProperties) {
       final resolvedType = context.resolveType(property.type);
 
-      reduce.appendUnit(
-          resolvedType.cType
-              .fromSwiftValue("self.${property.name}", property.name),
-          indentedBy: 4);
+      reduce.appendUnit(resolvedType.cType
+          .fromSwiftValue("self.${property.name}", property.name));
     }
 
     reduce.appendLine(
-        "let localHandle = ${newFunction.callingOutlet.swiftFunctionName}(",
-        indentedBy: 4);
+        "let localHandle = ${newFunction.callingOutlet.swiftFunctionName}(");
 
     // Key
-    reduce.appendLine("parentKey.joined(String(describing: Self.self)),",
-        indentedBy: 8);
+    reduce.appendLine("parentKey.joined(String(describing: Self.self)),");
 
-    reduce.appendLines(
-        swiftProperties
-            .map((element) => "${element.name}Value")
-            .join(",\n")
-            .split("\n"),
-        indentedBy: 8);
+    reduce.appendLines(swiftProperties
+        .map((element) => "${element.name}Value")
+        .join(",\n")
+        .split("\n"));
 
-    reduce.appendLine(")", indentedBy: 4);
+    reduce.appendLine(")");
 
-    reduce.appendLine("let reducedWidget = ReducedWidget(handle: localHandle)",
-        indentedBy: 4);
+    reduce.appendLine("let reducedWidget = ReducedWidget(handle: localHandle)");
 
     for (final property in swiftProperties) {
       final resolvedType = context.resolveType(property.type);
@@ -331,13 +321,13 @@ class WidgetBinding extends Binding {
       final cleanup = resolvedType.cType
           .fromSwiftValueCleanup("self.${property.name}", property.name);
       if (cleanup != null) {
-        reduce.appendUnit(cleanup, indentedBy: 4);
+        reduce.appendUnit(cleanup);
       }
     }
 
-    reduce.appendLine("return reducedWidget", indentedBy: 4);
+    reduce.appendLine("return reducedWidget");
 
-    reduce.appendLine("}");
+    reduce.exitScope("}");
 
     return reduce;
   }

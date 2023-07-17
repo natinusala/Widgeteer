@@ -21,7 +21,7 @@ Object newCenterImpl(Pointer<Char> key, Object child) {
     // 🍞 bin/widgeteer/bindings/widget_key.dart:43
     final keyString = key.cast<Utf8>().toDartString();
     final keyValue = ValueKey(keyString);
-    // 🍞 bin/widgeteer/bindings/widget.dart:698
+    // 🍞 bin/widgeteer/bindings/widget.dart:688
     final childValue = child as Widget;
     
     return Center(key: keyValue, child: childValue);

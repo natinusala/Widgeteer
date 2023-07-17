@@ -153,17 +153,15 @@ Future<void> generateBindings(String workingDirectory) async {
 
   registerOutletsFile.appendEmptyLine();
   registerOutletsFile
-      .appendLine("void registerOutlets(LibWidgeteer widgeteer) {");
+      .enterScope("void registerOutlets(LibWidgeteer widgeteer) {");
 
   for (final outlet in outlets) {
     registerOutletsFile.appendLine(
-        "// Outlet emitted by '${outlet.binding.name}' binding (${outlet.binding})",
-        indentedBy: 4);
-    registerOutletsFile.appendUnit(outlet.outlet.dartRegistrationCall,
-        indentedBy: 4);
+        "// Outlet emitted by '${outlet.binding.name}' binding (${outlet.binding})");
+    registerOutletsFile.appendUnit(outlet.outlet.dartRegistrationCall);
   }
 
-  registerOutletsFile.appendLine("}");
+  registerOutletsFile.exitScope("}");
 
   final registerOutletsDestination = p.join(dartRoot, "register_outlets.dart");
   registerOutletsFile.writeToFile(registerOutletsDestination);

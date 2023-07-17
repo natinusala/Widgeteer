@@ -21,11 +21,11 @@ Object newScaffoldImpl(Pointer<Char> key, Object body, Object? appBar, Object? f
     // 🍞 bin/widgeteer/bindings/widget_key.dart:43
     final keyString = key.cast<Utf8>().toDartString();
     final keyValue = ValueKey(keyString);
-    // 🍞 bin/widgeteer/bindings/widget.dart:698
+    // 🍞 bin/widgeteer/bindings/widget.dart:688
     final bodyValue = body as Widget;
-    // 🍞 bin/widgeteer/bindings/widget.dart:698
+    // 🍞 bin/widgeteer/bindings/widget.dart:688
     final appBarValue = appBar as PreferredSizeWidget?;
-    // 🍞 bin/widgeteer/bindings/widget.dart:698
+    // 🍞 bin/widgeteer/bindings/widget.dart:688
     final floatingActionButtonValue = floatingActionButton as Widget?;
     
     return Scaffold(key: keyValue, body: bodyValue, appBar: appBarValue, floatingActionButton: floatingActionButtonValue);

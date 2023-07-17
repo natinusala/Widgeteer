@@ -98,35 +98,31 @@ class PersistentObjectBinding extends Binding {
     final initializer = CodeUnit();
 
     initializer
-        .appendLine("public init(${initializerParams.swiftInitParameters}) {");
-    initializer.appendUnit(newFunction.callingOutlet.swiftCall("localHandle"),
-        indentedBy: 4);
-    initializer.appendLine(
-        "self.handle = Dart_NewPersistentHandle_DL(localHandle)!",
-        indentedBy: 4);
-    initializer.appendLine("}");
+        .enterScope("public init(${initializerParams.swiftInitParameters}) {");
+    initializer.appendUnit(newFunction.callingOutlet.swiftCall("localHandle"));
+    initializer
+        .appendLine("self.handle = Dart_NewPersistentHandle_DL(localHandle)!");
+    initializer.exitScope("}");
 
     initializer.appendEmptyLine();
     initializer
-        .appendLine("public init(persisting localHandle: Dart_Handle) {");
+        .enterScope("public init(persisting localHandle: Dart_Handle) {");
 
-    initializer.appendLine(
-        "self.handle = Dart_NewPersistentHandle_DL(localHandle)!",
-        indentedBy: 4);
+    initializer
+        .appendLine("self.handle = Dart_NewPersistentHandle_DL(localHandle)!");
 
-    initializer.appendLine("}");
+    initializer.exitScope("}");
 
     return initializer;
   }
 
   CodeUnit get swiftDeinitializer {
     final deinit = CodeUnit();
-    deinit.appendLine("deinit {");
-    deinit.appendLine("Flutter_Schedule(scoped: false) { [handle] _ in",
-        indentedBy: 4);
-    deinit.appendLine("Dart_DeletePersistentHandle_DL(handle)", indentedBy: 8);
-    deinit.appendLine("}", indentedBy: 4);
-    deinit.appendLine("}");
+    deinit.enterScope("deinit {");
+    deinit.enterScope("Flutter_Schedule(scoped: false) { [handle] _ in");
+    deinit.appendLine("Dart_DeletePersistentHandle_DL(handle)");
+    deinit.exitScope("}");
+    deinit.exitScope("}");
     return deinit;
   }
 
@@ -134,22 +130,21 @@ class PersistentObjectBinding extends Binding {
   CodeUnit get swiftClass {
     final swiftClass = CodeUnit();
 
-    swiftClass.appendLine("public class $className {");
+    swiftClass.enterScope("public class $className {");
 
-    swiftClass.appendLine("/// Persistent handle to the Dart object.",
-        indentedBy: 4);
-    swiftClass.appendLine("let handle: Dart_PersistentHandle", indentedBy: 4);
+    swiftClass.appendLine("/// Persistent handle to the Dart object.");
+    swiftClass.appendLine("let handle: Dart_PersistentHandle");
     swiftClass.appendEmptyLine();
 
-    swiftClass.appendUnit(swiftInitializer, indentedBy: 4);
+    swiftClass.appendUnit(swiftInitializer);
 
     swiftClass.appendEmptyLine();
-    swiftClass.appendUnit(swiftDeinitializer, indentedBy: 4);
+    swiftClass.appendUnit(swiftDeinitializer);
 
     // Properties
-    swiftClass.appendUnit(swiftProperties, indentedBy: 4);
+    swiftClass.appendUnit(swiftProperties);
 
-    swiftClass.appendLine("}");
+    swiftClass.exitScope("}");
 
     return swiftClass;
   }
@@ -161,23 +156,21 @@ class PersistentObjectBinding extends Binding {
     for (final property in properties) {
       final resolvedType = context.resolveType(property.type);
 
-      getters.appendLine(
+      getters.enterScope(
           "public var ${property.name}: ${resolvedType.swiftType.name} {");
 
-      getters.appendLine(
-          "return Flutter_BlockingSchedule(scoped: false) { _ in",
-          indentedBy: 4);
+      getters
+          .enterScope("return Flutter_BlockingSchedule(scoped: false) { _ in");
 
       getters.appendLine(
-          "let localHandle = ${property.getterOutlet(name).swiftFunctionName}(self.handle)",
-          indentedBy: 8);
-      getters.appendUnit(resolvedType.swiftType.fromCValue("localHandle", name),
-          indentedBy: 8);
-      getters.appendLine("return ${name}Value", indentedBy: 8);
+          "let localHandle = ${property.getterOutlet(name).swiftFunctionName}(self.handle)");
+      getters
+          .appendUnit(resolvedType.swiftType.fromCValue("localHandle", name));
+      getters.appendLine("return ${name}Value");
 
-      getters.appendLine("}", indentedBy: 4);
+      getters.exitScope("}");
 
-      getters.appendLine("}");
+      getters.exitScope("}");
       getters.appendEmptyLine();
     }
 
@@ -219,20 +212,17 @@ class PersistentObjectBinding extends Binding {
     final resolvedType = context.resolveType(property.type);
     final outlet = property.getterOutlet(name);
 
-    implementation.appendLine(
+    implementation.enterScope(
         "${resolvedType.cType.dartFfiMapping} ${outlet.implementationName}(Object target) {");
-    implementation.appendLine("final typedTarget = target as $name;",
-        indentedBy: 4);
-    implementation.appendLine("final value = typedTarget.${property.name};",
-        indentedBy: 4);
+    implementation.appendLine("final typedTarget = target as $name;");
+    implementation.appendLine("final value = typedTarget.${property.name};");
 
-    implementation.appendUnit(
-        resolvedType.cType.fromDartValue("value", "converted"),
-        indentedBy: 4);
+    implementation
+        .appendUnit(resolvedType.cType.fromDartValue("value", "converted"));
 
-    implementation.appendLine("return convertedValue;", indentedBy: 4);
+    implementation.appendLine("return convertedValue;");
 
-    implementation.appendLine("}");
+    implementation.exitScope("}");
 
     return implementation;
   }

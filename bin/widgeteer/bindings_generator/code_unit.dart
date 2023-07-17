@@ -26,6 +26,9 @@ import '../config.dart';
 class CodeUnit {
   List<String> lines = [];
 
+  /// Indentation level given by the current scope.
+  int scopeLevel = 0;
+
   CodeUnit({String? content, List<String>? initialLines, bool stamp = true}) {
     // Add the breadcrumb
     if (stamp) {
@@ -70,10 +73,8 @@ class CodeUnit {
     return CodeUnit(stamp: false);
   }
 
-  // TODO: add `enterScope` and `exitScope` that auto indent everything inside them, replace indentedBy usages with this
-
-  void appendLine(String line, {int indentedBy = 0}) {
-    final indentation = " " * indentedBy;
+  void appendLine(String line) {
+    final indentation = " " * scopeLevel;
     lines.add("$indentation$line");
   }
 
@@ -81,19 +82,43 @@ class CodeUnit {
     lines.add("");
   }
 
-  void appendLines(List<String> lines, {int indentedBy = 0}) {
+  void appendLines(List<String> lines) {
     for (final line in lines) {
-      appendLine(line, indentedBy: indentedBy);
+      appendLine(line);
     }
   }
 
-  void appendUnit(CodeUnit unit, {int indentedBy = 0}) {
+  void appendUnit(CodeUnit unit) {
+    assert(unit.scopeLevel == 0);
+
     for (final line in unit.lines) {
-      appendLine(line, indentedBy: indentedBy);
+      appendLine(line);
     }
+  }
+
+  void enterScope(String line) {
+    appendLine(line);
+    scopeLevel += 4;
+  }
+
+  void exitScope(String line) {
+    assert(scopeLevel > 0);
+
+    scopeLevel -= 4;
+    appendLine(line);
+  }
+
+  void exitAndEnterScope(String line) {
+    assert(scopeLevel > 0);
+
+    scopeLevel -= 4;
+    appendLine(line);
+    scopeLevel += 4;
   }
 
   Future<void> writeToFile(String path) async {
+    assert(scopeLevel == 0);
+
     final string = lines.join("\n");
     final file = File(path);
     await Directory(file.parent.path).create(recursive: true);

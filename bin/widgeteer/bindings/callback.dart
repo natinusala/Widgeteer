@@ -74,17 +74,17 @@ class CallbackBinding extends Binding {
   CodeUnit get swiftProxy {
     final proxy = CodeUnit();
 
-    proxy.appendLine("class $proxyName {");
-    proxy.appendLine("let closure: $name", indentedBy: 4);
+    proxy.enterScope("class $proxyName {");
+    proxy.appendLine("let closure: $name");
     proxy.appendEmptyLine();
 
-    proxy.appendLine("init(_ closure: @escaping $name) {", indentedBy: 4);
+    proxy.enterScope("init(_ closure: @escaping $name) {");
 
-    proxy.appendLine("self.closure = closure", indentedBy: 8);
+    proxy.appendLine("self.closure = closure");
 
-    proxy.appendLine("}", indentedBy: 4);
+    proxy.exitScope("}");
 
-    proxy.appendLine("}");
+    proxy.exitScope("}");
 
     return proxy;
   }
@@ -95,26 +95,24 @@ class CallbackBinding extends Binding {
 
     // Call
     functions.appendLine("@_cdecl(\"$callCFunction\")");
-    functions.appendLine(
+    functions.enterScope(
         "public func _${proxyName.camelCase}Call(_ proxy: UnsafeRawPointer) {");
 
     functions.appendLine(
-        "let proxy = Unmanaged<$proxyName>.fromOpaque(proxy).takeUnretainedValue()",
-        indentedBy: 4);
-    functions.appendLine("proxy.closure()", indentedBy: 4);
+        "let proxy = Unmanaged<$proxyName>.fromOpaque(proxy).takeUnretainedValue()");
+    functions.appendLine("proxy.closure()");
 
-    functions.appendLine("}");
+    functions.exitScope("}");
     functions.appendEmptyLine();
 
     // Release
     functions.appendLine("@_cdecl(\"$releaseCFunction\")");
-    functions.appendLine(
+    functions.enterScope(
         "public func _${proxyName.camelCase}Release(_ proxy: UnsafeRawPointer) {");
 
-    functions.appendLine("Unmanaged<$proxyName>.fromOpaque(proxy).release()",
-        indentedBy: 4);
+    functions.appendLine("Unmanaged<$proxyName>.fromOpaque(proxy).release()");
 
-    functions.appendLine("}");
+    functions.exitScope("}");
 
     return functions;
   }
@@ -140,32 +138,30 @@ class CallbackBinding extends Binding {
   CodeUnit get dartProxy {
     final proxy = CodeUnit();
 
-    proxy.appendLine("class $proxyName implements Finalizable {");
+    proxy.enterScope("class $proxyName implements Finalizable {");
 
     // Finalizer
     proxy.appendLine(
-        "static final _finalizer = NativeFinalizer(libWidgeteer.addresses.$releaseDartBinding);",
-        indentedBy: 4);
+        "static final _finalizer = NativeFinalizer(libWidgeteer.addresses.$releaseDartBinding);");
     proxy.appendEmptyLine();
 
     // C proxy handle
-    proxy.appendLine("final $snakeProxyName proxy;", indentedBy: 4);
+    proxy.appendLine("final $snakeProxyName proxy;");
     proxy.appendEmptyLine();
 
     // Constructor
-    proxy.appendLine("$proxyName(this.proxy) {", indentedBy: 4);
-    proxy.appendLine("_finalizer.attach(this, proxy, detach: this);",
-        indentedBy: 8);
-    proxy.appendLine("}", indentedBy: 4);
+    proxy.enterScope("$proxyName(this.proxy) {");
+    proxy.appendLine("_finalizer.attach(this, proxy, detach: this);");
+    proxy.exitScope("}");
 
     // call method
-    proxy.appendLine("void call() {", indentedBy: 4);
-    proxy.appendLine("libWidgeteer.enter_scope();", indentedBy: 8);
-    proxy.appendLine("libWidgeteer.$callDartBinding(proxy);", indentedBy: 8);
-    proxy.appendLine("libWidgeteer.exit_scope();", indentedBy: 8);
-    proxy.appendLine("}", indentedBy: 4);
+    proxy.enterScope("void call() {");
+    proxy.appendLine("libWidgeteer.enter_scope();");
+    proxy.appendLine("libWidgeteer.$callDartBinding(proxy);");
+    proxy.appendLine("libWidgeteer.exit_scope();");
+    proxy.exitScope("}");
 
-    proxy.appendLine("}");
+    proxy.exitScope("}");
 
     return proxy;
   }
@@ -229,13 +225,12 @@ class OptionalCCallback extends CType {
 
     transformer
         .appendLine("let ${variableName}Value: UnsafeMutableRawPointer?");
-    transformer.appendLine("if let ${variableName}Closure = $sourceValue {");
+    transformer.enterScope("if let ${variableName}Closure = $sourceValue {");
     transformer.appendLine(
-        "${variableName}Value = Unmanaged<${type.binding.proxyName}>.passRetained(${type.binding.proxyName}(${variableName}Closure)).toOpaque()",
-        indentedBy: 4);
-    transformer.appendLine("} else {");
-    transformer.appendLine("${variableName}Value = nil", indentedBy: 4);
-    transformer.appendLine("}");
+        "${variableName}Value = Unmanaged<${type.binding.proxyName}>.passRetained(${type.binding.proxyName}(${variableName}Closure)).toOpaque()");
+    transformer.exitAndEnterScope("} else {");
+    transformer.appendLine("${variableName}Value = nil");
+    transformer.exitScope("}");
 
     return transformer;
   }
@@ -262,14 +257,14 @@ class OptionalDartCallback extends DartType {
     final transformer = CodeUnit();
 
     transformer.appendLine("late ${type.name} ${variableName}Value;");
-    transformer.appendLine("if ($sourceFfiValue == nullptr) {");
-    transformer.appendLine("${variableName}Value = null;", indentedBy: 4);
-    transformer.appendLine("} else {");
+    transformer.enterScope("if ($sourceFfiValue == nullptr) {");
+    transformer.appendLine("${variableName}Value = null;");
+    transformer.exitAndEnterScope("} else {");
     transformer.appendLines([
       "final ${variableName}Proxy = ${type.binding.proxyName}($sourceFfiValue);",
       "${variableName}Value = () { return ${variableName}Proxy.call(); };",
-    ], indentedBy: 4);
-    transformer.appendLine("}");
+    ]);
+    transformer.exitScope("}");
 
     return transformer;
   }

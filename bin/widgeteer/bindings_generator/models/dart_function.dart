@@ -94,10 +94,10 @@ class DartFunction {
     // Function signature
     final function = CodeUnit();
 
-    function.appendLine(
+    function.enterScope(
         "${resolvedType.cType.dartFfiMapping} $outletImplementationName(${parameters.dartFFIParameters(isInit)}) {");
-    function.appendUnit(body, indentedBy: 4);
-    function.appendLine("}");
+    function.appendUnit(body);
+    function.exitScope("}");
     return function;
   }
 

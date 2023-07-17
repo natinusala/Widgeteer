@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:widgeteer/dylib.dart';
 import 'package:flutter/material.dart';
 import 'package:widgeteer/generated/Bindings/Callback/VoidCallback.dart';
-// 🍞 bin/widgeteer/bindings/persistent_object.dart:201
+// 🍞 bin/widgeteer/bindings/persistent_object.dart:194
 // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:59
 import 'package:flutter/material.dart';
 import 'dart:ffi';
@@ -26,7 +26,7 @@ Object newTextStyleImpl(int color) {
     return TextStyle(color: colorValue);
 }
 
-// 🍞 bin/widgeteer/bindings/persistent_object.dart:217
+// 🍞 bin/widgeteer/bindings/persistent_object.dart:210
 int textStyleGetColor(Object target) {
     final typedTarget = target as TextStyle;
     final value = typedTarget.color;

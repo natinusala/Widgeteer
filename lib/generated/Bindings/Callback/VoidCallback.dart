@@ -6,12 +6,12 @@ import 'package:flutter/widgets.dart';
 import 'package:widgeteer/dylib.dart';
 import 'package:flutter/material.dart';
 import 'package:widgeteer/generated/Bindings/Callback/VoidCallback.dart';
-// 🍞 bin/widgeteer/bindings/callback.dart:124
+// 🍞 bin/widgeteer/bindings/callback.dart:122
 import 'dart:ffi';
 import 'package:widgeteer/dylib.dart';
 import 'package:widgeteer/generated/lib_widgeteer.dart';
 
-// 🍞 bin/widgeteer/bindings/callback.dart:141
+// 🍞 bin/widgeteer/bindings/callback.dart:139
 class VoidCallbackProxy implements Finalizable {
     static final _finalizer = NativeFinalizer(libWidgeteer.addresses.void_callback_proxy_release);
 

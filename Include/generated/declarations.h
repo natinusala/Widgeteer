@@ -3,7 +3,7 @@
 // === Follow the breadcrumbs to find what code generated what you're reading ===
 #import "../types.h"
 
-// 🍞 bin/widgeteer/bindings/callback.dart:175
+// 🍞 bin/widgeteer/bindings/callback.dart:171
 typedef void* widgeteer_void_callback_proxy;
 void widgeteer_void_callback_proxy_release(widgeteer_void_callback_proxy proxy);
 void widgeteer_void_callback_proxy_call(widgeteer_void_callback_proxy proxy);

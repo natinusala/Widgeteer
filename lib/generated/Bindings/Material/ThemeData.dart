@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:widgeteer/dylib.dart';
 import 'package:flutter/material.dart';
 import 'package:widgeteer/generated/Bindings/Callback/VoidCallback.dart';
-// 🍞 bin/widgeteer/bindings/persistent_object.dart:201
+// 🍞 bin/widgeteer/bindings/persistent_object.dart:194
 // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:59
 import 'package:flutter/material.dart';
 import 'dart:ffi';
@@ -18,7 +18,7 @@ import 'package:flutter/foundation.dart';
 Object newThemeDataImpl(int primarySwatch, Object? textTheme, int scaffoldBackgroundColor, int hintColor, Object? primaryTextTheme) {
     // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:81
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:143
-    // 🍞 bin/widgeteer/bindings/enum.dart:205
+    // 🍞 bin/widgeteer/bindings/enum.dart:203
     late final MaterialColor? primarySwatchValue;
     switch (primarySwatch) {
         case -1: primarySwatchValue = null; break;
@@ -26,7 +26,7 @@ Object newThemeDataImpl(int primarySwatch, Object? textTheme, int scaffoldBackgr
         case 1: primarySwatchValue = Colors.green; break;
         default: throw "Received invalid index '$primarySwatch' for value of enum 'MaterialColor?'";
     }
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:388
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:378
     final textThemeValue = textTheme as TextTheme?;
     // 🍞 bin/widgeteer/bindings/color.dart:62
     late final Color? scaffoldBackgroundColorValue;
@@ -36,22 +36,22 @@ Object newThemeDataImpl(int primarySwatch, Object? textTheme, int scaffoldBackgr
     late final Color? hintColorValue;
     if (hintColor == -1) { hintColorValue = null; }
     else { hintColorValue = Color(hintColor); }
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:388
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:378
     final primaryTextThemeValue = primaryTextTheme as TextTheme?;
     
     return ThemeData(primarySwatch: primarySwatchValue, textTheme: textThemeValue, scaffoldBackgroundColor: scaffoldBackgroundColorValue, hintColor: hintColorValue, primaryTextTheme: primaryTextThemeValue);
 }
 
-// 🍞 bin/widgeteer/bindings/persistent_object.dart:217
+// 🍞 bin/widgeteer/bindings/persistent_object.dart:210
 Object themeDataGetTextTheme(Object target) {
     final typedTarget = target as ThemeData;
     final value = typedTarget.textTheme;
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:311
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:301
     final Object convertedValue = value;
     return convertedValue;
 }
 
-// 🍞 bin/widgeteer/bindings/persistent_object.dart:217
+// 🍞 bin/widgeteer/bindings/persistent_object.dart:210
 int themeDataGetScaffoldBackgroundColor(Object target) {
     final typedTarget = target as ThemeData;
     final value = typedTarget.scaffoldBackgroundColor;
@@ -60,7 +60,7 @@ int themeDataGetScaffoldBackgroundColor(Object target) {
     return convertedValue;
 }
 
-// 🍞 bin/widgeteer/bindings/persistent_object.dart:217
+// 🍞 bin/widgeteer/bindings/persistent_object.dart:210
 int themeDataGetHintColor(Object target) {
     final typedTarget = target as ThemeData;
     final value = typedTarget.hintColor;
@@ -69,11 +69,11 @@ int themeDataGetHintColor(Object target) {
     return convertedValue;
 }
 
-// 🍞 bin/widgeteer/bindings/persistent_object.dart:217
+// 🍞 bin/widgeteer/bindings/persistent_object.dart:210
 Object themeDataGetPrimaryTextTheme(Object target) {
     final typedTarget = target as ThemeData;
     final value = typedTarget.primaryTextTheme;
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:311
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:301
     final Object convertedValue = value;
     return convertedValue;
 }

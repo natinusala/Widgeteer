@@ -23,7 +23,7 @@ Object newTextImpl(Pointer<Char> key, Pointer<Char> data, Object? style) {
     final keyValue = ValueKey(keyString);
     // 🍞 bin/widgeteer/bindings/string.dart:131
     final dataValue = data.cast<Utf8>().toDartString();
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:388
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:378
     final styleValue = style as TextStyle?;
     
     return Text(key: keyValue, dataValue, style: styleValue);

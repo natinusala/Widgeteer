@@ -28,7 +28,7 @@ Object newDirectionalityImpl(Pointer<Char> key, int textDirection, Object child)
         case 1: textDirectionValue = TextDirection.ltr; break;
         default: throw "Received invalid index '$textDirection' for value of enum 'TextDirection'";
     }
-    // 🍞 bin/widgeteer/bindings/widget.dart:698
+    // 🍞 bin/widgeteer/bindings/widget.dart:688
     final childValue = child as Widget;
     
     return Directionality(key: keyValue, textDirection: textDirectionValue, child: childValue);

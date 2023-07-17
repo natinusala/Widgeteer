@@ -221,17 +221,16 @@ class ParametersList with IterableMixin<Parameter> {
   CodeUnit get swiftInitializer {
     final init = CodeUnit();
 
-    init.appendLine("public init($swiftInitParameters) {");
+    init.enterScope("public init($swiftInitParameters) {");
 
     for (final parameter in this) {
       final resolvedType = context.resolveType(parameter.type);
 
       init.appendLine(
-          "self.${parameter.name} = ${resolvedType.swiftType.initSetterValue(parameter.name)}",
-          indentedBy: 4);
+          "self.${parameter.name} = ${resolvedType.swiftType.initSetterValue(parameter.name)}");
     }
 
-    init.appendLine("}");
+    init.exitScope("}");
 
     return init;
   }

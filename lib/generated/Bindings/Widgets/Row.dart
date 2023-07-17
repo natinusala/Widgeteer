@@ -32,7 +32,7 @@ Object newRowImpl(Pointer<Char> key, int mainAxisAlignment, handles_list childre
         case 5: mainAxisAlignmentValue = MainAxisAlignment.spaceEvenly; break;
         default: throw "Received invalid index '$mainAxisAlignment' for value of enum 'MainAxisAlignment'";
     }
-    // 🍞 bin/widgeteer/bindings/widget.dart:625
+    // 🍞 bin/widgeteer/bindings/widget.dart:615
     final childrenValue = consumeHandlesList<Widget>(children);
     
     return Row(key: keyValue, mainAxisAlignment: mainAxisAlignmentValue, children: childrenValue);

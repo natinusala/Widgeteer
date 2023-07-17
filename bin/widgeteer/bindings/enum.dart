@@ -68,14 +68,14 @@ class EnumBinding extends Binding {
     // Swift enum
     final swiftEnum = CodeUnit();
 
-    swiftEnum.appendLine("public enum $enumName: Int {");
+    swiftEnum.enterScope("public enum $enumName: Int {");
 
     cases
-        .mapIndexed((index, element) =>
-            swiftEnum.appendLine("case $element = $index", indentedBy: 4))
+        .mapIndexed(
+            (index, element) => swiftEnum.appendLine("case $element = $index"))
         .toList();
 
-    swiftEnum.appendLine("}");
+    swiftEnum.exitScope("}");
 
     return swiftEnum;
   }
@@ -143,18 +143,16 @@ class DartEnum extends DartType {
     final unit = CodeUnit();
 
     unit.appendLine("late final ${type.dartType.name} ${variableName}Value;");
-    unit.appendLine("switch ($sourceFfiValue) {");
+    unit.enterScope("switch ($sourceFfiValue) {");
 
     type.binding.cases
         .mapIndexed((index, element) => unit.appendLine(
-            "case $index: ${variableName}Value = ${type.binding.enumPrefix}.$element; break;",
-            indentedBy: 4))
+            "case $index: ${variableName}Value = ${type.binding.enumPrefix}.$element; break;"))
         .toList();
     unit.appendLine(
-        "default: throw \"Received invalid index '\$$sourceFfiValue' for value of enum '${type.name}'\";",
-        indentedBy: 4);
+        "default: throw \"Received invalid index '\$$sourceFfiValue' for value of enum '${type.name}'\";");
 
-    unit.appendLine("}");
+    unit.exitScope("}");
 
     return unit;
   }
@@ -205,21 +203,18 @@ class OptionalDartEnum extends DartType {
     final unit = CodeUnit();
 
     unit.appendLine("late final $name ${variableName}Value;");
-    unit.appendLine("switch ($sourceFfiValue) {");
+    unit.enterScope("switch ($sourceFfiValue) {");
 
-    unit.appendLine("case -1: ${variableName}Value = null; break;",
-        indentedBy: 4);
+    unit.appendLine("case -1: ${variableName}Value = null; break;");
 
     type.binding.cases.mapIndexed((index, element) {
       unit.appendLine(
-          "case $index: ${variableName}Value = ${type.binding.enumPrefix}.$element; break;",
-          indentedBy: 4);
+          "case $index: ${variableName}Value = ${type.binding.enumPrefix}.$element; break;");
     }).toList();
     unit.appendLine(
-        "default: throw \"Received invalid index '\$$sourceFfiValue' for value of enum '${type.name}'\";",
-        indentedBy: 4);
+        "default: throw \"Received invalid index '\$$sourceFfiValue' for value of enum '${type.name}'\";");
 
-    unit.appendLine("}");
+    unit.exitScope("}");
 
     return unit;
   }
