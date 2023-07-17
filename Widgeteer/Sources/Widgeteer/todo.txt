@@ -1,4 +1,3 @@
-essayer de mutualiser content et initialLines avec un variadic
 renommer variableName to "destination" to have "source" and "destination"
 réessayer / remettre les modifiers
 vérifier que le dev menu marche encore même si il est pourri (c'est bien pour la démo)

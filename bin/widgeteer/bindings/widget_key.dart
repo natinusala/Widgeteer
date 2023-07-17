@@ -39,8 +39,8 @@ class DartWidgetKey extends DartType {
   String get name => "ValueKey";
 
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) => CodeUnit([
-        "final ${variableName}String = $sourceFfiValue.cast<Utf8>().toDartString();",
-        "final ${variableName}Value = ValueKey(${variableName}String);",
+  CodeUnit fromCValue(String source, String destination) => CodeUnit([
+        "final ${destination}String = $source.cast<Utf8>().toDartString();",
+        "final ${destination}Value = ValueKey(${destination}String);",
       ]);
 }

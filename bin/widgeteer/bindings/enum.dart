@@ -115,9 +115,9 @@ class CEnum extends CType {
   String get dartFfiMapping => "int";
 
   @override
-  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+  CodeUnit fromSwiftValue(String source, String destination) {
     return CodeUnit([
-      "let ${variableName}Value = $sourceValue.rawValue",
+      "let ${destination}Value = $source.rawValue",
     ]);
   }
 
@@ -128,7 +128,7 @@ class CEnum extends CType {
   String get swiftCInteropMapping => "Int";
 
   @override
-  CodeUnit fromDartValue(String sourceValue, String variableName) {
+  CodeUnit fromDartValue(String source, String destination) {
     throw UnimplementedError();
   }
 }
@@ -139,18 +139,18 @@ class DartEnum extends DartType {
   DartEnum(this.type);
 
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     final unit = CodeUnit.empty();
 
-    unit.appendLine("late final ${type.dartType.name} ${variableName}Value;");
-    unit.enterScope("switch ($sourceFfiValue) {");
+    unit.appendLine("late final ${type.dartType.name} ${destination}Value;");
+    unit.enterScope("switch ($source) {");
 
     type.binding.cases
         .mapIndexed((index, element) => unit.appendLine(
-            "case $index: ${variableName}Value = ${type.binding.enumPrefix}.$element; break;"))
+            "case $index: ${destination}Value = ${type.binding.enumPrefix}.$element; break;"))
         .toList();
     unit.appendLine(
-        "default: throw \"Received invalid index '\$$sourceFfiValue' for value of enum '${type.name}'\";");
+        "default: throw \"Received invalid index '\$$source' for value of enum '${type.name}'\";");
 
     unit.exitScope("}");
 
@@ -170,7 +170,7 @@ class SwiftEnum extends SwiftType {
   String get name => type.name;
 
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     throw UnimplementedError();
   }
 }
@@ -199,20 +199,20 @@ class OptionalDartEnum extends DartType {
   OptionalDartEnum(this.type);
 
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     final unit = CodeUnit.empty();
 
-    unit.appendLine("late final $name ${variableName}Value;");
-    unit.enterScope("switch ($sourceFfiValue) {");
+    unit.appendLine("late final $name ${destination}Value;");
+    unit.enterScope("switch ($source) {");
 
-    unit.appendLine("case -1: ${variableName}Value = null; break;");
+    unit.appendLine("case -1: ${destination}Value = null; break;");
 
     type.binding.cases.mapIndexed((index, element) {
       unit.appendLine(
-          "case $index: ${variableName}Value = ${type.binding.enumPrefix}.$element; break;");
+          "case $index: ${destination}Value = ${type.binding.enumPrefix}.$element; break;");
     }).toList();
     unit.appendLine(
-        "default: throw \"Received invalid index '\$$sourceFfiValue' for value of enum '${type.name}'\";");
+        "default: throw \"Received invalid index '\$$source' for value of enum '${type.name}'\";");
 
     unit.exitScope("}");
 
@@ -232,9 +232,9 @@ class OptionalCEnum extends CType {
   String get dartFfiMapping => "int";
 
   @override
-  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+  CodeUnit fromSwiftValue(String source, String destination) {
     return CodeUnit([
-      "let ${variableName}Value = $sourceValue?.rawValue ?? -1",
+      "let ${destination}Value = $source?.rawValue ?? -1",
     ]);
   }
 
@@ -245,7 +245,7 @@ class OptionalCEnum extends CType {
   String get swiftCInteropMapping => "Int";
 
   @override
-  CodeUnit fromDartValue(String sourceValue, String variableName) {
+  CodeUnit fromDartValue(String source, String destination) {
     throw UnimplementedError();
   }
 }
@@ -259,7 +259,7 @@ class OptionalSwiftEnum extends SwiftType {
   String get name => type.name;
 
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     throw UnimplementedError();
   }
 }

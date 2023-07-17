@@ -48,22 +48,22 @@ class COptionalString extends CType {
   String get dartFfiMapping => "optional_value";
 
   @override
-  CodeUnit fromDartValue(String sourceValue, String variableName) {
+  CodeUnit fromDartValue(String source, String destination) {
     throw UnimplementedError();
   }
 
   @override
-  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+  CodeUnit fromSwiftValue(String source, String destination) {
     return CodeUnit([
-      "let ${variableName}Unmanaged = Unmanaged<OptionalValue>.passRetained(OptionalValue(string: $sourceValue))",
-      "let ${variableName}Value = ${variableName}Unmanaged.toOpaque()",
+      "let ${destination}Unmanaged = Unmanaged<OptionalValue>.passRetained(OptionalValue(string: $source))",
+      "let ${destination}Value = ${destination}Unmanaged.toOpaque()",
     ]);
   }
 
   @override
-  CodeUnit? fromSwiftValueCleanup(String sourceValue, String variableName) {
+  CodeUnit? fromSwiftValueCleanup(String source, String destination) {
     return CodeUnit([
-      "${variableName}Unmanaged.release()",
+      "${destination}Unmanaged.release()",
     ]);
   }
 
@@ -76,7 +76,7 @@ class COptionalString extends CType {
 
 class SwiftOptionalString extends SwiftType {
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     throw UnimplementedError();
   }
 
@@ -86,13 +86,13 @@ class SwiftOptionalString extends SwiftType {
 
 class DartOptionalString extends DartType {
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     return CodeUnit([
-      "late final String? ${variableName}Value;",
-      "if (libWidgeteer.optional_value_is_set($sourceFfiValue)) {",
-      "    ${variableName}Value = libWidgeteer.optional_value_get_string($sourceFfiValue).cast<Utf8>().toDartString();",
+      "late final String? ${destination}Value;",
+      "if (libWidgeteer.optional_value_is_set($source)) {",
+      "    ${destination}Value = libWidgeteer.optional_value_get_string($source).cast<Utf8>().toDartString();",
       "} else {",
-      "    ${variableName}Value = null;",
+      "    ${destination}Value = null;",
       "}",
     ]);
   }
@@ -120,7 +120,7 @@ class SwiftString extends SwiftType {
   String get name => "String";
 
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     throw UnimplementedError();
   }
 }
@@ -130,8 +130,8 @@ class DartString extends DartType {
   String get name => "String";
 
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) => CodeUnit([
-        "final ${variableName}Value = $sourceFfiValue.cast<Utf8>().toDartString();",
+  CodeUnit fromCValue(String source, String destination) => CodeUnit([
+        "final ${destination}Value = $source.cast<Utf8>().toDartString();",
       ]);
 }
 
@@ -146,15 +146,15 @@ class CString extends CType {
   String get dartFfiMapping => "Pointer<Char>";
 
   @override
-  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+  CodeUnit fromSwiftValue(String source, String destination) {
     // Use Swift implicit conversion from String to CChar* in function calls
     return CodeUnit([
-      "let ${variableName}Value = $sourceValue",
+      "let ${destination}Value = $source",
     ]);
   }
 
   @override
-  CodeUnit fromDartValue(String sourceValue, String variableName) {
+  CodeUnit fromDartValue(String source, String destination) {
     throw UnimplementedError();
   }
 }

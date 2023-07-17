@@ -48,16 +48,16 @@ class SwiftInt extends SwiftType {
   String get name => "Int";
 
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     throw UnimplementedError();
   }
 }
 
 class DartInt extends DartType {
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     return CodeUnit([
-      "final ${variableName}Value = $sourceFfiValue;",
+      "final ${destination}Value = $source;",
     ]);
   }
 
@@ -70,9 +70,9 @@ class CInt extends CType {
   String get dartFfiMapping => "int";
 
   @override
-  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+  CodeUnit fromSwiftValue(String source, String destination) {
     return CodeUnit([
-      "let ${variableName}Value = $sourceValue",
+      "let ${destination}Value = $source",
     ]);
   }
 
@@ -83,7 +83,7 @@ class CInt extends CType {
   String get swiftCInteropMapping => "Int";
 
   @override
-  CodeUnit fromDartValue(String sourceValue, String variableName) {
+  CodeUnit fromDartValue(String source, String destination) {
     throw UnimplementedError();
   }
 }

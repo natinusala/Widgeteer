@@ -54,22 +54,22 @@ class CObject extends CType {
   String get dartFfiMapping => "Object";
 
   @override
-  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+  CodeUnit fromSwiftValue(String source, String destination) {
     throw UnimplementedError();
   }
 
   @override
-  CodeUnit fromDartValue(String sourceValue, String variableName) {
+  CodeUnit fromDartValue(String source, String destination) {
     throw UnimplementedError();
   }
 }
 
 class DartObject extends DartType {
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     // No conversion required
     return CodeUnit([
-      "final ${variableName}Value = $sourceFfiValue;",
+      "final ${destination}Value = $source;",
     ]);
   }
 
@@ -82,7 +82,7 @@ class SwiftObject extends SwiftType {
   String get name => "Dart_Handle";
 
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     throw UnimplementedError();
   }
 }
@@ -103,10 +103,10 @@ class OptionalObjectType extends BoundType {
 
 class OptionalDartObject extends DartType {
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     // No conversion required
     return CodeUnit([
-      "final ${variableName}Value = sourceFfiValue;",
+      "final ${destination}Value = sourceFfiValue;",
     ]);
   }
 
@@ -119,7 +119,7 @@ class OptionalSwiftObject extends SwiftType {
   String get name => "Dart_Handle?";
 
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     throw UnimplementedError();
   }
 }
@@ -135,12 +135,12 @@ class OptionalCObject extends CType {
   String get dartFfiMapping => "Object?";
 
   @override
-  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+  CodeUnit fromSwiftValue(String source, String destination) {
     throw UnimplementedError();
   }
 
   @override
-  CodeUnit fromDartValue(String sourceValue, String variableName) {
+  CodeUnit fromDartValue(String source, String destination) {
     throw UnimplementedError();
   }
 }

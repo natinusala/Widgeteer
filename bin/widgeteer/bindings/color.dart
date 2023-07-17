@@ -49,20 +49,20 @@ class SwiftOptionalColor extends SwiftType {
   String get name => "Color?";
 
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     return CodeUnit([
-      "let ${variableName}Value: Color? = $sourceFfiValue == -1 ? nil : Color($sourceFfiValue)",
+      "let ${destination}Value: Color? = $source == -1 ? nil : Color($source)",
     ]);
   }
 }
 
 class DartOptionalColor extends DartType {
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     return CodeUnit([
-      "late final Color? ${variableName}Value;",
-      "if ($variableName == -1) { ${variableName}Value = null; }",
-      "else { ${sourceFfiValue}Value = Color($variableName); }",
+      "late final Color? ${destination}Value;",
+      "if ($destination == -1) { ${destination}Value = null; }",
+      "else { ${source}Value = Color($destination); }",
     ]);
   }
 
@@ -75,9 +75,9 @@ class COptionalColor extends CType {
   String get dartFfiMapping => "int";
 
   @override
-  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+  CodeUnit fromSwiftValue(String source, String destination) {
     return CodeUnit([
-      "let ${variableName}Value = $sourceValue?.value ?? -1",
+      "let ${destination}Value = $source?.value ?? -1",
     ]);
   }
 
@@ -88,9 +88,9 @@ class COptionalColor extends CType {
   String get swiftCInteropMapping => "Int";
 
   @override
-  CodeUnit fromDartValue(String sourceValue, String variableName) {
+  CodeUnit fromDartValue(String source, String destination) {
     return CodeUnit([
-      "final ${variableName}Value = $sourceValue?.value ?? -1;",
+      "final ${destination}Value = $source?.value ?? -1;",
     ]);
   }
 
@@ -117,18 +117,18 @@ class SwiftColor extends SwiftType {
   String get name => "Color";
 
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     return CodeUnit([
-      "let ${variableName}Value = Color($sourceFfiValue)",
+      "let ${destination}Value = Color($source)",
     ]);
   }
 }
 
 class DartColor extends DartType {
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     return CodeUnit([
-      "final ${sourceFfiValue}Value = Color($variableName);",
+      "final ${source}Value = Color($destination);",
     ]);
   }
 
@@ -141,9 +141,9 @@ class CColor extends CType {
   String get dartFfiMapping => "int";
 
   @override
-  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+  CodeUnit fromSwiftValue(String source, String destination) {
     return CodeUnit([
-      "let ${variableName}Value = $sourceValue.value",
+      "let ${destination}Value = $source.value",
     ]);
   }
 
@@ -154,9 +154,9 @@ class CColor extends CType {
   String get swiftCInteropMapping => "Int";
 
   @override
-  CodeUnit fromDartValue(String sourceValue, String variableName) {
+  CodeUnit fromDartValue(String source, String destination) {
     return CodeUnit([
-      "final ${variableName}Value = $sourceValue.value;",
+      "final ${destination}Value = $source.value;",
     ]);
   }
 

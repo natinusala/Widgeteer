@@ -48,14 +48,14 @@ class SwiftVoid extends SwiftType {
   String get name => "Void";
 
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     throw UnimplementedError();
   }
 }
 
 class DartVoid extends DartType {
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     throw UnimplementedError();
   }
 
@@ -74,12 +74,12 @@ class CVoid extends CType {
   String get name => "void";
 
   @override
-  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+  CodeUnit fromSwiftValue(String source, String destination) {
     throw UnimplementedError();
   }
 
   @override
-  CodeUnit fromDartValue(String sourceValue, String variableName) {
+  CodeUnit fromDartValue(String source, String destination) {
     throw UnimplementedError();
   }
 }

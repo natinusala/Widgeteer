@@ -59,8 +59,8 @@ abstract class SwiftType {
   }
 
   /// Swift code that takes [sourceFfiValue] and turns it into a value of
-  /// the target Swift type inside a variable called `${variableName}Value`.
-  CodeUnit fromCValue(String sourceFfiValue, String variableName);
+  /// the target Swift type inside a variable called `${destination}Value`.
+  CodeUnit fromCValue(String source, String destination);
 }
 
 abstract class DartType {
@@ -69,14 +69,13 @@ abstract class DartType {
   String get name;
 
   /// Dart code that takes [sourceFfiValue] and turns it into a value
-  /// of the target Dart type inside a variable called `${variableName}Value`.
+  /// of the target Dart type inside a variable called `${destination}Value`.
   ///
   /// [sourceFfiValue] is the name of a variable (or a full expression)
   /// that has the FFI type described in the binding associated C type.
   ///
   /// [variableName] is the name of the associated parameter.
-  /// TODO: rename parameters to "source" and "destination" everywhere for consistency and clarity
-  CodeUnit fromCValue(String sourceFfiValue, String variableName);
+  CodeUnit fromCValue(String source, String destination);
 }
 
 /// The C type that acts as intermediate between a Swift type and its
@@ -92,16 +91,16 @@ abstract class CType {
   String get dartFfiMapping;
 
   /// Swift code that takes [sourceValue] and turns it unto a value of the
-  /// interop C type inside a variable called `${variableName}Value`.
-  CodeUnit fromSwiftValue(String sourceValue, String variableName);
+  /// interop C type inside a variable called `${destination}Value`.
+  CodeUnit fromSwiftValue(String source, String destination);
 
   /// Dart code that takes [sourceValue] and turns it unto a value of the
-  /// Dart FFI C type inside a variable called `${variableName}Value`.
-  CodeUnit fromDartValue(String sourceValue, String variableName);
+  /// Dart FFI C type inside a variable called `${destination}Value`.
+  CodeUnit fromDartValue(String source, String destination);
 
   /// Optional Swift code to run after the values from [fromSwiftValue] are about
   /// to go out of scope.
-  CodeUnit? fromSwiftValueCleanup(String sourceValue, String variableName) {
+  CodeUnit? fromSwiftValueCleanup(String source, String destination) {
     return null;
   }
 

@@ -220,16 +220,15 @@ class OptionalCCallback extends CType {
   String get dartFfiMapping => "Pointer<Void>"; // opaque proxy handle
 
   @override
-  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+  CodeUnit fromSwiftValue(String source, String destination) {
     final transformer = CodeUnit.empty();
 
-    transformer
-        .appendLine("let ${variableName}Value: UnsafeMutableRawPointer?");
-    transformer.enterScope("if let ${variableName}Closure = $sourceValue {");
+    transformer.appendLine("let ${destination}Value: UnsafeMutableRawPointer?");
+    transformer.enterScope("if let ${destination}Closure = $source {");
     transformer.appendLine(
-        "${variableName}Value = Unmanaged<${type.binding.proxyName}>.passRetained(${type.binding.proxyName}(${variableName}Closure)).toOpaque()");
+        "${destination}Value = Unmanaged<${type.binding.proxyName}>.passRetained(${type.binding.proxyName}(${destination}Closure)).toOpaque()");
     transformer.exitAndEnterScope("} else {");
-    transformer.appendLine("${variableName}Value = nil");
+    transformer.appendLine("${destination}Value = nil");
     transformer.exitScope("}");
 
     return transformer;
@@ -242,7 +241,7 @@ class OptionalCCallback extends CType {
   String get swiftCInteropMapping => "UnsafeRawPointer?";
 
   @override
-  CodeUnit fromDartValue(String sourceValue, String variableName) {
+  CodeUnit fromDartValue(String source, String destination) {
     throw UnimplementedError();
   }
 }
@@ -253,16 +252,16 @@ class OptionalDartCallback extends DartType {
   OptionalDartCallback(this.type);
 
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     final transformer = CodeUnit.empty();
 
-    transformer.appendLine("late ${type.name} ${variableName}Value;");
-    transformer.enterScope("if ($sourceFfiValue == nullptr) {");
-    transformer.appendLine("${variableName}Value = null;");
+    transformer.appendLine("late ${type.name} ${destination}Value;");
+    transformer.enterScope("if ($source == nullptr) {");
+    transformer.appendLine("${destination}Value = null;");
     transformer.exitAndEnterScope("} else {");
     transformer.appendLines([
-      "final ${variableName}Proxy = ${type.binding.proxyName}($sourceFfiValue);",
-      "${variableName}Value = () { return ${variableName}Proxy.call(); };",
+      "final ${destination}Proxy = ${type.binding.proxyName}($source);",
+      "${destination}Value = () { return ${destination}Proxy.call(); };",
     ]);
     transformer.exitScope("}");
 
@@ -286,7 +285,7 @@ class OptionalSwiftCallback extends SwiftType {
       "$name = nil"; // closure is already escaping in optional type argument
 
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     throw UnimplementedError();
   }
 }
@@ -318,9 +317,9 @@ class CCallback extends CType {
   String get dartFfiMapping => "Pointer<Void>"; // opaque proxy handle
 
   @override
-  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+  CodeUnit fromSwiftValue(String source, String destination) {
     return CodeUnit([
-      "let ${variableName}Value = Unmanaged<${type.binding.proxyName}>.passRetained(${type.binding.proxyName}($sourceValue)).toOpaque()",
+      "let ${destination}Value = Unmanaged<${type.binding.proxyName}>.passRetained(${type.binding.proxyName}($source)).toOpaque()",
     ]);
   }
 
@@ -331,7 +330,7 @@ class CCallback extends CType {
   String get swiftCInteropMapping => "UnsafeRawPointer";
 
   @override
-  CodeUnit fromDartValue(String sourceValue, String variableName) {
+  CodeUnit fromDartValue(String source, String destination) {
     throw UnimplementedError();
   }
 }
@@ -342,13 +341,13 @@ class DartCallback extends DartType {
   DartCallback(this.type);
 
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     // The Dart proxy holds the Swift proxy (through GC and native finalizer)
     // and the Dart closure holds the Dart proxy through capture for as long as Flutter
     // deems it necessary
     return CodeUnit([
-      "final ${variableName}Proxy = ${type.binding.proxyName}($sourceFfiValue);",
-      "final ${variableName}Value = () { return ${variableName}Proxy.call(); };",
+      "final ${destination}Proxy = ${type.binding.proxyName}($source);",
+      "final ${destination}Value = () { return ${destination}Proxy.call(); };",
     ]);
   }
 
@@ -368,7 +367,7 @@ class SwiftCallback extends SwiftType {
   String get initType => "@escaping $name";
 
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     throw UnimplementedError();
   }
 }

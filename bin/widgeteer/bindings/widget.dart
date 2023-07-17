@@ -360,9 +360,9 @@ class DartWidget extends DartType {
   String get name => type.name;
 
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     return CodeUnit([
-      "final ${variableName}Value = $sourceFfiValue as $name;",
+      "final ${destination}Value = $source as $name;",
     ]);
   }
 }
@@ -376,7 +376,7 @@ class SwiftWidget extends SwiftType {
   String get name => type.name;
 
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     throw UnimplementedError();
   }
 }
@@ -386,9 +386,9 @@ class CWidget extends CType {
   String get dartFfiMapping => "Object";
 
   @override
-  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+  CodeUnit fromSwiftValue(String source, String destination) {
     return CodeUnit([
-      "let ${variableName}Value = $sourceValue.reduce(parentKey: parentKey.joined(\"$variableName\")).handle",
+      "let ${destination}Value = $source.reduce(parentKey: parentKey.joined(\"$destination\")).handle",
     ]);
   }
 
@@ -399,7 +399,7 @@ class CWidget extends CType {
   String get swiftCInteropMapping => "Dart_Handle";
 
   @override
-  CodeUnit fromDartValue(String sourceValue, String variableName) {
+  CodeUnit fromDartValue(String source, String destination) {
     throw UnimplementedError();
   }
 }
@@ -431,9 +431,9 @@ class OptionalDartWidget extends DartType {
   String get name => "${type.name}?";
 
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     return CodeUnit([
-      "final ${variableName}Value = $sourceFfiValue as $name;",
+      "final ${destination}Value = $source as $name;",
     ]);
   }
 }
@@ -447,7 +447,7 @@ class OptionalSwiftWidget extends SwiftType {
   String get name => "${type.name}?";
 
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     throw UnimplementedError();
   }
 }
@@ -457,9 +457,9 @@ class OptionalCWidget extends CType {
   String get dartFfiMapping => "Object?";
 
   @override
-  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+  CodeUnit fromSwiftValue(String source, String destination) {
     return CodeUnit([
-      "let ${variableName}Value = $sourceValue?.reduce(parentKey: parentKey.joined(\"$variableName\")).handle",
+      "let ${destination}Value = $source?.reduce(parentKey: parentKey.joined(\"$destination\")).handle",
     ]);
   }
 
@@ -470,7 +470,7 @@ class OptionalCWidget extends CType {
   String get swiftCInteropMapping => "Dart_Handle?";
 
   @override
-  CodeUnit fromDartValue(String sourceValue, String variableName) {
+  CodeUnit fromDartValue(String source, String destination) {
     throw UnimplementedError();
   }
 }
@@ -602,7 +602,7 @@ class MultiSwiftWidgetContent extends SwiftType {
   }
 
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     throw UnimplementedError();
   }
 }
@@ -613,9 +613,9 @@ class MultiDartWidgetContent extends DartType {
   MultiDartWidgetContent(this.type);
 
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     return CodeUnit([
-      "final ${variableName}Value = consumeHandlesList<${type.dartClass()}>($sourceFfiValue);",
+      "final ${destination}Value = consumeHandlesList<${type.dartClass()}>($source);",
     ]);
   }
 
@@ -632,18 +632,18 @@ class MultiCWidgetContent extends CType {
   String get dartFfiMapping => "handles_list";
 
   @override
-  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+  CodeUnit fromSwiftValue(String source, String destination) {
     return CodeUnit([
-      "let ${variableName}List = HandlesList(handles: $sourceValue.reduce(parentKey: parentKey.joined(\"$variableName\")).map(\\.handle))",
-      "let ${variableName}Unmanaged = Unmanaged<HandlesList>.passRetained(${variableName}List)",
-      "let ${variableName}Value = ${variableName}Unmanaged.toOpaque()",
+      "let ${destination}List = HandlesList(handles: $source.reduce(parentKey: parentKey.joined(\"$destination\")).map(\\.handle))",
+      "let ${destination}Unmanaged = Unmanaged<HandlesList>.passRetained(${destination}List)",
+      "let ${destination}Value = ${destination}Unmanaged.toOpaque()",
     ]);
   }
 
   @override
-  CodeUnit? fromSwiftValueCleanup(String sourceValue, String variableName) {
+  CodeUnit? fromSwiftValueCleanup(String source, String destination) {
     return CodeUnit([
-      "${variableName}Unmanaged.release()",
+      "${destination}Unmanaged.release()",
     ]);
   }
 
@@ -654,7 +654,7 @@ class MultiCWidgetContent extends CType {
   String get swiftCInteropMapping => "UnsafeRawPointer";
 
   @override
-  CodeUnit fromDartValue(String sourceValue, String variableName) {
+  CodeUnit fromDartValue(String source, String destination) {
     throw UnimplementedError();
   }
 }
@@ -678,7 +678,7 @@ class SwiftWidgetContent extends SwiftType {
   }
 
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     throw UnimplementedError();
   }
 }
@@ -689,8 +689,8 @@ class DartWidgetContent extends DartType {
   DartWidgetContent(this.type);
 
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) => CodeUnit([
-        "final ${variableName}Value = $sourceFfiValue as ${type.dartClass()};",
+  CodeUnit fromCValue(String source, String destination) => CodeUnit([
+        "final ${destination}Value = $source as ${type.dartClass()};",
       ]);
 
   @override
@@ -706,8 +706,8 @@ class CWidgetContent extends CType {
   String get dartFfiMapping => type.optional ? "Object?" : "Object";
 
   @override
-  CodeUnit fromSwiftValue(String sourceValue, String variableName) => CodeUnit([
-        "let ${variableName}Value = $sourceValue.reduce(parentKey: parentKey.joined(\"$variableName\")).handle",
+  CodeUnit fromSwiftValue(String source, String destination) => CodeUnit([
+        "let ${destination}Value = $source.reduce(parentKey: parentKey.joined(\"$destination\")).handle",
       ]);
 
   @override
@@ -717,7 +717,7 @@ class CWidgetContent extends CType {
   String get swiftCInteropMapping => "Dart_Handle";
 
   @override
-  CodeUnit fromDartValue(String sourceValue, String variableName) {
+  CodeUnit fromDartValue(String source, String destination) {
     throw UnimplementedError();
   }
 }

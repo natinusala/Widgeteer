@@ -50,9 +50,9 @@ class StatelessUserWidgetProxyType extends BoundType {
 
 class DartStatelessUserWidgetProxy extends DartType {
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     return CodeUnit([
-      "final ${variableName}Value = StatelessUserWidgetProxy($sourceFfiValue);",
+      "final ${destination}Value = StatelessUserWidgetProxy($source);",
     ]);
   }
 
@@ -65,9 +65,9 @@ class CStatelessUserWidgetProxy extends CType {
   String get dartFfiMapping => "stateless_user_widget_proxy";
 
   @override
-  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+  CodeUnit fromSwiftValue(String source, String destination) {
     return CodeUnit([
-      "let ${variableName}Value = Unmanaged<StatelessUserWidgetProxy>.passRetained($sourceValue).toOpaque()",
+      "let ${destination}Value = Unmanaged<StatelessUserWidgetProxy>.passRetained($source).toOpaque()",
     ]);
   }
 
@@ -78,7 +78,7 @@ class CStatelessUserWidgetProxy extends CType {
   String get swiftCInteropMapping => "UnsafeRawPointer";
 
   @override
-  CodeUnit fromDartValue(String sourceValue, String variableName) {
+  CodeUnit fromDartValue(String source, String destination) {
     throw UnimplementedError();
   }
 }
@@ -88,7 +88,7 @@ class SwiftStatelessUserWidgetProxy extends SwiftType {
   String get name => "StatelessUserWidgetProxy";
 
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     throw UnimplementedError();
   }
 }
@@ -109,9 +109,9 @@ class StatefulUserWidgetProxyType extends BoundType {
 
 class DartStatefulUserWidgetProxy extends DartType {
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     return CodeUnit([
-      "final ${variableName}Value = StatefulUserWidgetProxy($sourceFfiValue);",
+      "final ${destination}Value = StatefulUserWidgetProxy($source);",
     ]);
   }
 
@@ -124,9 +124,9 @@ class CStatefulUserWidgetProxy extends CType {
   String get dartFfiMapping => "stateful_user_widget_proxy";
 
   @override
-  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+  CodeUnit fromSwiftValue(String source, String destination) {
     return CodeUnit([
-      "let ${variableName}Value = Unmanaged<StatefulUserWidgetProxy>.passRetained($sourceValue).toOpaque()",
+      "let ${destination}Value = Unmanaged<StatefulUserWidgetProxy>.passRetained($source).toOpaque()",
     ]);
   }
 
@@ -137,7 +137,7 @@ class CStatefulUserWidgetProxy extends CType {
   String get swiftCInteropMapping => "UnsafeRawPointer";
 
   @override
-  CodeUnit fromDartValue(String sourceValue, String variableName) {
+  CodeUnit fromDartValue(String source, String destination) {
     throw UnimplementedError();
   }
 }
@@ -147,7 +147,7 @@ class SwiftStatefulUserWidgetProxy extends SwiftType {
   String get name => "StatefulUserWidgetProxy";
 
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     throw UnimplementedError();
   }
 }
@@ -171,10 +171,10 @@ class CBuildContext extends CType {
   String get dartFfiMapping => "Object";
 
   @override
-  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+  CodeUnit fromSwiftValue(String source, String destination) {
     // `BuildContext` is an alias to `Dart_Handle` in Swift
     return CodeUnit([
-      "let ${variableName}Value = $sourceValue",
+      "let ${destination}Value = $source",
     ]);
   }
 
@@ -185,16 +185,16 @@ class CBuildContext extends CType {
   String get swiftCInteropMapping => "Dart_Handle";
 
   @override
-  CodeUnit fromDartValue(String sourceValue, String variableName) {
+  CodeUnit fromDartValue(String source, String destination) {
     throw UnimplementedError();
   }
 }
 
 class DartBuildContext extends DartType {
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     return CodeUnit([
-      "final ${variableName}Value = $sourceFfiValue as BuildContext;",
+      "final ${destination}Value = $source as BuildContext;",
     ]);
   }
 
@@ -207,7 +207,7 @@ class SwiftBuildContext extends SwiftType {
   String get name => "BuildContext";
 
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     throw UnimplementedError();
   }
 }

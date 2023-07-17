@@ -63,7 +63,7 @@ class SwiftAnyWidget extends SwiftType {
   String get name => "any Widget";
 
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     throw UnimplementedError();
   }
 }
@@ -73,15 +73,15 @@ class SwiftOptionalAnyWidget extends SwiftType {
   String get name => "(any Widget)?";
 
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     throw UnimplementedError();
   }
 }
 
 class DartAnyWidget extends DartType {
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) => CodeUnit([
-        "final ${variableName}Value = $sourceFfiValue as Widget;",
+  CodeUnit fromCValue(String source, String destination) => CodeUnit([
+        "final ${destination}Value = $source as Widget;",
       ]);
 
   @override
@@ -90,8 +90,8 @@ class DartAnyWidget extends DartType {
 
 class DartOptionalAnyWidget extends DartType {
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) => CodeUnit([
-        "final ${variableName}Value = $sourceFfiValue as Widget?;",
+  CodeUnit fromCValue(String source, String destination) => CodeUnit([
+        "final ${destination}Value = $source as Widget?;",
       ]);
 
   @override
@@ -109,14 +109,14 @@ class CAnyWidget extends CType {
   String get swiftCInteropMapping => "Dart_Handle";
 
   @override
-  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+  CodeUnit fromSwiftValue(String source, String destination) {
     return CodeUnit([
-      "let ${variableName}Value = $sourceValue.reduce(parentKey: parentKey.joined(\"$variableName\")).handle",
+      "let ${destination}Value = $source.reduce(parentKey: parentKey.joined(\"$destination\")).handle",
     ]);
   }
 
   @override
-  CodeUnit fromDartValue(String sourceValue, String variableName) {
+  CodeUnit fromDartValue(String source, String destination) {
     throw UnimplementedError();
   }
 }
@@ -133,14 +133,14 @@ class COptionalAnyWidget extends CType {
   String get swiftCInteropMapping => "Dart_Handle?";
 
   @override
-  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+  CodeUnit fromSwiftValue(String source, String destination) {
     return CodeUnit([
-      "let ${variableName}Value = $sourceValue?.reduce(parentKey: parentKey.joined(\"$variableName\")).handle",
+      "let ${destination}Value = $source?.reduce(parentKey: parentKey.joined(\"$destination\")).handle",
     ]);
   }
 
   @override
-  CodeUnit fromDartValue(String sourceValue, String variableName) {
+  CodeUnit fromDartValue(String source, String destination) {
     throw UnimplementedError();
   }
 }

@@ -45,7 +45,7 @@ class OptionalDoubleType extends BoundType {
 
 class SwiftOptionalDouble extends SwiftType {
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     throw UnimplementedError();
   }
 
@@ -55,13 +55,13 @@ class SwiftOptionalDouble extends SwiftType {
 
 class DartOptionalDouble extends DartType {
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     return CodeUnit([
-      "late final double? ${variableName}Value;",
-      "if (libWidgeteer.optional_value_is_set($sourceFfiValue)) {",
-      "    ${variableName}Value = libWidgeteer.optional_value_get_double($sourceFfiValue);",
+      "late final double? ${destination}Value;",
+      "if (libWidgeteer.optional_value_is_set($source)) {",
+      "    ${destination}Value = libWidgeteer.optional_value_get_double($source);",
       "} else {",
-      "    ${variableName}Value = null;",
+      "    ${destination}Value = null;",
       "}",
     ]);
   }
@@ -75,22 +75,22 @@ class COptionalDouble extends CType {
   String get dartFfiMapping => "optional_value";
 
   @override
-  CodeUnit fromDartValue(String sourceValue, String variableName) {
+  CodeUnit fromDartValue(String source, String destination) {
     throw UnimplementedError();
   }
 
   @override
-  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+  CodeUnit fromSwiftValue(String source, String destination) {
     return CodeUnit([
-      "let ${variableName}Unmanaged = Unmanaged<OptionalValue>.passRetained(OptionalValue(double: $sourceValue))",
-      "let ${variableName}Value = ${variableName}Unmanaged.toOpaque()",
+      "let ${destination}Unmanaged = Unmanaged<OptionalValue>.passRetained(OptionalValue(double: $source))",
+      "let ${destination}Value = ${destination}Unmanaged.toOpaque()",
     ]);
   }
 
   @override
-  CodeUnit? fromSwiftValueCleanup(String sourceValue, String variableName) {
+  CodeUnit? fromSwiftValueCleanup(String source, String destination) {
     return CodeUnit([
-      "${variableName}Unmanaged.release()",
+      "${destination}Unmanaged.release()",
     ]);
   }
 
@@ -120,16 +120,16 @@ class SwiftDouble extends SwiftType {
   String get name => "Double";
 
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     throw UnimplementedError();
   }
 }
 
 class DartDouble extends DartType {
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+  CodeUnit fromCValue(String source, String destination) {
     return CodeUnit([
-      "final ${variableName}Value = $sourceFfiValue;",
+      "final ${destination}Value = $source;",
     ]);
   }
 
@@ -142,9 +142,9 @@ class CDouble extends CType {
   String get dartFfiMapping => "double";
 
   @override
-  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+  CodeUnit fromSwiftValue(String source, String destination) {
     return CodeUnit([
-      "let ${variableName}Value = $sourceValue",
+      "let ${destination}Value = $source",
     ]);
   }
 
@@ -155,7 +155,7 @@ class CDouble extends CType {
   String get swiftCInteropMapping => "Double";
 
   @override
-  CodeUnit fromDartValue(String sourceValue, String variableName) {
+  CodeUnit fromDartValue(String source, String destination) {
     throw UnimplementedError();
   }
 }
