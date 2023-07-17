@@ -26,7 +26,7 @@ Object newThemeDataImpl(int primarySwatch, Object? textTheme, int scaffoldBackgr
         case 1: primarySwatchValue = Colors.green; break;
         default: throw "Received invalid index '$primarySwatch' for value of enum 'MaterialColor?'";
     }
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:378
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:381
     final textThemeValue = textTheme as TextTheme?;
     // 🍞 bin/widgeteer/bindings/color.dart:62
     late final Color? scaffoldBackgroundColorValue;
@@ -36,7 +36,7 @@ Object newThemeDataImpl(int primarySwatch, Object? textTheme, int scaffoldBackgr
     late final Color? hintColorValue;
     if (hintColor == -1) { hintColorValue = null; }
     else { hintColorValue = Color(hintColor); }
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:378
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:381
     final primaryTextThemeValue = primaryTextTheme as TextTheme?;
     
     return ThemeData(primarySwatch: primarySwatchValue, textTheme: textThemeValue, scaffoldBackgroundColor: scaffoldBackgroundColorValue, hintColor: hintColorValue, primaryTextTheme: primaryTextThemeValue);
@@ -46,7 +46,7 @@ Object newThemeDataImpl(int primarySwatch, Object? textTheme, int scaffoldBackgr
 Object themeDataGetTextTheme(Object target) {
     final typedTarget = target as ThemeData;
     final value = typedTarget.textTheme;
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:301
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:304
     final Object convertedValue = value;
     return convertedValue;
 }
@@ -55,7 +55,7 @@ Object themeDataGetTextTheme(Object target) {
 int themeDataGetScaffoldBackgroundColor(Object target) {
     final typedTarget = target as ThemeData;
     final value = typedTarget.scaffoldBackgroundColor;
-    // 🍞 bin/widgeteer/bindings/color.dart:152
+    // 🍞 bin/widgeteer/bindings/color.dart:158
     final convertedValue = value.value;
     return convertedValue;
 }
@@ -64,7 +64,7 @@ int themeDataGetScaffoldBackgroundColor(Object target) {
 int themeDataGetHintColor(Object target) {
     final typedTarget = target as ThemeData;
     final value = typedTarget.hintColor;
-    // 🍞 bin/widgeteer/bindings/color.dart:152
+    // 🍞 bin/widgeteer/bindings/color.dart:158
     final convertedValue = value.value;
     return convertedValue;
 }
@@ -73,7 +73,7 @@ int themeDataGetHintColor(Object target) {
 Object themeDataGetPrimaryTextTheme(Object target) {
     final typedTarget = target as ThemeData;
     final value = typedTarget.primaryTextTheme;
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:301
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:304
     final Object convertedValue = value;
     return convertedValue;
 }

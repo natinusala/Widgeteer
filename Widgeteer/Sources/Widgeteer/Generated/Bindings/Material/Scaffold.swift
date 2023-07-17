@@ -18,11 +18,11 @@ public struct Scaffold<AppBar: PreferredSizeWidget, FloatingActionButton: Option
 
     // 🍞 bin/widgeteer/bindings/widget.dart:290
     public func reduce(parentKey: WidgetKey) -> ReducedWidget {
-        // 🍞 bin/widgeteer/bindings/widget.dart:705
+        // 🍞 bin/widgeteer/bindings/widget.dart:709
         let bodyValue = self.body.reduce(parentKey: parentKey.joined("body")).handle
-        // 🍞 bin/widgeteer/bindings/widget.dart:705
+        // 🍞 bin/widgeteer/bindings/widget.dart:709
         let appBarValue = self.appBar.reduce(parentKey: parentKey.joined("appBar")).handle
-        // 🍞 bin/widgeteer/bindings/widget.dart:705
+        // 🍞 bin/widgeteer/bindings/widget.dart:709
         let floatingActionButtonValue = self.floatingActionButton.reduce(parentKey: parentKey.joined("floatingActionButton")).handle
         let localHandle = Flutter_NewScaffold(
         parentKey.joined(String(describing: Self.self)),

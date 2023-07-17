@@ -16,9 +16,9 @@ public struct Text: DartWidget {
 
     // 🍞 bin/widgeteer/bindings/widget.dart:290
     public func reduce(parentKey: WidgetKey) -> ReducedWidget {
-        // 🍞 bin/widgeteer/bindings/string.dart:149
+        // 🍞 bin/widgeteer/bindings/string.dart:151
         let dataValue = self.data
-        // 🍞 bin/widgeteer/bindings/persistent_object.dart:351
+        // 🍞 bin/widgeteer/bindings/persistent_object.dart:354
         let styleValue = self.style?.handle ?? Dart_Null
         let localHandle = Flutter_NewText(
         parentKey.joined(String(describing: Self.self)),

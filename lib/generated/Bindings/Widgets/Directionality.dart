@@ -18,7 +18,7 @@ import 'package:flutter/foundation.dart';
 Object newDirectionalityImpl(Pointer<Char> key, int textDirection, Object child) {
     // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:81
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:143
-    // 🍞 bin/widgeteer/bindings/widget_key.dart:43
+    // 🍞 bin/widgeteer/bindings/widget_key.dart:42
     final keyString = key.cast<Utf8>().toDartString();
     final keyValue = ValueKey(keyString);
     // 🍞 bin/widgeteer/bindings/enum.dart:143
@@ -28,7 +28,7 @@ Object newDirectionalityImpl(Pointer<Char> key, int textDirection, Object child)
         case 1: textDirectionValue = TextDirection.ltr; break;
         default: throw "Received invalid index '$textDirection' for value of enum 'TextDirection'";
     }
-    // 🍞 bin/widgeteer/bindings/widget.dart:688
+    // 🍞 bin/widgeteer/bindings/widget.dart:692
     final childValue = child as Widget;
     
     return Directionality(key: keyValue, textDirection: textDirectionValue, child: childValue);

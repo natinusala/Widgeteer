@@ -140,7 +140,7 @@ class ParametersList with IterableMixin<Parameter> {
   /// that takes the parameters in their FFI form and turn them into their
   /// final Dart values.
   CodeUnit dartValuesFromFFI(BindingContext context, bool isInit) {
-    final values = CodeUnit();
+    final values = CodeUnit.empty();
 
     for (final parameter in this) {
       final type = context.resolveType(
@@ -206,7 +206,7 @@ class ParametersList with IterableMixin<Parameter> {
 
   /// Swift property declarations (`let` constants).
   CodeUnit get swiftProperties {
-    final properties = CodeUnit();
+    final properties = CodeUnit.empty();
 
     for (final parameter in this) {
       final resolvedType = context.resolveType(parameter.type);
@@ -219,7 +219,7 @@ class ParametersList with IterableMixin<Parameter> {
 
   /// Swift initializer that sets all properties.
   CodeUnit get swiftInitializer {
-    final init = CodeUnit();
+    final init = CodeUnit.empty();
 
     init.enterScope("public init($swiftInitParameters) {");
 

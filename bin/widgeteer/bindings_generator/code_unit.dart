@@ -29,7 +29,7 @@ class CodeUnit {
   /// Indentation level given by the current scope.
   int scopeLevel = 0;
 
-  CodeUnit({String? content, List<String>? initialLines, bool stamp = true}) {
+  CodeUnit(List<String>? initialLines, {bool stamp = true}) {
     // Add the breadcrumb
     if (stamp) {
       // Find the first caller that's outside of the `CodeUnit` class
@@ -56,21 +56,17 @@ class CodeUnit {
     }
 
     // Add content
-    if (content != null) {
-      lines.add(content);
-    }
-
     if (initialLines != null) {
       lines.addAll(initialLines);
     }
   }
 
   factory CodeUnit.forNewFile() {
-    return CodeUnit(content: generatedHeader);
+    return CodeUnit([generatedHeader]);
   }
 
   factory CodeUnit.empty() {
-    return CodeUnit(stamp: false);
+    return CodeUnit([], stamp: true);
   }
 
   void appendLine(String line) {

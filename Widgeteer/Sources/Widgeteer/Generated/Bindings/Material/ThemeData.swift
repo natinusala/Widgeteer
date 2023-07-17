@@ -16,13 +16,13 @@ public class ThemeData {
         
         // 🍞 bin/widgeteer/bindings/enum.dart:236
         let primarySwatchValue = primarySwatch?.rawValue ?? -1
-        // 🍞 bin/widgeteer/bindings/persistent_object.dart:351
+        // 🍞 bin/widgeteer/bindings/persistent_object.dart:354
         let textThemeValue = textTheme?.handle ?? Dart_Null
         // 🍞 bin/widgeteer/bindings/color.dart:79
         let scaffoldBackgroundColorValue = scaffoldBackgroundColor?.value ?? -1
         // 🍞 bin/widgeteer/bindings/color.dart:79
         let hintColorValue = hintColor?.value ?? -1
-        // 🍞 bin/widgeteer/bindings/persistent_object.dart:351
+        // 🍞 bin/widgeteer/bindings/persistent_object.dart:354
         let primaryTextThemeValue = primaryTextTheme?.handle ?? Dart_Null
         let localHandle = Flutter_NewThemeData(
             primarySwatchValue,
@@ -57,7 +57,7 @@ public class ThemeData {
     public var scaffoldBackgroundColor: Color {
         return Flutter_BlockingSchedule(scoped: false) { _ in
             let localHandle = Flutter_ThemeDataGetScaffoldBackgroundColor(self.handle)
-            // 🍞 bin/widgeteer/bindings/color.dart:119
+            // 🍞 bin/widgeteer/bindings/color.dart:121
             let ThemeDataValue = Color(localHandle)
             return ThemeDataValue
         }
@@ -66,7 +66,7 @@ public class ThemeData {
     public var hintColor: Color {
         return Flutter_BlockingSchedule(scoped: false) { _ in
             let localHandle = Flutter_ThemeDataGetHintColor(self.handle)
-            // 🍞 bin/widgeteer/bindings/color.dart:119
+            // 🍞 bin/widgeteer/bindings/color.dart:121
             let ThemeDataValue = Color(localHandle)
             return ThemeDataValue
         }

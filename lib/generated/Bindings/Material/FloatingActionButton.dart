@@ -18,7 +18,7 @@ import 'package:flutter/foundation.dart';
 Object newFloatingActionButtonImpl(Pointer<Char> key, Pointer<Void> onPressed, optional_value tooltip, Object child) {
     // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:81
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:143
-    // 🍞 bin/widgeteer/bindings/widget_key.dart:43
+    // 🍞 bin/widgeteer/bindings/widget_key.dart:42
     final keyString = key.cast<Utf8>().toDartString();
     final keyValue = ValueKey(keyString);
     // 🍞 bin/widgeteer/bindings/callback.dart:257
@@ -29,14 +29,14 @@ Object newFloatingActionButtonImpl(Pointer<Char> key, Pointer<Void> onPressed, o
         final onPressedProxy = VoidCallbackProxy(onPressed);
         onPressedValue = () { return onPressedProxy.call(); };
     }
-    // 🍞 bin/widgeteer/bindings/string.dart:88
+    // 🍞 bin/widgeteer/bindings/string.dart:90
     late final String? tooltipValue;
     if (libWidgeteer.optional_value_is_set(tooltip)) {
         tooltipValue = libWidgeteer.optional_value_get_string(tooltip).cast<Utf8>().toDartString();
     } else {
         tooltipValue = null;
     }
-    // 🍞 bin/widgeteer/bindings/widget.dart:688
+    // 🍞 bin/widgeteer/bindings/widget.dart:692
     final childValue = child as Widget;
     
     return FloatingActionButton(key: keyValue, onPressed: onPressedValue, tooltip: tooltipValue, child: childValue);

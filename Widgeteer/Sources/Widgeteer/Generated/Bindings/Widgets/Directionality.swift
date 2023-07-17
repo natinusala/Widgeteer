@@ -18,7 +18,7 @@ public struct Directionality<Child: SingleWidget>: DartWidget {
     public func reduce(parentKey: WidgetKey) -> ReducedWidget {
         // 🍞 bin/widgeteer/bindings/enum.dart:119
         let textDirectionValue = self.textDirection.rawValue
-        // 🍞 bin/widgeteer/bindings/widget.dart:705
+        // 🍞 bin/widgeteer/bindings/widget.dart:709
         let childValue = self.child.reduce(parentKey: parentKey.joined("child")).handle
         let localHandle = Flutter_NewDirectionality(
         parentKey.joined(String(describing: Self.self)),

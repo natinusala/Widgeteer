@@ -56,7 +56,7 @@ class DartFunction {
   /// If `isInit` is specified, the outlet will be considered an "init" outlet
   /// and the generated implementation will use `initType` when possible.
   CodeUnit outletImplementation(bool isInit) {
-    final outlet = CodeUnit();
+    final outlet = CodeUnit.empty();
 
     // Imports
     outlet.appendLines([
@@ -78,7 +78,7 @@ class DartFunction {
     final resolvedType = context.resolveType(returnType);
 
     // Function body
-    final body = CodeUnit();
+    final body = CodeUnit.empty();
 
     // C -> Dart parameters conversion
     body.appendUnit(parameters.dartValuesFromFFI(context, isInit));
@@ -92,7 +92,7 @@ class DartFunction {
     }
 
     // Function signature
-    final function = CodeUnit();
+    final function = CodeUnit.empty();
 
     function.enterScope(
         "${resolvedType.cType.dartFfiMapping} $outletImplementationName(${parameters.dartFFIParameters(isInit)}) {");

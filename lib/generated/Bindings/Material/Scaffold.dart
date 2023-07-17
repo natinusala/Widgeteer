@@ -18,14 +18,14 @@ import 'package:flutter/foundation.dart';
 Object newScaffoldImpl(Pointer<Char> key, Object body, Object? appBar, Object? floatingActionButton) {
     // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:81
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:143
-    // 🍞 bin/widgeteer/bindings/widget_key.dart:43
+    // 🍞 bin/widgeteer/bindings/widget_key.dart:42
     final keyString = key.cast<Utf8>().toDartString();
     final keyValue = ValueKey(keyString);
-    // 🍞 bin/widgeteer/bindings/widget.dart:688
+    // 🍞 bin/widgeteer/bindings/widget.dart:692
     final bodyValue = body as Widget;
-    // 🍞 bin/widgeteer/bindings/widget.dart:688
+    // 🍞 bin/widgeteer/bindings/widget.dart:692
     final appBarValue = appBar as PreferredSizeWidget?;
-    // 🍞 bin/widgeteer/bindings/widget.dart:688
+    // 🍞 bin/widgeteer/bindings/widget.dart:692
     final floatingActionButtonValue = floatingActionButton as Widget?;
     
     return Scaffold(key: keyValue, body: bodyValue, appBar: appBarValue, floatingActionButton: floatingActionButtonValue);

@@ -14,29 +14,29 @@ public class TextTheme {
         // 🍞 bin/widgeteer/bindings_generator/models/outlet.dart:127
         assertIsOnFlutterThread()
         
-        // 🍞 bin/widgeteer/bindings/persistent_object.dart:351
+        // 🍞 bin/widgeteer/bindings/persistent_object.dart:354
         let headlineLargeValue = headlineLarge?.handle ?? Dart_Null
-        // 🍞 bin/widgeteer/bindings/persistent_object.dart:351
+        // 🍞 bin/widgeteer/bindings/persistent_object.dart:354
         let headlineMediumValue = headlineMedium?.handle ?? Dart_Null
-        // 🍞 bin/widgeteer/bindings/persistent_object.dart:351
+        // 🍞 bin/widgeteer/bindings/persistent_object.dart:354
         let headlineSmallValue = headlineSmall?.handle ?? Dart_Null
-        // 🍞 bin/widgeteer/bindings/persistent_object.dart:351
+        // 🍞 bin/widgeteer/bindings/persistent_object.dart:354
         let titleLargeValue = titleLarge?.handle ?? Dart_Null
-        // 🍞 bin/widgeteer/bindings/persistent_object.dart:351
+        // 🍞 bin/widgeteer/bindings/persistent_object.dart:354
         let titleMediumValue = titleMedium?.handle ?? Dart_Null
-        // 🍞 bin/widgeteer/bindings/persistent_object.dart:351
+        // 🍞 bin/widgeteer/bindings/persistent_object.dart:354
         let titleSmallValue = titleSmall?.handle ?? Dart_Null
-        // 🍞 bin/widgeteer/bindings/persistent_object.dart:351
+        // 🍞 bin/widgeteer/bindings/persistent_object.dart:354
         let labelLargeValue = labelLarge?.handle ?? Dart_Null
-        // 🍞 bin/widgeteer/bindings/persistent_object.dart:351
+        // 🍞 bin/widgeteer/bindings/persistent_object.dart:354
         let labelMediumValue = labelMedium?.handle ?? Dart_Null
-        // 🍞 bin/widgeteer/bindings/persistent_object.dart:351
+        // 🍞 bin/widgeteer/bindings/persistent_object.dart:354
         let labelSmallValue = labelSmall?.handle ?? Dart_Null
-        // 🍞 bin/widgeteer/bindings/persistent_object.dart:351
+        // 🍞 bin/widgeteer/bindings/persistent_object.dart:354
         let bodyLargeValue = bodyLarge?.handle ?? Dart_Null
-        // 🍞 bin/widgeteer/bindings/persistent_object.dart:351
+        // 🍞 bin/widgeteer/bindings/persistent_object.dart:354
         let bodyMediumValue = bodyMedium?.handle ?? Dart_Null
-        // 🍞 bin/widgeteer/bindings/persistent_object.dart:351
+        // 🍞 bin/widgeteer/bindings/persistent_object.dart:354
         let bodySmallValue = bodySmall?.handle ?? Dart_Null
         let localHandle = Flutter_NewTextTheme(
             headlineLargeValue,
@@ -69,7 +69,7 @@ public class TextTheme {
     public var headlineLarge: TextStyle? {
         return Flutter_BlockingSchedule(scoped: false) { _ in
             let localHandle = Flutter_TextThemeGetHeadlineLarge(self.handle)
-            // 🍞 bin/widgeteer/bindings/persistent_object.dart:335
+            // 🍞 bin/widgeteer/bindings/persistent_object.dart:338
             let TextThemeValue: TextStyle? = localHandle == Dart_Null ? nil : TextStyle(persisting: localHandle)
             return TextThemeValue
         }
@@ -78,7 +78,7 @@ public class TextTheme {
     public var headlineMedium: TextStyle? {
         return Flutter_BlockingSchedule(scoped: false) { _ in
             let localHandle = Flutter_TextThemeGetHeadlineMedium(self.handle)
-            // 🍞 bin/widgeteer/bindings/persistent_object.dart:335
+            // 🍞 bin/widgeteer/bindings/persistent_object.dart:338
             let TextThemeValue: TextStyle? = localHandle == Dart_Null ? nil : TextStyle(persisting: localHandle)
             return TextThemeValue
         }
@@ -87,7 +87,7 @@ public class TextTheme {
     public var headlineSmall: TextStyle? {
         return Flutter_BlockingSchedule(scoped: false) { _ in
             let localHandle = Flutter_TextThemeGetHeadlineSmall(self.handle)
-            // 🍞 bin/widgeteer/bindings/persistent_object.dart:335
+            // 🍞 bin/widgeteer/bindings/persistent_object.dart:338
             let TextThemeValue: TextStyle? = localHandle == Dart_Null ? nil : TextStyle(persisting: localHandle)
             return TextThemeValue
         }
@@ -96,7 +96,7 @@ public class TextTheme {
     public var titleLarge: TextStyle? {
         return Flutter_BlockingSchedule(scoped: false) { _ in
             let localHandle = Flutter_TextThemeGetTitleLarge(self.handle)
-            // 🍞 bin/widgeteer/bindings/persistent_object.dart:335
+            // 🍞 bin/widgeteer/bindings/persistent_object.dart:338
             let TextThemeValue: TextStyle? = localHandle == Dart_Null ? nil : TextStyle(persisting: localHandle)
             return TextThemeValue
         }
@@ -105,7 +105,7 @@ public class TextTheme {
     public var titleMedium: TextStyle? {
         return Flutter_BlockingSchedule(scoped: false) { _ in
             let localHandle = Flutter_TextThemeGetTitleMedium(self.handle)
-            // 🍞 bin/widgeteer/bindings/persistent_object.dart:335
+            // 🍞 bin/widgeteer/bindings/persistent_object.dart:338
             let TextThemeValue: TextStyle? = localHandle == Dart_Null ? nil : TextStyle(persisting: localHandle)
             return TextThemeValue
         }
@@ -114,7 +114,7 @@ public class TextTheme {
     public var titleSmall: TextStyle? {
         return Flutter_BlockingSchedule(scoped: false) { _ in
             let localHandle = Flutter_TextThemeGetTitleSmall(self.handle)
-            // 🍞 bin/widgeteer/bindings/persistent_object.dart:335
+            // 🍞 bin/widgeteer/bindings/persistent_object.dart:338
             let TextThemeValue: TextStyle? = localHandle == Dart_Null ? nil : TextStyle(persisting: localHandle)
             return TextThemeValue
         }
@@ -123,7 +123,7 @@ public class TextTheme {
     public var labelLarge: TextStyle? {
         return Flutter_BlockingSchedule(scoped: false) { _ in
             let localHandle = Flutter_TextThemeGetLabelLarge(self.handle)
-            // 🍞 bin/widgeteer/bindings/persistent_object.dart:335
+            // 🍞 bin/widgeteer/bindings/persistent_object.dart:338
             let TextThemeValue: TextStyle? = localHandle == Dart_Null ? nil : TextStyle(persisting: localHandle)
             return TextThemeValue
         }
@@ -132,7 +132,7 @@ public class TextTheme {
     public var labelMedium: TextStyle? {
         return Flutter_BlockingSchedule(scoped: false) { _ in
             let localHandle = Flutter_TextThemeGetLabelMedium(self.handle)
-            // 🍞 bin/widgeteer/bindings/persistent_object.dart:335
+            // 🍞 bin/widgeteer/bindings/persistent_object.dart:338
             let TextThemeValue: TextStyle? = localHandle == Dart_Null ? nil : TextStyle(persisting: localHandle)
             return TextThemeValue
         }
@@ -141,7 +141,7 @@ public class TextTheme {
     public var labelSmall: TextStyle? {
         return Flutter_BlockingSchedule(scoped: false) { _ in
             let localHandle = Flutter_TextThemeGetLabelSmall(self.handle)
-            // 🍞 bin/widgeteer/bindings/persistent_object.dart:335
+            // 🍞 bin/widgeteer/bindings/persistent_object.dart:338
             let TextThemeValue: TextStyle? = localHandle == Dart_Null ? nil : TextStyle(persisting: localHandle)
             return TextThemeValue
         }
@@ -150,7 +150,7 @@ public class TextTheme {
     public var bodyLarge: TextStyle? {
         return Flutter_BlockingSchedule(scoped: false) { _ in
             let localHandle = Flutter_TextThemeGetBodyLarge(self.handle)
-            // 🍞 bin/widgeteer/bindings/persistent_object.dart:335
+            // 🍞 bin/widgeteer/bindings/persistent_object.dart:338
             let TextThemeValue: TextStyle? = localHandle == Dart_Null ? nil : TextStyle(persisting: localHandle)
             return TextThemeValue
         }
@@ -159,7 +159,7 @@ public class TextTheme {
     public var bodyMedium: TextStyle? {
         return Flutter_BlockingSchedule(scoped: false) { _ in
             let localHandle = Flutter_TextThemeGetBodyMedium(self.handle)
-            // 🍞 bin/widgeteer/bindings/persistent_object.dart:335
+            // 🍞 bin/widgeteer/bindings/persistent_object.dart:338
             let TextThemeValue: TextStyle? = localHandle == Dart_Null ? nil : TextStyle(persisting: localHandle)
             return TextThemeValue
         }
@@ -168,7 +168,7 @@ public class TextTheme {
     public var bodySmall: TextStyle? {
         return Flutter_BlockingSchedule(scoped: false) { _ in
             let localHandle = Flutter_TextThemeGetBodySmall(self.handle)
-            // 🍞 bin/widgeteer/bindings/persistent_object.dart:335
+            // 🍞 bin/widgeteer/bindings/persistent_object.dart:338
             let TextThemeValue: TextStyle? = localHandle == Dart_Null ? nil : TextStyle(persisting: localHandle)
             return TextThemeValue
         }

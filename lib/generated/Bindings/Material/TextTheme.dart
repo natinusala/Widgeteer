@@ -18,29 +18,29 @@ import 'package:flutter/foundation.dart';
 Object newTextThemeImpl(Object? headlineLarge, Object? headlineMedium, Object? headlineSmall, Object? titleLarge, Object? titleMedium, Object? titleSmall, Object? labelLarge, Object? labelMedium, Object? labelSmall, Object? bodyLarge, Object? bodyMedium, Object? bodySmall) {
     // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:81
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:143
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:378
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:381
     final headlineLargeValue = headlineLarge as TextStyle?;
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:378
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:381
     final headlineMediumValue = headlineMedium as TextStyle?;
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:378
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:381
     final headlineSmallValue = headlineSmall as TextStyle?;
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:378
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:381
     final titleLargeValue = titleLarge as TextStyle?;
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:378
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:381
     final titleMediumValue = titleMedium as TextStyle?;
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:378
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:381
     final titleSmallValue = titleSmall as TextStyle?;
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:378
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:381
     final labelLargeValue = labelLarge as TextStyle?;
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:378
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:381
     final labelMediumValue = labelMedium as TextStyle?;
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:378
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:381
     final labelSmallValue = labelSmall as TextStyle?;
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:378
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:381
     final bodyLargeValue = bodyLarge as TextStyle?;
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:378
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:381
     final bodyMediumValue = bodyMedium as TextStyle?;
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:378
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:381
     final bodySmallValue = bodySmall as TextStyle?;
     
     return TextTheme(headlineLarge: headlineLargeValue, headlineMedium: headlineMediumValue, headlineSmall: headlineSmallValue, titleLarge: titleLargeValue, titleMedium: titleMediumValue, titleSmall: titleSmallValue, labelLarge: labelLargeValue, labelMedium: labelMediumValue, labelSmall: labelSmallValue, bodyLarge: bodyLargeValue, bodyMedium: bodyMediumValue, bodySmall: bodySmallValue);
@@ -50,7 +50,7 @@ Object newTextThemeImpl(Object? headlineLarge, Object? headlineMedium, Object? h
 Object? textThemeGetHeadlineLarge(Object target) {
     final typedTarget = target as TextTheme;
     final value = typedTarget.headlineLarge;
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:364
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:367
     final Object? convertedValue = value;
     return convertedValue;
 }
@@ -59,7 +59,7 @@ Object? textThemeGetHeadlineLarge(Object target) {
 Object? textThemeGetHeadlineMedium(Object target) {
     final typedTarget = target as TextTheme;
     final value = typedTarget.headlineMedium;
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:364
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:367
     final Object? convertedValue = value;
     return convertedValue;
 }
@@ -68,7 +68,7 @@ Object? textThemeGetHeadlineMedium(Object target) {
 Object? textThemeGetHeadlineSmall(Object target) {
     final typedTarget = target as TextTheme;
     final value = typedTarget.headlineSmall;
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:364
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:367
     final Object? convertedValue = value;
     return convertedValue;
 }
@@ -77,7 +77,7 @@ Object? textThemeGetHeadlineSmall(Object target) {
 Object? textThemeGetTitleLarge(Object target) {
     final typedTarget = target as TextTheme;
     final value = typedTarget.titleLarge;
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:364
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:367
     final Object? convertedValue = value;
     return convertedValue;
 }
@@ -86,7 +86,7 @@ Object? textThemeGetTitleLarge(Object target) {
 Object? textThemeGetTitleMedium(Object target) {
     final typedTarget = target as TextTheme;
     final value = typedTarget.titleMedium;
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:364
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:367
     final Object? convertedValue = value;
     return convertedValue;
 }
@@ -95,7 +95,7 @@ Object? textThemeGetTitleMedium(Object target) {
 Object? textThemeGetTitleSmall(Object target) {
     final typedTarget = target as TextTheme;
     final value = typedTarget.titleSmall;
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:364
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:367
     final Object? convertedValue = value;
     return convertedValue;
 }
@@ -104,7 +104,7 @@ Object? textThemeGetTitleSmall(Object target) {
 Object? textThemeGetLabelLarge(Object target) {
     final typedTarget = target as TextTheme;
     final value = typedTarget.labelLarge;
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:364
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:367
     final Object? convertedValue = value;
     return convertedValue;
 }
@@ -113,7 +113,7 @@ Object? textThemeGetLabelLarge(Object target) {
 Object? textThemeGetLabelMedium(Object target) {
     final typedTarget = target as TextTheme;
     final value = typedTarget.labelMedium;
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:364
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:367
     final Object? convertedValue = value;
     return convertedValue;
 }
@@ -122,7 +122,7 @@ Object? textThemeGetLabelMedium(Object target) {
 Object? textThemeGetLabelSmall(Object target) {
     final typedTarget = target as TextTheme;
     final value = typedTarget.labelSmall;
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:364
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:367
     final Object? convertedValue = value;
     return convertedValue;
 }
@@ -131,7 +131,7 @@ Object? textThemeGetLabelSmall(Object target) {
 Object? textThemeGetBodyLarge(Object target) {
     final typedTarget = target as TextTheme;
     final value = typedTarget.bodyLarge;
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:364
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:367
     final Object? convertedValue = value;
     return convertedValue;
 }
@@ -140,7 +140,7 @@ Object? textThemeGetBodyLarge(Object target) {
 Object? textThemeGetBodyMedium(Object target) {
     final typedTarget = target as TextTheme;
     final value = typedTarget.bodyMedium;
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:364
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:367
     final Object? convertedValue = value;
     return convertedValue;
 }
@@ -149,7 +149,7 @@ Object? textThemeGetBodyMedium(Object target) {
 Object? textThemeGetBodySmall(Object target) {
     final typedTarget = target as TextTheme;
     final value = typedTarget.bodySmall;
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:364
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:367
     final Object? convertedValue = value;
     return convertedValue;
 }

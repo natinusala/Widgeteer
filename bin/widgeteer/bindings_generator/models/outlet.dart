@@ -75,13 +75,13 @@ class Outlet {
     final resolvedReturnType = context.resolveType(returnType);
 
     if (resolvedReturnType.cType.exceptionalReturnValue != null) {
-      return CodeUnit(
-          content:
-              "widgeteer.$cRegistrationDeclarationName(Pointer.fromFunction($implementationName, ${resolvedReturnType.cType.exceptionalReturnValue}));");
+      return CodeUnit([
+        "widgeteer.$cRegistrationDeclarationName(Pointer.fromFunction($implementationName, ${resolvedReturnType.cType.exceptionalReturnValue}));",
+      ]);
     } else {
-      return CodeUnit(
-          content:
-              "widgeteer.$cRegistrationDeclarationName(Pointer.fromFunction($implementationName));");
+      return CodeUnit([
+        "widgeteer.$cRegistrationDeclarationName(Pointer.fromFunction($implementationName));",
+      ]);
     }
   }
 
@@ -93,7 +93,7 @@ class Outlet {
     final closureTypeAlias =
         "(${parameters.swiftCFunctionParameters}) -> ${resolvedReturnType.cType.swiftCInteropMapping}";
 
-    final registration = CodeUnit();
+    final registration = CodeUnit.empty();
 
     // C Function Pointer typealias
     registration.appendLine(
@@ -124,7 +124,7 @@ class Outlet {
   /// Generates a Swift call to the outlet, setting the result in [destination].
   /// TODO: use inside widgets reductionFunction too
   CodeUnit swiftCall(String destination) {
-    final call = CodeUnit();
+    final call = CodeUnit.empty();
 
     call.appendLine("assertIsOnFlutterThread()");
     call.appendEmptyLine();

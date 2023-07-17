@@ -54,7 +54,7 @@ class COptionalString extends CType {
 
   @override
   CodeUnit fromSwiftValue(String sourceValue, String variableName) {
-    return CodeUnit(initialLines: [
+    return CodeUnit([
       "let ${variableName}Unmanaged = Unmanaged<OptionalValue>.passRetained(OptionalValue(string: $sourceValue))",
       "let ${variableName}Value = ${variableName}Unmanaged.toOpaque()",
     ]);
@@ -62,7 +62,9 @@ class COptionalString extends CType {
 
   @override
   CodeUnit? fromSwiftValueCleanup(String sourceValue, String variableName) {
-    return CodeUnit(content: "${variableName}Unmanaged.release()");
+    return CodeUnit([
+      "${variableName}Unmanaged.release()",
+    ]);
   }
 
   @override
@@ -85,7 +87,7 @@ class SwiftOptionalString extends SwiftType {
 class DartOptionalString extends DartType {
   @override
   CodeUnit fromCValue(String sourceFfiValue, String variableName) {
-    return CodeUnit(initialLines: [
+    return CodeUnit([
       "late final String? ${variableName}Value;",
       "if (libWidgeteer.optional_value_is_set($sourceFfiValue)) {",
       "    ${variableName}Value = libWidgeteer.optional_value_get_string($sourceFfiValue).cast<Utf8>().toDartString();",
@@ -128,9 +130,9 @@ class DartString extends DartType {
   String get name => "String";
 
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) => CodeUnit(
-      content:
-          "final ${variableName}Value = $sourceFfiValue.cast<Utf8>().toDartString();");
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) => CodeUnit([
+        "final ${variableName}Value = $sourceFfiValue.cast<Utf8>().toDartString();",
+      ]);
 }
 
 class CString extends CType {
@@ -146,7 +148,9 @@ class CString extends CType {
   @override
   CodeUnit fromSwiftValue(String sourceValue, String variableName) {
     // Use Swift implicit conversion from String to CChar* in function calls
-    return CodeUnit(content: "let ${variableName}Value = $sourceValue");
+    return CodeUnit([
+      "let ${variableName}Value = $sourceValue",
+    ]);
   }
 
   @override

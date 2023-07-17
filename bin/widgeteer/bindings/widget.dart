@@ -145,7 +145,7 @@ class WidgetBinding extends Binding {
 
   @override
   CodeUnit? get dartBody {
-    final body = CodeUnit();
+    final body = CodeUnit.empty();
 
     // Both normal and optional types use the same creation outlet
     body.appendUnit(newFunction.outletImplementation(true));
@@ -164,7 +164,7 @@ class WidgetBinding extends Binding {
 
   @override
   CodeUnit? get swiftBody {
-    final body = CodeUnit();
+    final body = CodeUnit.empty();
 
     // Swift struct
     body.appendUnit(swiftStruct);
@@ -185,7 +185,7 @@ class WidgetBinding extends Binding {
       throw "Cannot generate a wrapper for '$name': it has no content property.";
     }
 
-    final wrapper = CodeUnit();
+    final wrapper = CodeUnit.empty();
 
     wrapper.appendUnit(swiftWrapperStruct);
     wrapper.appendEmptyLine();
@@ -197,7 +197,7 @@ class WidgetBinding extends Binding {
   String get wrapperStructName => "${name}Wrapper";
 
   CodeUnit get swiftWrapperStruct {
-    final struct = CodeUnit();
+    final struct = CodeUnit.empty();
 
     struct.enterScope("struct $wrapperStructName: WidgetWrapper {");
 
@@ -213,7 +213,7 @@ class WidgetBinding extends Binding {
   }
 
   CodeUnit get swiftWrapperFunction {
-    final function = CodeUnit();
+    final function = CodeUnit.empty();
 
     function.enterScope("public extension Widget {");
 
@@ -264,7 +264,7 @@ class WidgetBinding extends Binding {
   }
 
   CodeUnit get swiftStruct {
-    final struct = CodeUnit();
+    final struct = CodeUnit.empty();
 
     final protocol = superClass ?? "DartWidget";
 
@@ -287,7 +287,7 @@ class WidgetBinding extends Binding {
   }
 
   CodeUnit get reductionFunction {
-    final reduce = CodeUnit();
+    final reduce = CodeUnit.empty();
 
     reduce.enterScope(
         "public func reduce(parentKey: WidgetKey) -> ReducedWidget {");
@@ -361,8 +361,9 @@ class DartWidget extends DartType {
 
   @override
   CodeUnit fromCValue(String sourceFfiValue, String variableName) {
-    return CodeUnit(
-        content: "final ${variableName}Value = $sourceFfiValue as $name;");
+    return CodeUnit([
+      "final ${variableName}Value = $sourceFfiValue as $name;",
+    ]);
   }
 }
 
@@ -386,9 +387,9 @@ class CWidget extends CType {
 
   @override
   CodeUnit fromSwiftValue(String sourceValue, String variableName) {
-    return CodeUnit(
-        content:
-            "let ${variableName}Value = $sourceValue.reduce(parentKey: parentKey.joined(\"$variableName\")).handle");
+    return CodeUnit([
+      "let ${variableName}Value = $sourceValue.reduce(parentKey: parentKey.joined(\"$variableName\")).handle",
+    ]);
   }
 
   @override
@@ -431,8 +432,9 @@ class OptionalDartWidget extends DartType {
 
   @override
   CodeUnit fromCValue(String sourceFfiValue, String variableName) {
-    return CodeUnit(
-        content: "final ${variableName}Value = $sourceFfiValue as $name;");
+    return CodeUnit([
+      "final ${variableName}Value = $sourceFfiValue as $name;",
+    ]);
   }
 }
 
@@ -456,9 +458,9 @@ class OptionalCWidget extends CType {
 
   @override
   CodeUnit fromSwiftValue(String sourceValue, String variableName) {
-    return CodeUnit(
-        content:
-            "let ${variableName}Value = $sourceValue?.reduce(parentKey: parentKey.joined(\"$variableName\")).handle");
+    return CodeUnit([
+      "let ${variableName}Value = $sourceValue?.reduce(parentKey: parentKey.joined(\"$variableName\")).handle",
+    ]);
   }
 
   @override
@@ -612,9 +614,9 @@ class MultiDartWidgetContent extends DartType {
 
   @override
   CodeUnit fromCValue(String sourceFfiValue, String variableName) {
-    return CodeUnit(
-        content:
-            "final ${variableName}Value = consumeHandlesList<${type.dartClass()}>($sourceFfiValue);");
+    return CodeUnit([
+      "final ${variableName}Value = consumeHandlesList<${type.dartClass()}>($sourceFfiValue);",
+    ]);
   }
 
   @override
@@ -631,7 +633,7 @@ class MultiCWidgetContent extends CType {
 
   @override
   CodeUnit fromSwiftValue(String sourceValue, String variableName) {
-    return CodeUnit(initialLines: [
+    return CodeUnit([
       "let ${variableName}List = HandlesList(handles: $sourceValue.reduce(parentKey: parentKey.joined(\"$variableName\")).map(\\.handle))",
       "let ${variableName}Unmanaged = Unmanaged<HandlesList>.passRetained(${variableName}List)",
       "let ${variableName}Value = ${variableName}Unmanaged.toOpaque()",
@@ -640,7 +642,9 @@ class MultiCWidgetContent extends CType {
 
   @override
   CodeUnit? fromSwiftValueCleanup(String sourceValue, String variableName) {
-    return CodeUnit(content: "${variableName}Unmanaged.release()");
+    return CodeUnit([
+      "${variableName}Unmanaged.release()",
+    ]);
   }
 
   @override
@@ -685,9 +689,9 @@ class DartWidgetContent extends DartType {
   DartWidgetContent(this.type);
 
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) => CodeUnit(
-      content:
-          "final ${variableName}Value = $sourceFfiValue as ${type.dartClass()};");
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) => CodeUnit([
+        "final ${variableName}Value = $sourceFfiValue as ${type.dartClass()};",
+      ]);
 
   @override
   String get name => type.dartClass();
@@ -702,9 +706,9 @@ class CWidgetContent extends CType {
   String get dartFfiMapping => type.optional ? "Object?" : "Object";
 
   @override
-  CodeUnit fromSwiftValue(String sourceValue, String variableName) => CodeUnit(
-      content:
-          "let ${variableName}Value = $sourceValue.reduce(parentKey: parentKey.joined(\"$variableName\")).handle");
+  CodeUnit fromSwiftValue(String sourceValue, String variableName) => CodeUnit([
+        "let ${variableName}Value = $sourceValue.reduce(parentKey: parentKey.joined(\"$variableName\")).handle",
+      ]);
 
   @override
   String get name => "Dart_Handle";

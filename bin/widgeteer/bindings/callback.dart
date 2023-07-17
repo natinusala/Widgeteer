@@ -54,7 +54,7 @@ class CallbackBinding extends Binding {
 
   @override
   CodeUnit? get swiftBody {
-    final body = CodeUnit();
+    final body = CodeUnit.empty();
 
     // typealias
     body.appendLine("public typealias $name = () -> Void");
@@ -72,7 +72,7 @@ class CallbackBinding extends Binding {
 
   /// Swift proxy class that holds the closure.
   CodeUnit get swiftProxy {
-    final proxy = CodeUnit();
+    final proxy = CodeUnit.empty();
 
     proxy.enterScope("class $proxyName {");
     proxy.appendLine("let closure: $name");
@@ -91,7 +91,7 @@ class CallbackBinding extends Binding {
 
   /// Swift functions to call the proxy, exposed to C.
   CodeUnit get swiftCFunctions {
-    final functions = CodeUnit();
+    final functions = CodeUnit.empty();
 
     // Call
     functions.appendLine("@_cdecl(\"$callCFunction\")");
@@ -119,7 +119,7 @@ class CallbackBinding extends Binding {
 
   @override
   CodeUnit get dartBody {
-    final body = CodeUnit();
+    final body = CodeUnit.empty();
 
     body.appendLines([
       "import 'dart:ffi';",
@@ -136,7 +136,7 @@ class CallbackBinding extends Binding {
 
   /// Dart class holding the Swift proxy.
   CodeUnit get dartProxy {
-    final proxy = CodeUnit();
+    final proxy = CodeUnit.empty();
 
     proxy.enterScope("class $proxyName implements Finalizable {");
 
@@ -168,7 +168,7 @@ class CallbackBinding extends Binding {
 
   @override
   CodeUnit get cDeclarations {
-    final headers = CodeUnit();
+    final headers = CodeUnit.empty();
 
     // type alias
     headers.appendLine("typedef void* $cProxyType;");
@@ -221,7 +221,7 @@ class OptionalCCallback extends CType {
 
   @override
   CodeUnit fromSwiftValue(String sourceValue, String variableName) {
-    final transformer = CodeUnit();
+    final transformer = CodeUnit.empty();
 
     transformer
         .appendLine("let ${variableName}Value: UnsafeMutableRawPointer?");
@@ -254,7 +254,7 @@ class OptionalDartCallback extends DartType {
 
   @override
   CodeUnit fromCValue(String sourceFfiValue, String variableName) {
-    final transformer = CodeUnit();
+    final transformer = CodeUnit.empty();
 
     transformer.appendLine("late ${type.name} ${variableName}Value;");
     transformer.enterScope("if ($sourceFfiValue == nullptr) {");
@@ -319,9 +319,9 @@ class CCallback extends CType {
 
   @override
   CodeUnit fromSwiftValue(String sourceValue, String variableName) {
-    return CodeUnit(
-        content:
-            "let ${variableName}Value = Unmanaged<${type.binding.proxyName}>.passRetained(${type.binding.proxyName}($sourceValue)).toOpaque()");
+    return CodeUnit([
+      "let ${variableName}Value = Unmanaged<${type.binding.proxyName}>.passRetained(${type.binding.proxyName}($sourceValue)).toOpaque()",
+    ]);
   }
 
   @override
@@ -346,7 +346,7 @@ class DartCallback extends DartType {
     // The Dart proxy holds the Swift proxy (through GC and native finalizer)
     // and the Dart closure holds the Dart proxy through capture for as long as Flutter
     // deems it necessary
-    return CodeUnit(initialLines: [
+    return CodeUnit([
       "final ${variableName}Proxy = ${type.binding.proxyName}($sourceFfiValue);",
       "final ${variableName}Value = () { return ${variableName}Proxy.call(); };",
     ]);

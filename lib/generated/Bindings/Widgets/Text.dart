@@ -18,12 +18,12 @@ import 'package:flutter/foundation.dart';
 Object newTextImpl(Pointer<Char> key, Pointer<Char> data, Object? style) {
     // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:81
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:143
-    // 🍞 bin/widgeteer/bindings/widget_key.dart:43
+    // 🍞 bin/widgeteer/bindings/widget_key.dart:42
     final keyString = key.cast<Utf8>().toDartString();
     final keyValue = ValueKey(keyString);
-    // 🍞 bin/widgeteer/bindings/string.dart:131
+    // 🍞 bin/widgeteer/bindings/string.dart:133
     final dataValue = data.cast<Utf8>().toDartString();
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:378
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:381
     final styleValue = style as TextStyle?;
     
     return Text(key: keyValue, dataValue, style: styleValue);

@@ -18,7 +18,7 @@ import 'package:flutter/foundation.dart';
 Object newIconImpl(Pointer<Char> key, int icon, optional_value size) {
     // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:81
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:143
-    // 🍞 bin/widgeteer/bindings/widget_key.dart:43
+    // 🍞 bin/widgeteer/bindings/widget_key.dart:42
     final keyString = key.cast<Utf8>().toDartString();
     final keyValue = ValueKey(keyString);
     // 🍞 bin/widgeteer/bindings/enum.dart:143

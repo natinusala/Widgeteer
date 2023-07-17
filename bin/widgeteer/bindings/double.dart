@@ -56,7 +56,7 @@ class SwiftOptionalDouble extends SwiftType {
 class DartOptionalDouble extends DartType {
   @override
   CodeUnit fromCValue(String sourceFfiValue, String variableName) {
-    return CodeUnit(initialLines: [
+    return CodeUnit([
       "late final double? ${variableName}Value;",
       "if (libWidgeteer.optional_value_is_set($sourceFfiValue)) {",
       "    ${variableName}Value = libWidgeteer.optional_value_get_double($sourceFfiValue);",
@@ -81,7 +81,7 @@ class COptionalDouble extends CType {
 
   @override
   CodeUnit fromSwiftValue(String sourceValue, String variableName) {
-    return CodeUnit(initialLines: [
+    return CodeUnit([
       "let ${variableName}Unmanaged = Unmanaged<OptionalValue>.passRetained(OptionalValue(double: $sourceValue))",
       "let ${variableName}Value = ${variableName}Unmanaged.toOpaque()",
     ]);
@@ -89,7 +89,9 @@ class COptionalDouble extends CType {
 
   @override
   CodeUnit? fromSwiftValueCleanup(String sourceValue, String variableName) {
-    return CodeUnit(content: "${variableName}Unmanaged.release()");
+    return CodeUnit([
+      "${variableName}Unmanaged.release()",
+    ]);
   }
 
   @override
@@ -126,7 +128,9 @@ class SwiftDouble extends SwiftType {
 class DartDouble extends DartType {
   @override
   CodeUnit fromCValue(String sourceFfiValue, String variableName) {
-    return CodeUnit(content: "final ${variableName}Value = $sourceFfiValue;");
+    return CodeUnit([
+      "final ${variableName}Value = $sourceFfiValue;",
+    ]);
   }
 
   @override
@@ -139,7 +143,9 @@ class CDouble extends CType {
 
   @override
   CodeUnit fromSwiftValue(String sourceValue, String variableName) {
-    return CodeUnit(content: "let ${variableName}Value = $sourceValue");
+    return CodeUnit([
+      "let ${variableName}Value = $sourceValue",
+    ]);
   }
 
   @override

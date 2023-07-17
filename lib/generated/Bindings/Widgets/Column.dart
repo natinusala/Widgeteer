@@ -18,7 +18,7 @@ import 'package:flutter/foundation.dart';
 Object newColumnImpl(Pointer<Char> key, int mainAxisAlignment, int mainAxisSize, int crossAxisAlignment, handles_list children) {
     // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:81
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:143
-    // 🍞 bin/widgeteer/bindings/widget_key.dart:43
+    // 🍞 bin/widgeteer/bindings/widget_key.dart:42
     final keyString = key.cast<Utf8>().toDartString();
     final keyValue = ValueKey(keyString);
     // 🍞 bin/widgeteer/bindings/enum.dart:143
@@ -49,7 +49,7 @@ Object newColumnImpl(Pointer<Char> key, int mainAxisAlignment, int mainAxisSize,
         case 4: crossAxisAlignmentValue = CrossAxisAlignment.baseline; break;
         default: throw "Received invalid index '$crossAxisAlignment' for value of enum 'CrossAxisAlignment'";
     }
-    // 🍞 bin/widgeteer/bindings/widget.dart:615
+    // 🍞 bin/widgeteer/bindings/widget.dart:617
     final childrenValue = consumeHandlesList<Widget>(children);
     
     return Column(key: keyValue, mainAxisAlignment: mainAxisAlignmentValue, mainAxisSize: mainAxisSizeValue, crossAxisAlignment: crossAxisAlignmentValue, children: childrenValue);

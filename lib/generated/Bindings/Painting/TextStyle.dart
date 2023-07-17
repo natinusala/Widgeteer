@@ -30,7 +30,7 @@ Object newTextStyleImpl(int color) {
 int textStyleGetColor(Object target) {
     final typedTarget = target as TextStyle;
     final value = typedTarget.color;
-    // 🍞 bin/widgeteer/bindings/color.dart:91
+    // 🍞 bin/widgeteer/bindings/color.dart:92
     final convertedValue = value?.value ?? -1;
     return convertedValue;
 }

@@ -18,7 +18,7 @@ public struct StatelessUserWidget: DartWidget {
     public func reduce(parentKey: WidgetKey) -> ReducedWidget {
         // 🍞 bin/widgeteer/bindings/flutter_bridging.dart:69
         let proxyValue = Unmanaged<StatelessUserWidgetProxy>.passRetained(self.proxy).toOpaque()
-        // 🍞 bin/widgeteer/bindings/string.dart:149
+        // 🍞 bin/widgeteer/bindings/string.dart:151
         let swiftWidgetNameValue = self.swiftWidgetName
         let localHandle = Flutter_NewStatelessUserWidget(
         parentKey.joined(String(describing: Self.self)),

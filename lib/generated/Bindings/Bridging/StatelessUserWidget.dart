@@ -18,12 +18,12 @@ import 'package:flutter/foundation.dart';
 Object newStatelessUserWidgetImpl(Pointer<Char> key, stateless_user_widget_proxy proxy, Pointer<Char> swiftWidgetName) {
     // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:81
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:143
-    // 🍞 bin/widgeteer/bindings/widget_key.dart:43
+    // 🍞 bin/widgeteer/bindings/widget_key.dart:42
     final keyString = key.cast<Utf8>().toDartString();
     final keyValue = ValueKey(keyString);
     // 🍞 bin/widgeteer/bindings/flutter_bridging.dart:54
     final proxyValue = StatelessUserWidgetProxy(proxy);
-    // 🍞 bin/widgeteer/bindings/string.dart:131
+    // 🍞 bin/widgeteer/bindings/string.dart:133
     final swiftWidgetNameValue = swiftWidgetName.cast<Utf8>().toDartString();
     
     return StatelessUserWidget(key: keyValue, proxy: proxyValue, swiftWidgetNameValue);

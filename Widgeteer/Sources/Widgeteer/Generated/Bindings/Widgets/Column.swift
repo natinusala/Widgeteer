@@ -26,7 +26,7 @@ public struct Column<Children: MultiWidget>: DartWidget {
         let mainAxisSizeValue = self.mainAxisSize.rawValue
         // 🍞 bin/widgeteer/bindings/enum.dart:119
         let crossAxisAlignmentValue = self.crossAxisAlignment.rawValue
-        // 🍞 bin/widgeteer/bindings/widget.dart:634
+        // 🍞 bin/widgeteer/bindings/widget.dart:636
         let childrenList = HandlesList(handles: self.children.reduce(parentKey: parentKey.joined("children")).map(\.handle))
         let childrenUnmanaged = Unmanaged<HandlesList>.passRetained(childrenList)
         let childrenValue = childrenUnmanaged.toOpaque()
@@ -38,7 +38,7 @@ public struct Column<Children: MultiWidget>: DartWidget {
         childrenValue
         )
         let reducedWidget = ReducedWidget(handle: localHandle)
-        // 🍞 bin/widgeteer/bindings/widget.dart:643
+        // 🍞 bin/widgeteer/bindings/widget.dart:645
         childrenUnmanaged.release()
         return reducedWidget
     }

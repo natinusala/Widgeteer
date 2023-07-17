@@ -68,7 +68,9 @@ class DartObject extends DartType {
   @override
   CodeUnit fromCValue(String sourceFfiValue, String variableName) {
     // No conversion required
-    return CodeUnit(content: "final ${variableName}Value = $sourceFfiValue;");
+    return CodeUnit([
+      "final ${variableName}Value = $sourceFfiValue;",
+    ]);
   }
 
   @override
@@ -103,7 +105,9 @@ class OptionalDartObject extends DartType {
   @override
   CodeUnit fromCValue(String sourceFfiValue, String variableName) {
     // No conversion required
-    return CodeUnit(content: "final ${variableName}Value = sourceFfiValue;");
+    return CodeUnit([
+      "final ${variableName}Value = sourceFfiValue;",
+    ]);
   }
 
   @override

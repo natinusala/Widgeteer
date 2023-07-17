@@ -95,7 +95,7 @@ class PersistentObjectBinding extends Binding {
 
   /// The Swift class initializer.
   CodeUnit get swiftInitializer {
-    final initializer = CodeUnit();
+    final initializer = CodeUnit.empty();
 
     initializer
         .enterScope("public init(${initializerParams.swiftInitParameters}) {");
@@ -117,7 +117,7 @@ class PersistentObjectBinding extends Binding {
   }
 
   CodeUnit get swiftDeinitializer {
-    final deinit = CodeUnit();
+    final deinit = CodeUnit.empty();
     deinit.enterScope("deinit {");
     deinit.enterScope("Flutter_Schedule(scoped: false) { [handle] _ in");
     deinit.appendLine("Dart_DeletePersistentHandle_DL(handle)");
@@ -128,7 +128,7 @@ class PersistentObjectBinding extends Binding {
 
   /// The Swift class holding the persistent handle to the object.
   CodeUnit get swiftClass {
-    final swiftClass = CodeUnit();
+    final swiftClass = CodeUnit.empty();
 
     swiftClass.enterScope("public class $className {");
 
@@ -151,7 +151,7 @@ class PersistentObjectBinding extends Binding {
 
   /// Properties bridged from the Dart class.
   CodeUnit get swiftProperties {
-    final getters = CodeUnit();
+    final getters = CodeUnit.empty();
 
     for (final property in properties) {
       final resolvedType = context.resolveType(property.type);
@@ -179,7 +179,7 @@ class PersistentObjectBinding extends Binding {
 
   @override
   CodeUnit get swiftBody {
-    final body = CodeUnit();
+    final body = CodeUnit.empty();
 
     body.appendLine("import DartApiDl");
     body.appendEmptyLine();
@@ -191,7 +191,7 @@ class PersistentObjectBinding extends Binding {
 
   @override
   CodeUnit get dartBody {
-    final body = CodeUnit();
+    final body = CodeUnit.empty();
 
     // new function outlet implementation
     body.appendUnit(newFunction.outletImplementation(true));
@@ -207,7 +207,7 @@ class PersistentObjectBinding extends Binding {
   }
 
   CodeUnit getterOutletImplementation(Parameter property) {
-    final implementation = CodeUnit();
+    final implementation = CodeUnit.empty();
 
     final resolvedType = context.resolveType(property.type);
     final outlet = property.getterOutlet(name);
@@ -256,9 +256,9 @@ class SwiftPersistentObject extends SwiftType {
 
   @override
   CodeUnit fromCValue(String sourceFfiValue, String variableName) {
-    return CodeUnit(
-        content:
-            "let ${variableName}Value = $name(persisting: $sourceFfiValue)");
+    return CodeUnit([
+      "let ${variableName}Value = $name(persisting: $sourceFfiValue)",
+    ]);
   }
 }
 
@@ -269,8 +269,9 @@ class DartPersistentObject extends DartType {
 
   @override
   CodeUnit fromCValue(String sourceFfiValue, String variableName) {
-    return CodeUnit(
-        content: "final ${variableName}Value = $sourceFfiValue as $name;");
+    return CodeUnit([
+      "final ${variableName}Value = $sourceFfiValue as $name;",
+    ]);
   }
 
   @override
@@ -287,7 +288,9 @@ class CPersistentObject extends CType {
 
   @override
   CodeUnit fromSwiftValue(String sourceValue, String variableName) {
-    return CodeUnit(content: "let ${variableName}Value = $sourceValue.handle");
+    return CodeUnit([
+      "let ${variableName}Value = $sourceValue.handle",
+    ]);
   }
 
   @override
@@ -298,9 +301,9 @@ class CPersistentObject extends CType {
 
   @override
   CodeUnit fromDartValue(String sourceValue, String variableName) {
-    return CodeUnit(
-        content:
-            "final Object ${variableName}Value = $sourceValue;"); // Object downcast is enough
+    return CodeUnit([
+      "final Object ${variableName}Value = $sourceValue;",
+    ]); // Object downcast is enough
   }
 }
 
@@ -332,9 +335,9 @@ class SwiftOptionalPersistentObject extends SwiftType {
 
   @override
   CodeUnit fromCValue(String sourceFfiValue, String variableName) {
-    return CodeUnit(
-        content:
-            "let ${variableName}Value: $name = $sourceFfiValue == Dart_Null ? nil : ${type.binding.className}(persisting: $sourceFfiValue)");
+    return CodeUnit([
+      "let ${variableName}Value: $name = $sourceFfiValue == Dart_Null ? nil : ${type.binding.className}(persisting: $sourceFfiValue)",
+    ]);
   }
 }
 
@@ -348,9 +351,9 @@ class COptionalPersistentObject extends CType {
 
   @override
   CodeUnit fromSwiftValue(String sourceValue, String variableName) {
-    return CodeUnit(
-        content:
-            "let ${variableName}Value = $sourceValue?.handle ?? Dart_Null");
+    return CodeUnit([
+      "let ${variableName}Value = $sourceValue?.handle ?? Dart_Null",
+    ]);
   }
 
   @override
@@ -361,9 +364,9 @@ class COptionalPersistentObject extends CType {
 
   @override
   CodeUnit fromDartValue(String sourceValue, String variableName) {
-    return CodeUnit(
-        content:
-            "final Object? ${variableName}Value = $sourceValue;"); // Object? downcast is enough
+    return CodeUnit([
+      "final Object? ${variableName}Value = $sourceValue;",
+    ]); // Object? downcast is enough
   }
 }
 
@@ -375,8 +378,9 @@ class DartOptionalPersistentObject extends DartType {
   @override
   CodeUnit fromCValue(String sourceFfiValue, String variableName) {
     // FFI gives us an `Object?` so we just need to cast it
-    return CodeUnit(
-        content: "final ${variableName}Value = $sourceFfiValue as $name;");
+    return CodeUnit([
+      "final ${variableName}Value = $sourceFfiValue as $name;",
+    ]);
   }
 
   @override

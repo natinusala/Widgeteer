@@ -18,14 +18,14 @@ import 'package:flutter/foundation.dart';
 Object newMaterialAppImpl(Pointer<Char> key, Pointer<Char> title, Object? theme, Object home) {
     // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:81
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:143
-    // 🍞 bin/widgeteer/bindings/widget_key.dart:43
+    // 🍞 bin/widgeteer/bindings/widget_key.dart:42
     final keyString = key.cast<Utf8>().toDartString();
     final keyValue = ValueKey(keyString);
-    // 🍞 bin/widgeteer/bindings/string.dart:131
+    // 🍞 bin/widgeteer/bindings/string.dart:133
     final titleValue = title.cast<Utf8>().toDartString();
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:378
+    // 🍞 bin/widgeteer/bindings/persistent_object.dart:381
     final themeValue = theme as ThemeData?;
-    // 🍞 bin/widgeteer/bindings/widget.dart:688
+    // 🍞 bin/widgeteer/bindings/widget.dart:692
     final homeValue = home as Widget;
     
     return MaterialApp(key: keyValue, title: titleValue, theme: themeValue, home: homeValue);

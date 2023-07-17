@@ -66,7 +66,7 @@ class EnumBinding extends Binding {
   @override
   CodeUnit get swiftBody {
     // Swift enum
-    final swiftEnum = CodeUnit();
+    final swiftEnum = CodeUnit.empty();
 
     swiftEnum.enterScope("public enum $enumName: Int {");
 
@@ -116,8 +116,9 @@ class CEnum extends CType {
 
   @override
   CodeUnit fromSwiftValue(String sourceValue, String variableName) {
-    return CodeUnit(
-        content: "let ${variableName}Value = $sourceValue.rawValue");
+    return CodeUnit([
+      "let ${variableName}Value = $sourceValue.rawValue",
+    ]);
   }
 
   @override
@@ -128,7 +129,6 @@ class CEnum extends CType {
 
   @override
   CodeUnit fromDartValue(String sourceValue, String variableName) {
-    // TODO: implement fromDartValue
     throw UnimplementedError();
   }
 }
@@ -140,7 +140,7 @@ class DartEnum extends DartType {
 
   @override
   CodeUnit fromCValue(String sourceFfiValue, String variableName) {
-    final unit = CodeUnit();
+    final unit = CodeUnit.empty();
 
     unit.appendLine("late final ${type.dartType.name} ${variableName}Value;");
     unit.enterScope("switch ($sourceFfiValue) {");
@@ -200,7 +200,7 @@ class OptionalDartEnum extends DartType {
 
   @override
   CodeUnit fromCValue(String sourceFfiValue, String variableName) {
-    final unit = CodeUnit();
+    final unit = CodeUnit.empty();
 
     unit.appendLine("late final $name ${variableName}Value;");
     unit.enterScope("switch ($sourceFfiValue) {");
@@ -233,8 +233,9 @@ class OptionalCEnum extends CType {
 
   @override
   CodeUnit fromSwiftValue(String sourceValue, String variableName) {
-    return CodeUnit(
-        content: "let ${variableName}Value = $sourceValue?.rawValue ?? -1");
+    return CodeUnit([
+      "let ${variableName}Value = $sourceValue?.rawValue ?? -1",
+    ]);
   }
 
   @override

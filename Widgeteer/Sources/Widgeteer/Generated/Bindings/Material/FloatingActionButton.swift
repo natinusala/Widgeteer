@@ -28,7 +28,7 @@ public struct FloatingActionButton<Child: SingleWidget>: DartWidget {
         // 🍞 bin/widgeteer/bindings/string.dart:57
         let tooltipUnmanaged = Unmanaged<OptionalValue>.passRetained(OptionalValue(string: self.tooltip))
         let tooltipValue = tooltipUnmanaged.toOpaque()
-        // 🍞 bin/widgeteer/bindings/widget.dart:705
+        // 🍞 bin/widgeteer/bindings/widget.dart:709
         let childValue = self.child.reduce(parentKey: parentKey.joined("child")).handle
         let localHandle = Flutter_NewFloatingActionButton(
         parentKey.joined(String(describing: Self.self)),

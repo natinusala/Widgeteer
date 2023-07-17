@@ -14,7 +14,7 @@ public struct Center<Child: SingleWidget>: DartWidget {
 
     // 🍞 bin/widgeteer/bindings/widget.dart:290
     public func reduce(parentKey: WidgetKey) -> ReducedWidget {
-        // 🍞 bin/widgeteer/bindings/widget.dart:705
+        // 🍞 bin/widgeteer/bindings/widget.dart:709
         let childValue = self.child.reduce(parentKey: parentKey.joined("child")).handle
         let localHandle = Flutter_NewCenter(
         parentKey.joined(String(describing: Self.self)),

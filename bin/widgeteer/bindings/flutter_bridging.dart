@@ -51,9 +51,9 @@ class StatelessUserWidgetProxyType extends BoundType {
 class DartStatelessUserWidgetProxy extends DartType {
   @override
   CodeUnit fromCValue(String sourceFfiValue, String variableName) {
-    return CodeUnit(
-        content:
-            "final ${variableName}Value = StatelessUserWidgetProxy($sourceFfiValue);");
+    return CodeUnit([
+      "final ${variableName}Value = StatelessUserWidgetProxy($sourceFfiValue);",
+    ]);
   }
 
   @override
@@ -66,9 +66,9 @@ class CStatelessUserWidgetProxy extends CType {
 
   @override
   CodeUnit fromSwiftValue(String sourceValue, String variableName) {
-    return CodeUnit(
-        content:
-            "let ${variableName}Value = Unmanaged<StatelessUserWidgetProxy>.passRetained($sourceValue).toOpaque()");
+    return CodeUnit([
+      "let ${variableName}Value = Unmanaged<StatelessUserWidgetProxy>.passRetained($sourceValue).toOpaque()",
+    ]);
   }
 
   @override
@@ -110,9 +110,9 @@ class StatefulUserWidgetProxyType extends BoundType {
 class DartStatefulUserWidgetProxy extends DartType {
   @override
   CodeUnit fromCValue(String sourceFfiValue, String variableName) {
-    return CodeUnit(
-        content:
-            "final ${variableName}Value = StatefulUserWidgetProxy($sourceFfiValue);");
+    return CodeUnit([
+      "final ${variableName}Value = StatefulUserWidgetProxy($sourceFfiValue);",
+    ]);
   }
 
   @override
@@ -125,9 +125,9 @@ class CStatefulUserWidgetProxy extends CType {
 
   @override
   CodeUnit fromSwiftValue(String sourceValue, String variableName) {
-    return CodeUnit(
-        content:
-            "let ${variableName}Value = Unmanaged<StatefulUserWidgetProxy>.passRetained($sourceValue).toOpaque()");
+    return CodeUnit([
+      "let ${variableName}Value = Unmanaged<StatefulUserWidgetProxy>.passRetained($sourceValue).toOpaque()",
+    ]);
   }
 
   @override
@@ -173,7 +173,9 @@ class CBuildContext extends CType {
   @override
   CodeUnit fromSwiftValue(String sourceValue, String variableName) {
     // `BuildContext` is an alias to `Dart_Handle` in Swift
-    return CodeUnit(content: "let ${variableName}Value = $sourceValue");
+    return CodeUnit([
+      "let ${variableName}Value = $sourceValue",
+    ]);
   }
 
   @override
@@ -191,9 +193,9 @@ class CBuildContext extends CType {
 class DartBuildContext extends DartType {
   @override
   CodeUnit fromCValue(String sourceFfiValue, String variableName) {
-    return CodeUnit(
-        content:
-            "final ${variableName}Value = $sourceFfiValue as BuildContext;");
+    return CodeUnit([
+      "final ${variableName}Value = $sourceFfiValue as BuildContext;",
+    ]);
   }
 
   @override

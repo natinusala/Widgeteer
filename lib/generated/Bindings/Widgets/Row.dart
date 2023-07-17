@@ -18,7 +18,7 @@ import 'package:flutter/foundation.dart';
 Object newRowImpl(Pointer<Char> key, int mainAxisAlignment, handles_list children) {
     // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:81
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:143
-    // 🍞 bin/widgeteer/bindings/widget_key.dart:43
+    // 🍞 bin/widgeteer/bindings/widget_key.dart:42
     final keyString = key.cast<Utf8>().toDartString();
     final keyValue = ValueKey(keyString);
     // 🍞 bin/widgeteer/bindings/enum.dart:143
@@ -32,7 +32,7 @@ Object newRowImpl(Pointer<Char> key, int mainAxisAlignment, handles_list childre
         case 5: mainAxisAlignmentValue = MainAxisAlignment.spaceEvenly; break;
         default: throw "Received invalid index '$mainAxisAlignment' for value of enum 'MainAxisAlignment'";
     }
-    // 🍞 bin/widgeteer/bindings/widget.dart:615
+    // 🍞 bin/widgeteer/bindings/widget.dart:617
     final childrenValue = consumeHandlesList<Widget>(children);
     
     return Row(key: keyValue, mainAxisAlignment: mainAxisAlignmentValue, children: childrenValue);

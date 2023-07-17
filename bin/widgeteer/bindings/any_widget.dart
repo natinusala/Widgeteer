@@ -80,8 +80,9 @@ class SwiftOptionalAnyWidget extends SwiftType {
 
 class DartAnyWidget extends DartType {
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) => CodeUnit(
-      content: "final ${variableName}Value = $sourceFfiValue as Widget;");
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) => CodeUnit([
+        "final ${variableName}Value = $sourceFfiValue as Widget;",
+      ]);
 
   @override
   String get name => "Widget";
@@ -89,8 +90,9 @@ class DartAnyWidget extends DartType {
 
 class DartOptionalAnyWidget extends DartType {
   @override
-  CodeUnit fromCValue(String sourceFfiValue, String variableName) => CodeUnit(
-      content: "final ${variableName}Value = $sourceFfiValue as Widget?;");
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) => CodeUnit([
+        "final ${variableName}Value = $sourceFfiValue as Widget?;",
+      ]);
 
   @override
   String get name => "Widget?";
@@ -108,9 +110,9 @@ class CAnyWidget extends CType {
 
   @override
   CodeUnit fromSwiftValue(String sourceValue, String variableName) {
-    return CodeUnit(
-        content:
-            "let ${variableName}Value = $sourceValue.reduce(parentKey: parentKey.joined(\"$variableName\")).handle");
+    return CodeUnit([
+      "let ${variableName}Value = $sourceValue.reduce(parentKey: parentKey.joined(\"$variableName\")).handle",
+    ]);
   }
 
   @override
@@ -132,9 +134,9 @@ class COptionalAnyWidget extends CType {
 
   @override
   CodeUnit fromSwiftValue(String sourceValue, String variableName) {
-    return CodeUnit(
-        content:
-            "let ${variableName}Value = $sourceValue?.reduce(parentKey: parentKey.joined(\"$variableName\")).handle");
+    return CodeUnit([
+      "let ${variableName}Value = $sourceValue?.reduce(parentKey: parentKey.joined(\"$variableName\")).handle",
+    ]);
   }
 
   @override
