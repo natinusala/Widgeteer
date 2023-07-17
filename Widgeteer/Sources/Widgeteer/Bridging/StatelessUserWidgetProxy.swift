@@ -16,7 +16,7 @@
 
 import DartApiDl
 
-public class StatelessUserWidgetProxy: WidgetProxy {
+public class StatelessUserWidgetProxy: UserWidgetProxy {
     override init<Proxied: BuildableWidget>(of widget: Proxied) {
         super.init(of: widget)
 
@@ -27,12 +27,13 @@ public class StatelessUserWidgetProxy: WidgetProxy {
         trace("'StatelessWidgetProxy' released for '\(self.widgetName)'")
     }
 
-    func build(parentKey: String, buildContext: BuildContext) -> LocalWidgetHandle {
+    /// Called by Flutter to rebuild the proxied widget.
+    func build(buildContext: BuildContext, parentKey: String) -> LocalWidgetHandle {
         time("Building \(self.widgetName)")
 
         trace("Installing '\(self.widgetName)'")
         let installed = self.widget.installed(storage: nil, buildContext: buildContext)
-        let widget = installed.build(parentKey: parentKey, buildContext: buildContext)
+        let widget = installed.build(buildContext: buildContext, parentKey: parentKey)
         return widget
     }
 }
@@ -43,9 +44,9 @@ public func _statelessUserWidgetProxyRelease(_ proxy: UnsafeRawPointer) {
 }
 
 @_cdecl("widgeteer_stateless_user_widget_proxy_build")
-public func _statelessUserWidgetProxyBuild(_ proxy: UnsafeRawPointer, _ parentKey: UnsafePointer<CChar>, _ buildContext: Dart_Handle) -> LocalWidgetHandle {
+public func _statelessUserWidgetProxyBuild(_ proxy: UnsafeRawPointer, _ buildContext: Dart_Handle, _ parentKey: UnsafePointer<CChar>) -> LocalWidgetHandle {
     let proxy = Unmanaged<StatelessUserWidgetProxy>.fromOpaque(proxy).takeUnretainedValue()
     let parentKey = String(cString: parentKey)
 
-    return proxy.build(parentKey: parentKey, buildContext: buildContext)
+    return proxy.build(buildContext: buildContext, parentKey: parentKey)
 }

@@ -14,11 +14,11 @@ import 'package:ffi/ffi.dart';
 import 'package:widgeteer/generated/lib_widgeteer.dart';
 import 'package:widgeteer/swift.dart';
 import 'package:flutter/foundation.dart';
-// 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:91
+// 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:95
 Object ThemeOfImpl(Object buildContext) {
     // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:81
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:143
-    // 🍞 bin/widgeteer/bindings/flutter_bridging.dart:132
+    // 🍞 bin/widgeteer/bindings/flutter_bridging.dart:194
     final buildContextValue = buildContext as BuildContext;
     
     return ThemeOf(buildContextValue);

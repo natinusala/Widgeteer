@@ -27,8 +27,11 @@ class FlutterBridgingBinding extends Binding {
   String get origin => "built in";
 
   @override
-  List<BoundType> get types =>
-      [StatelessUserWidgetProxyType(), BuildContextType()];
+  List<BoundType> get types => [
+        StatelessUserWidgetProxyType(),
+        StatefulUserWidgetProxyType(),
+        BuildContextType(),
+      ];
 }
 
 class StatelessUserWidgetProxyType extends BoundType {
@@ -83,6 +86,65 @@ class CStatelessUserWidgetProxy extends CType {
 class SwiftStatelessUserWidgetProxy extends SwiftType {
   @override
   String get name => "StatelessUserWidgetProxy";
+
+  @override
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+    throw UnimplementedError();
+  }
+}
+
+class StatefulUserWidgetProxyType extends BoundType {
+  @override
+  CType get cType => CStatefulUserWidgetProxy();
+
+  @override
+  DartType get dartType => DartStatefulUserWidgetProxy();
+
+  @override
+  String get name => "StatefulUserWidgetProxy";
+
+  @override
+  SwiftType get swiftType => SwiftStatefulUserWidgetProxy();
+}
+
+class DartStatefulUserWidgetProxy extends DartType {
+  @override
+  CodeUnit fromCValue(String sourceFfiValue, String variableName) {
+    return CodeUnit(
+        content:
+            "final ${variableName}Value = StatefulUserWidgetProxy($sourceFfiValue);");
+  }
+
+  @override
+  String get name => "StatefulUserWidgetProxy";
+}
+
+class CStatefulUserWidgetProxy extends CType {
+  @override
+  String get dartFfiMapping => "stateful_user_widget_proxy";
+
+  @override
+  CodeUnit fromSwiftValue(String sourceValue, String variableName) {
+    return CodeUnit(
+        content:
+            "let ${variableName}Value = Unmanaged<StatefulUserWidgetProxy>.passRetained($sourceValue).toOpaque()");
+  }
+
+  @override
+  String get name => "widgeteer_stateful_user_widget_proxy";
+
+  @override
+  String get swiftCInteropMapping => "UnsafeRawPointer";
+
+  @override
+  CodeUnit fromDartValue(String sourceValue, String variableName) {
+    throw UnimplementedError();
+  }
+}
+
+class SwiftStatefulUserWidgetProxy extends SwiftType {
+  @override
+  String get name => "StatefulUserWidgetProxy";
 
   @override
   CodeUnit fromCValue(String sourceFfiValue, String variableName) {

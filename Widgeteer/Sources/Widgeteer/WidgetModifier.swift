@@ -30,7 +30,7 @@ public extension WidgetModifier {
         return self.body(content: content).reduce(parentKey: parentKey)
     }
 
-    func createStateStorage() -> StateStorage {
+    func createStateStorage() -> UserStateStorage {
         fatalError("State storage should never be directly created for modifiers")
     }
 }
@@ -50,13 +50,13 @@ public struct ModifiedWidget<Content: Widget, Modifier: WidgetModifier>: Widget,
     let content: Content
     let modifier: Modifier
 
-    public func build(parentKey: String, buildContext: BuildContext) -> LocalWidgetHandle {
+    public func build(buildContext: BuildContext, parentKey: String) -> LocalWidgetHandle {
         trace("Building '\(Self.self)'")
         let content = AnyWidget(self.content)
         return self.modifier.reduce(parentKey: parentKey, content: content).handle
     }
 
-    public func installed(storage: StateStorage?, buildContext: BuildContext) -> ModifiedWidget<Content, Modifier> {
+    public func installed(storage: UserStateStorage?, buildContext: BuildContext) -> ModifiedWidget<Content, Modifier> {
         return Self(
             content: self.content,
             modifier: self.modifier.installed(storage: storage, buildContext: buildContext)
@@ -68,8 +68,8 @@ public struct ModifiedWidget<Content: Widget, Modifier: WidgetModifier>: Widget,
         return self.modifier.isStateful()
     }
 
-    public func createStateStorage() -> StateStorage {
-        return StateStorage(from: self.modifier)
+    public func createStateStorage() -> UserStateStorage {
+        return UserStateStorage(from: self.modifier)
     }
 
     public var body: Never {

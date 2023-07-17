@@ -73,7 +73,7 @@ public struct State<Value>: StateProperty {
 /// Contains the underlying storage (held by a Flutter state object)
 /// and the position of the property inside this storage.
 struct StateLocation {
-    let storage: StateStorage
+    let storage: UserStateStorage
     let position: Int
 
     func set(_ value: Any) {
@@ -87,7 +87,7 @@ struct StateLocation {
 
 /// Stores all state properties of a widget. Held by a `UserWidgetState` object
 /// on the Flutter side.
-public class StateStorage {
+public class UserStateStorage {
     struct Entry {
         let property: PropertyInfo
         let value: Any
@@ -103,6 +103,7 @@ public class StateStorage {
     private var entries: [Entry] = []
 
     /// Weak persistent handle to the Flutter `UserWidgetState` counterpart.
+    /// Used to touch it to notify Flutter that the state has changed.
     var dartStateHandle: Dart_PersistentHandle?
 
     init<W: InstallableWidget>(from widget: W) {
@@ -195,6 +196,44 @@ public class StateStorage {
             Dart_DeleteWeakPersistentHandle_DL(dartStateHandle)
         }
     }
+}
+
+/// Called by Flutter to bind the created `UserWidgetState` instance to the Swift
+/// state storage.
+@_cdecl("widgeteer_user_state_storage_bind_state")
+public func _userStateStorageBindState(_ storagePtr: UnsafeRawPointer, _ state: Dart_Handle) {
+    trace("Binding state storage")
+
+    let storage = Unmanaged<UserStateStorage>.fromOpaque(storagePtr).takeUnretainedValue()
+    assert(storage.dartStateHandle == nil)
+
+    let mutableStoragePtr = UnsafeMutableRawPointer(mutating: storagePtr)
+
+    // Create a new weak persistent handle to deinit the Swift class when the Dart state is GC'd
+    storage.dartStateHandle = Dart_NewWeakPersistentHandle_DL(
+        state,
+        mutableStoragePtr,
+        0,
+        { isolate_callback_data, peer in
+            guard let peer else {
+                fatalError("State weak persistent handle finalizer called without 'peer'")
+            }
+
+            trace("Deleting Dart state handle from finalizer")
+
+            let storage = Unmanaged<UserStateStorage>.fromOpaque(peer).takeUnretainedValue()
+            assert(storage.dartStateHandle != nil)
+
+            Dart_DeleteWeakPersistentHandle_DL(storage.dartStateHandle)
+            storage.dartStateHandle = nil
+        }
+    )
+}
+
+@_cdecl("widgeteer_user_state_storage_release")
+public func _userStateStorageRelease(_ storage: UnsafeRawPointer) {
+    trace("Releasing Swift state storage")
+    Unmanaged<UserStateStorage>.fromOpaque(storage).release()
 }
 
 extension InstallableWidget {

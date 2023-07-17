@@ -45,8 +45,7 @@ class LibWidgeteer extends NativeLibrary {
         "rename": {"widgeteer_(.*)": "\$1"},
         "symbol-address": {
           "include": [
-            "widgeteer_stateless_user_widget_proxy_release",
-            "widgeteer_(.*)_callback_proxy_release",
+            "widgeteer_(.*)_release",
           ]
         }
       },

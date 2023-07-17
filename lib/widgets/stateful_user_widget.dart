@@ -14,7 +14,11 @@
    limitations under the License.
 */
 
+import 'dart:ffi';
+
+import 'package:ffi/ffi.dart';
 import 'package:flutter/widgets.dart';
+import 'package:widgeteer/generated/lib_widgeteer.dart';
 
 import '../dylib.dart';
 import '../runtime_types.dart';
@@ -33,9 +37,9 @@ class StatefulUserWidget extends StatefulWidget {
   State createState() {
     final storage = UserStateStorage(libWidgeteer
         .stateful_user_widget_proxy_create_storage(proxy.nativeProxy));
-    final state = UserWidgetState(storage: storage);
+    final state = UserWidgetState(storage);
 
-    libWidgeteer.state_storage_bind_state(storage.nativeStorage, state);
+    libWidgeteer.user_state_storage_bind_state(storage.nativeStorage, state);
     return state;
   }
 
@@ -56,6 +60,60 @@ class StatefulUserWidget extends StatefulWidget {
     return other is StatefulUserWidget &&
         libWidgeteer.user_widget_proxy_equals(
             proxy.nativeProxy, other.proxy.nativeProxy);
+  }
+}
+
+class UserWidgetState extends State<StatefulUserWidget> {
+  final UserStateStorage storage;
+
+  UserWidgetState(this.storage);
+
+  @override
+  Widget build(BuildContext context) {
+    final proxy = widget.proxy;
+    final key = widget.key! as ValueKey<String>;
+    return proxy.build(context, storage, key.value);
+  }
+
+  void touchState() {
+    /// XXX: I would use `_element.markNeedsBuild()` directly but it's private
+    setState(() {});
+  }
+}
+
+class StatefulUserWidgetProxy implements Finalizable {
+  static final _finalizer = NativeFinalizer(
+      libWidgeteer.addresses.stateful_user_widget_proxy_release);
+
+  final stateful_user_widget_proxy nativeProxy;
+
+  StatefulUserWidgetProxy(this.nativeProxy) {
+    _finalizer.attach(this, nativeProxy);
+  }
+
+  Widget build(BuildContext context, UserStateStorage storage, String key) {
+    final utf8Key = key.toNativeUtf8().cast<Char>();
+
+    libWidgeteer.enter_scope();
+    final widget = libWidgeteer.stateful_user_widget_proxy_build(
+        nativeProxy, context, storage.nativeStorage, utf8Key) as Widget;
+    libWidgeteer.exit_scope();
+
+    calloc.free(utf8Key);
+
+    return widget;
+  }
+}
+
+/// Swift class storing a widget's state properties.
+class UserStateStorage implements Finalizable {
+  static final _finalizer =
+      NativeFinalizer(libWidgeteer.addresses.user_state_storage_release);
+
+  final user_state_storage nativeStorage;
+
+  UserStateStorage(this.nativeStorage) {
+    _finalizer.attach(this, nativeStorage, detach: this);
   }
 }
 

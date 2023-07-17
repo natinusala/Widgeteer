@@ -30,7 +30,7 @@ class StatelessUserWidget extends StatelessWidget {
 
   StatelessUserWidget(String swiftWidgetName,
       {super.key, required this.proxy}) {
-    _runtimeType = WidgetRuntimeType(swiftWidgetName: swiftWidgetName);
+    _runtimeType = UserWidgetRuntimeType(swiftWidgetName: swiftWidgetName);
   }
 
   @override
@@ -74,7 +74,7 @@ class StatelessUserWidgetProxy implements Finalizable {
 
     libWidgeteer.enter_scope();
     final widget = libWidgeteer.stateless_user_widget_proxy_build(
-        nativeProxy, utf8Key, context) as Widget;
+        nativeProxy, context, utf8Key) as Widget;
     libWidgeteer.exit_scope();
 
     calloc.free(utf8Key);

@@ -68,7 +68,7 @@ class DartObject extends DartType {
   @override
   CodeUnit fromCValue(String sourceFfiValue, String variableName) {
     // No conversion required
-    return CodeUnit(content: "final ${variableName}Value = sourceFfiValue;");
+    return CodeUnit(content: "final ${variableName}Value = $sourceFfiValue;");
   }
 
   @override

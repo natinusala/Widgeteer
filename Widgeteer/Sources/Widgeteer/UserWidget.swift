@@ -18,15 +18,22 @@ public extension BuildableWidget {
     func reduce(parentKey: WidgetKey) -> ReducedWidget {
         let widgetName = String(describing: Self.self) // TODO: add #file to account for private structs
 
-        return StatelessUserWidget(
-            proxy: StatelessUserWidgetProxy(of: self),
-            swiftWidgetName: widgetName
-        ).reduce(parentKey: parentKey)
+        if self.isStateful() {
+            return StatefulUserWidget(
+                proxy: StatefulUserWidgetProxy(of: self),
+                swiftWidgetName: widgetName
+            ).reduce(parentKey: parentKey)
+        } else {
+            return StatelessUserWidget(
+                proxy: StatelessUserWidgetProxy(of: self),
+                swiftWidgetName: widgetName
+            ).reduce(parentKey: parentKey)
+        }
     }
 }
 
 public extension Widget {
-    func build(parentKey: String, buildContext: BuildContext) -> LocalWidgetHandle {
+    func build(buildContext: BuildContext, parentKey: String) -> LocalWidgetHandle {
         trace("Building '\(Self.self)'")
         return self.body.reduce(parentKey: parentKey).handle
     }
@@ -34,7 +41,7 @@ public extension Widget {
 
 public extension InstallableWidget {
     // Default installation method: install the widget itself.
-    func installed(storage: StateStorage?, buildContext: BuildContext) -> Self {
+    func installed(storage: UserStateStorage?, buildContext: BuildContext) -> Self {
         log("Installing '\(Self.self)'")
 
         var installed = self
@@ -46,7 +53,7 @@ public extension InstallableWidget {
     }
 
     // Default state storage: get properties from self.
-    func createStateStorage() -> StateStorage {
-        return StateStorage(from: self)
+    func createStateStorage() -> UserStateStorage {
+        return UserStateStorage(from: self)
     }
 }

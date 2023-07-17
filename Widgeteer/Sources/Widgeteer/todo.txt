@@ -1,5 +1,5 @@
 reinstate la demo en entier
-renommer BuiltinWidget en DartWidget
+renommer BuiltinWidget en DartWidget et vérifier qu'il est appliqué partout dans la codegen
 les TODO du codegen
 renommer variableName to "destination" to have "source" and "destination"
 réessayer / remettre les modifiers

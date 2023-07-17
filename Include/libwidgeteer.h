@@ -34,8 +34,17 @@ extern void widgeteer_exit_scope();
 extern bool widgeteer_user_widget_proxy_equals(widgeteer_user_widget_proxy lhs, widgeteer_user_widget_proxy rhs);
 
 // widgeteer_stateless_user_widget_proxy: stateless user widgets
-extern Dart_Handle widgeteer_stateless_user_widget_proxy_build(widgeteer_stateless_user_widget_proxy proxy, char* parentKey, Dart_Handle buildContext);
+extern Dart_Handle widgeteer_stateless_user_widget_proxy_build(widgeteer_stateless_user_widget_proxy proxy, Dart_Handle buildContext, char* parentKey);
 extern void widgeteer_stateless_user_widget_proxy_release(widgeteer_stateless_user_widget_proxy proxy);
+
+// widgeteer_stateful_user_widget_proxy: stateful user widgets
+extern Dart_Handle widgeteer_stateful_user_widget_proxy_build(widgeteer_stateful_user_widget_proxy proxy, Dart_Handle buildContext, widgeteer_user_state_storage stateStorage, char* parentKey);
+extern void widgeteer_stateful_user_widget_proxy_release(widgeteer_stateful_user_widget_proxy proxy);
+extern widgeteer_user_state_storage widgeteer_stateful_user_widget_proxy_create_storage(widgeteer_stateful_user_widget_proxy proxy);
+
+// widgeteer_user_state_storage: stateful user widgets state properties storage
+extern void widgeteer_user_state_storage_bind_state(widgeteer_user_state_storage storage, Dart_Handle state);
+extern void widgeteer_user_state_storage_release(widgeteer_user_state_storage storage);
 
 // widgeteer_handles_list: Dart handles list
 extern int widgeteer_handles_list_count(widgeteer_handles_list list);

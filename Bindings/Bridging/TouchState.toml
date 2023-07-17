@@ -14,6 +14,7 @@
 
 [function]
 location = "package:widgeteer/widgets/stateful_user_widget.dart"
+name = "touchState"
 return_type = "Void"
 
 [[parameter]]

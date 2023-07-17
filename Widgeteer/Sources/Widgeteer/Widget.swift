@@ -53,15 +53,15 @@ public protocol Widget: SingleWidget, BuildableWidget, InstallableWidget {
 }
 
 public protocol InstallableWidget {
-    func installed(storage: StateStorage?, buildContext: BuildContext) -> Self
+    func installed(storage: UserStateStorage?, buildContext: BuildContext) -> Self
     func isStateful() -> Bool
-    func createStateStorage() -> StateStorage
+    func createStateStorage() -> UserStateStorage
 }
 
 /// A widget that can be built by Flutter when needed.
 public protocol BuildableWidget: IsPodable, InstallableWidget {
     /// Called by Flutter when the widget needs to be rebuilt.
-    func build(parentKey: String, buildContext: BuildContext) -> LocalWidgetHandle
+    func build(buildContext: BuildContext, parentKey: String) -> LocalWidgetHandle
 }
 
 /// A widget that's reduced to a built in Flutter widget.
@@ -78,7 +78,7 @@ public extension BuiltinWidget {
         fatalError("Builtin widgets do not have a body")
     }
 
-    func build(parentKey: String, buildContext: BuildContext) -> LocalWidgetHandle {
+    func build(buildContext: BuildContext, parentKey: String) -> LocalWidgetHandle {
         fatalError("Builtin widgets cannot be built")
     }
 }
@@ -102,7 +102,7 @@ extension WidgetKey {
 /// A property which value is managed by either Flutter or Widgeteer.
 public protocol ManagedProperty: IsPodable {}
 
-public class WidgetProxy {
+public class UserWidgetProxy {
     let widget: any BuildableWidget
     let widgetType: any BuildableWidget.Type
 
@@ -126,8 +126,8 @@ public class WidgetProxy {
 
 @_cdecl("widgeteer_user_widget_proxy_equals")
 public func _userWidgetProxyEquals(_ lhs: UnsafeRawPointer, _ rhs: UnsafeRawPointer) -> Bool {
-    let lhs = Unmanaged<WidgetProxy>.fromOpaque(lhs).takeUnretainedValue()
-    let rhs = Unmanaged<WidgetProxy>.fromOpaque(rhs).takeUnretainedValue()
+    let lhs = Unmanaged<UserWidgetProxy>.fromOpaque(lhs).takeUnretainedValue()
+    let rhs = Unmanaged<UserWidgetProxy>.fromOpaque(rhs).takeUnretainedValue()
 
     // Don't bother checking for value equality if the proxy is identical then we already know the widget is the same
     // This is also to handle cases where Flutter asserts that the current widget

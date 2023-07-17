@@ -6,25 +6,20 @@ import 'package:flutter/widgets.dart';
 import 'package:widgeteer/dylib.dart';
 import 'package:flutter/material.dart';
 import 'package:widgeteer/generated/Bindings/Callback/VoidCallback.dart';
-// 🍞 bin/widgeteer/bindings/widget.dart:148
+// 🍞 bin/widgeteer/bindings/function.dart:80
 // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:59
-import 'package:flutter/widgets.dart';
+import 'package:widgeteer/widgets/stateful_user_widget.dart';
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
 import 'package:widgeteer/generated/lib_widgeteer.dart';
 import 'package:widgeteer/swift.dart';
 import 'package:flutter/foundation.dart';
 // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:95
-Object newTextImpl(Pointer<Char> key, Pointer<Char> data, Object? style) {
+void touchStateImpl(Object state) {
     // 🍞 bin/widgeteer/bindings_generator/models/dart_function.dart:81
     // 🍞 bin/widgeteer/bindings_generator/models/parameter.dart:143
-    // 🍞 bin/widgeteer/bindings/widget_key.dart:43
-    final keyString = key.cast<Utf8>().toDartString();
-    final keyValue = ValueKey(keyString);
-    // 🍞 bin/widgeteer/bindings/string.dart:131
-    final dataValue = data.cast<Utf8>().toDartString();
-    // 🍞 bin/widgeteer/bindings/persistent_object.dart:388
-    final styleValue = style as TextStyle?;
+    // 🍞 bin/widgeteer/bindings/object.dart:71
+    final stateValue = state;
     
-    return Text(key: keyValue, dataValue, style: styleValue);
+    touchState(stateValue);
 }

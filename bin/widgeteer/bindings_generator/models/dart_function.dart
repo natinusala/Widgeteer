@@ -75,7 +75,7 @@ class DartFunction {
   }
 
   CodeUnit outletFunction(bool isInit) {
-    final returnType = context.resolveType(this.returnType);
+    final resolvedType = context.resolveType(returnType);
 
     // Function body
     final body = CodeUnit();
@@ -85,13 +85,17 @@ class DartFunction {
 
     // Return statement
     body.appendEmptyLine();
-    body.appendLine("return $name(${parameters.dartArguments});");
+    if (returnType == "Void") {
+      body.appendLine("$name(${parameters.dartArguments});");
+    } else {
+      body.appendLine("return $name(${parameters.dartArguments});");
+    }
 
     // Function signature
     final function = CodeUnit();
 
     function.appendLine(
-        "${returnType.cType.dartFfiMapping} $outletImplementationName(${parameters.dartFFIParameters(isInit)}) {");
+        "${resolvedType.cType.dartFfiMapping} $outletImplementationName(${parameters.dartFFIParameters(isInit)}) {");
     function.appendUnit(body, indentedBy: 4);
     function.appendLine("}");
     return function;

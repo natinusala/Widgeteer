@@ -22,5 +22,7 @@
 
 typedef void* widgeteer_user_widget_proxy;
 typedef void* widgeteer_stateless_user_widget_proxy;
+typedef void* widgeteer_stateful_user_widget_proxy;
 typedef void* widgeteer_handles_list;
 typedef void* widgeteer_optional_value;
+typedef void* widgeteer_user_state_storage;
