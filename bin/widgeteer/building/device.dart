@@ -89,26 +89,42 @@ Iterable<Device> getDevices() {
 
   final lines = (process.stdout as String).split("\n");
 
-  // Expected format is "X connected device" followed by a blank line
+  // Expected format is the pattern followed by a blank line
   // and one line per device
-  final countRegex = RegExp("([0-9]+) connected device");
-  final countStr = countRegex.firstMatch(lines[0])?.group(1);
+  return parseDevices(lines, "([0-9]+) connected device") +
+      parseDevices(lines, "([0-9]+) wirelessly connected device");
+}
 
-  if (countStr == null) {
-    fail("Cannot list connected devices: 'flutter devices' "
-        "returned unexpected output '${lines.join("\n")}'");
+List<Device> parseDevices(List<String> lines, String pattern) {
+  final countRegex = RegExp(pattern);
+
+  // Identify the first line matching the pattern, that's the start boundary
+  int boundary = -1;
+  int count = 0;
+  for (int line = 0; line < lines.length; line++) {
+    final countStr = countRegex.firstMatch(lines[line])?.group(1);
+    if (countStr == null) {
+      continue;
+    }
+
+    count = int.parse(countStr);
+    boundary = line;
+    break;
   }
 
-  final count = int.parse(countStr);
+  if (boundary == -1) {
+    return [];
+  }
 
-  final devicesLines = lines.sublist(2, 2 + count + 1);
-  return devicesLines.map((line) => parseDevice(line)).whereNotNull();
+  final devicesLines = lines.sublist(boundary + 2, boundary + 2 + count + 1);
+  return devicesLines.map((line) => parseDevice(line)).whereNotNull().toList();
 }
 
 /// Attempt to find the right device from the given name or id.
 Device? findDevice(String device, List<Device> devices) {
   for (Device candidate in devices) {
-    if (candidate.id.startsWith(device) || candidate.name.startsWith(device)) {
+    if (candidate.id.toLowerCase().startsWith(device.toLowerCase()) ||
+        candidate.name.toLowerCase().startsWith(device.toLowerCase())) {
       return candidate;
     }
   }

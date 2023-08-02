@@ -29,6 +29,7 @@ class AndroidDevice extends Device {
   late final File destinationJson;
   late final String _target;
   late final String androidArch;
+  late final String libsDir;
 
   /// Path to `widgeteer` directory somewhere inside `.build`.
   Directory? buildDir;
@@ -43,6 +44,7 @@ class AndroidDevice extends Device {
     switch (architecture) {
       case "arm64":
         androidArch = "arm64-v8a";
+        libsDir = "aarch64-linux-android";
         break;
       default:
         fail("Unknown or unsupported Android architecture '$architecture'");
@@ -96,6 +98,7 @@ class AndroidDevice extends Device {
 
       // Copy all .so files from Swift stdlib
       // Except for FoundationXML and FoundationNetworking that have unresolved dependencies in libcurl and libxml2
+      // TODO: since Swift 5.8 Swift libs and toolchain libs are in the same directory: change to a list of files to copy instead of copying every found .so (see .kt for the list)
       final skippedSwiftStdlib = [
         "libFoundationNetworking.so",
         "libFoundationXML.so",
@@ -103,8 +106,15 @@ class AndroidDevice extends Device {
         "libswiftDistributed.so",
       ];
 
-      final swiftStdlib = Directory(
-          p.join(sdkPath.absolute.path, "usr", "lib", "swift", "android"));
+      final swiftStdlib =
+          Directory(p.join(sdkPath.absolute.path, "usr", "lib", libsDir));
+
+      if (!await swiftStdlib.exists()) {
+        throw "Could not find Swift SDK shared libraries at '${swiftStdlib.path}'";
+      }
+
+      logger.debug(
+          "Copying Swift SDK shared libraries from '${swiftStdlib.path}'");
 
       await for (var entity in swiftStdlib.list()) {
         final basename = p.basename(entity.path);
@@ -126,8 +136,7 @@ class AndroidDevice extends Device {
         "libicuuc.so",
       ];
 
-      final toolchainStdlib =
-          Directory(p.join(sdkPath.absolute.path, "usr", "lib"));
+      final toolchainStdlib = swiftStdlib;
 
       await for (var entity in toolchainStdlib.list()) {
         final basename = p.basename(entity.path);
@@ -179,12 +188,11 @@ class AndroidDevice extends Device {
 
   @override
   String? get unavailability {
-    // Android is only available on Linux since this is the only platform
-    // with a cross-compilation toolchain (for now)
+    // Android is only available on Linux for now
     if (Platform.isLinux) {
       return null;
     }
 
-    return "Android cross-compilation toolchain is only available on Linux";
+    return "Android cross-compilation is only available on Linux for now";
   }
 }

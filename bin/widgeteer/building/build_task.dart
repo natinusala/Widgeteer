@@ -56,6 +56,9 @@ Future<void> runBuildTask(
 
   if (verbose) {
     logger.log("⚙️  Running '$command ${args.join(" ")}'...");
+    if (additionalEnvironment.isNotEmpty) {
+      logger.log("📋 Environment: $additionalEnvironment");
+    }
   }
 
   await stdout.flush();
