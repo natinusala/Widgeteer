@@ -63,8 +63,11 @@ Future<void> runBuildTask(
 
   await stdout.flush();
 
+  // Find the full command path using `which`
+  final commandPath = Process.runSync("which", [command]).stdout.toString();
+
   final process = await Process.start(
-    command,
+    commandPath.replaceAll("\n", ""),
     args,
     workingDirectory: workingDirectory,
     mode: ProcessStartMode.inheritStdio,
@@ -79,7 +82,8 @@ Future<void> runBuildTask(
 
   if (exitCode != 0) {
     if (fatalFailure) {
-      fail("❌  Command failed: process returned exit code '$exitCode'");
+      fail(
+          "❌  Command '$command' failed: process returned exit code '$exitCode'");
     } else {
       throw BuildException(exitCode: exitCode);
     }

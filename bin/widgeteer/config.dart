@@ -33,6 +33,7 @@ import 'bindings_generator/native_libraries/lib_app.dart';
 import 'bindings_generator/toml.dart';
 import 'building/device.dart';
 import 'building/devices/android.dart';
+import 'building/devices/ios.dart';
 import 'building/devices/linux.dart';
 import 'bindings_generator/native_libraries/lib_widgeteer.dart';
 
@@ -78,13 +79,31 @@ Device createDevice(String id, String name, String platform, String version) {
   if (platform.startsWith("linux")) {
     // Assume we are not cross-compiling and ignore arch suffix
     return LinuxDevice(
-        id: id, name: name, platform: platform, version: version);
+      id: id,
+      name: name,
+      platform: platform,
+      version: version,
+    );
   }
 
   // Android
   if (platform.startsWith("android")) {
     return AndroidDevice(
-        id: id, name: name, platform: platform, version: version);
+      id: id,
+      name: name,
+      platform: platform,
+      version: version,
+    );
+  }
+
+  // iOS
+  if (platform.startsWith("ios")) {
+    return iOSDevice(
+      id: id,
+      name: name,
+      platform: platform,
+      version: version,
+    );
   }
 
   // Unsupported / unknown device

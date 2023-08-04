@@ -52,6 +52,10 @@ abstract class Device {
   Future<void> build(
       String swiftBuildDir, String artifactsDir, String mode) async {}
 
+  /// Should the widgeteer CLI build the Swift app, or is it part of the
+  /// platform specific project?
+  bool get shouldBuildSwiftApp => true;
+
   String get description {
     String prefix = "";
     if (unavailability != null) {

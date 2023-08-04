@@ -4,6 +4,7 @@ import PackageDescription
 
 let package = Package(
     name: "Widgeteer",
+    platforms: [.iOS(.v16), .macOS(.v13)],
     products: [
         .library(
             name: "Widgeteer",

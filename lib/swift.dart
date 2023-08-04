@@ -40,7 +40,13 @@ void _bootstrap(List<String> args) {
   // The entrypoint lib has symbols for all other libs
   // thanks to `@_exported` imports in Swift, so we only need
   // to open one library in here
-  final DynamicLibrary lib = DynamicLibrary.open(_getLibraryPath(args));
+  final DynamicLibrary lib;
+  final libraryPath = _getLibraryPath(args);
+  if (libraryPath != null) {
+    lib = DynamicLibrary.open(libraryPath);
+  } else {
+    lib = DynamicLibrary.executable();
+  }
 
   libWidgeteer = LibWidgeteer(lib);
   libApp = LibApp(lib);
@@ -71,7 +77,7 @@ void _restart() {
   libWidgeteer.exit_scope();
 }
 
-String _getLibraryPath(List<String> args) {
+String? _getLibraryPath(List<String> args) {
   // Get value from args if specified, or fallback to environment
   if (args.isNotEmpty) {
     return args[0];
@@ -79,9 +85,9 @@ String _getLibraryPath(List<String> args) {
 
   const widgeteerPath =
       String.fromEnvironment(libraryPathEnv, defaultValue: "");
+
   if (widgeteerPath.isEmpty) {
-    throw "Could not resolve Swift library path, "
-        "check '--dart-define' in 'flutter run'";
+    return null; // use executable
   }
 
   return widgeteerPath;

@@ -83,93 +83,96 @@ class RunCommand extends Command {
     final bool release = argResults!["release"];
     final mode = release ? "release" : "debug";
 
-    final artifactsDir = p.join(libBuildDir, device.target(), mode);
-    final pidFile = File(p.join(artifactsDir, "widgeteer_pid"));
-    final nextSoFile = File(p.join(artifactsDir, "widgeteer_next_so"));
-
     ensureWidgeteerProject();
 
     logger.log("Launching on ${device.name} "
         "in $mode mode...");
 
-    // Build Swift library
-    final swiftBuildArgs = ["build", "-c", mode] + device.swiftBuildArgs;
-    await buildSwiftApp(swiftBuildArgs);
-
-    // Find the path to the built library
-    var appLibrary = await findAppLibrary(artifactsDir);
-
-    if (appLibrary == null) {
-      fail("Unable to find built Swift app "
-          "shared library inside '$libBuildDir' with mode '$mode' "
-          "and target '${device.target()}'");
-    }
-
     List<String> additionalFlutterArgs = [];
-
-    // Prepare hot restarting if needed
-    if (watch) {
-      if (mode == "release") {
-        fail("Hot restarting and previews are only available in debug mode.");
-      }
-
-      // We don't want subsequent `swift build` calls to overwrite the
-      // .so currently loaded by the app so we need to rename it
-      final destination = await renameBuiltApp(appLibrary, artifactsDir);
-      appLibrary = destination;
-
-      // If `WIDGETEER_HOT_RESTART=true` at bootstrap, the Widgeteer app will write its own PID to
-      // `widgeteer_pid`. Then, it will start listening for `SIGUSR1`.
-      // When that signal happens, it will read the location of the new .so from "widgeteer_next_so",
-      // dlopen it and call `widgeteer_main()` again.
-      // We cannot use the built-in `--pid-file` option because it only works if hot reloading is enabled,
-      // and we don't want it enabled to be able to catch `SIGUSR1` on our own.
-      // On the host side, every time a Swift file changes, the .so will be rebuilt, "widgeteer_next_so" will be updated
-      // with the new path and `SIGUSR1` will be sent to the app.
-      // Note: as we cannot have any guarantee that the previous library can safely be dlclosed (there may be running
-      // async or dispatch tasks, or Dart native finalizers not GC'd yet...), it is currently never closed, which can cause
-      // a memory usage grow after a long period of periodic restarts.
-      // TODO: replace SIGUSR1 by a watch on the next SO text file and remove --no-hot since it prevents the layout inspector from being used
-      if (await pidFile.exists()) {
-        await pidFile.delete();
-      }
-
-      additionalFlutterArgs.add("--dart-define=WIDGETEER_HOT_RESTART=true");
-      additionalFlutterArgs
-          .add("--dart-define=$pidEnv=${pidFile.absolute.path}");
-      additionalFlutterArgs
-          .add("--dart-define=$nextSoEnv=${nextSoFile.absolute.path}");
-    }
-
-    // Preview
-    if (previewing) {
-      final previewName = argResults!["preview"];
-      additionalFlutterArgs.add("--dart-define=$previewEnv=$previewName");
-    }
-
-    // Platform specific build
-    await device.build(libBuildDir, artifactsDir, mode);
-
-    // Start watching for changes
     StreamSubscription<WatchEvent>? watcherStream;
-    if (watch) {
-      final watcher = DirectoryWatcher(libDir);
-      watcherStream = watcher.events.listen((event) => EasyDebounce.debounce(
-            "hot-reload",
-            const Duration(milliseconds: 250),
-            () => hotRestart(
-              event,
-              swiftBuildArgs,
-              artifactsDir,
-              device,
-              nextSoFile,
-              pidFile,
-              mode,
-            ),
-          ));
+    String appLibrary = "";
 
-      logger.log("🔥  Watching for changes in 'lib' to"
-          " ${previewing ? "reload the preview" : "hot restart"}  🔥");
+    if (device.shouldBuildSwiftApp) {
+      final artifactsDir = p.join(libBuildDir, device.target(), mode);
+      final pidFile = File(p.join(artifactsDir, "widgeteer_pid"));
+      final nextSoFile = File(p.join(artifactsDir, "widgeteer_next_so"));
+
+      // Build Swift library
+      final swiftBuildArgs = ["build", "-c", mode] + device.swiftBuildArgs;
+      await buildSwiftApp(swiftBuildArgs);
+
+      // Find the path to the built library
+      appLibrary = await findAppLibrary(artifactsDir) ?? "";
+
+      if (appLibrary == null) {
+        fail("Unable to find built Swift app "
+            "shared library inside '$libBuildDir' with mode '$mode' "
+            "and target '${device.target()}'");
+      }
+
+      // Prepare hot restarting if needed
+      if (watch) {
+        if (mode == "release") {
+          fail("Hot restarting and previews are only available in debug mode.");
+        }
+
+        // We don't want subsequent `swift build` calls to overwrite the
+        // .so currently loaded by the app so we need to rename it
+        final destination = await renameBuiltApp(appLibrary, artifactsDir);
+        appLibrary = destination;
+
+        // If `WIDGETEER_HOT_RESTART=true` at bootstrap, the Widgeteer app will write its own PID to
+        // `widgeteer_pid`. Then, it will start listening for `SIGUSR1`.
+        // When that signal happens, it will read the location of the new .so from "widgeteer_next_so",
+        // dlopen it and call `widgeteer_main()` again.
+        // We cannot use the built-in `--pid-file` option because it only works if hot reloading is enabled,
+        // and we don't want it enabled to be able to catch `SIGUSR1` on our own.
+        // On the host side, every time a Swift file changes, the .so will be rebuilt, "widgeteer_next_so" will be updated
+        // with the new path and `SIGUSR1` will be sent to the app.
+        // Note: as we cannot have any guarantee that the previous library can safely be dlclosed (there may be running
+        // async or dispatch tasks, or Dart native finalizers not GC'd yet...), it is currently never closed, which can cause
+        // a memory usage grow after a long period of periodic restarts.
+        // TODO: replace SIGUSR1 by a watch on the next SO text file and remove --no-hot since it prevents the layout inspector from being used
+        if (await pidFile.exists()) {
+          await pidFile.delete();
+        }
+
+        additionalFlutterArgs.add("--dart-define=WIDGETEER_HOT_RESTART=true");
+        additionalFlutterArgs
+            .add("--dart-define=$pidEnv=${pidFile.absolute.path}");
+        additionalFlutterArgs
+            .add("--dart-define=$nextSoEnv=${nextSoFile.absolute.path}");
+      }
+
+      // Preview
+      if (previewing) {
+        final previewName = argResults!["preview"];
+        additionalFlutterArgs.add("--dart-define=$previewEnv=$previewName");
+      }
+
+      // Platform specific build
+      await device.build(libBuildDir, artifactsDir, mode);
+
+      // Start watching for changes
+      if (watch) {
+        final watcher = DirectoryWatcher(libDir);
+        watcherStream = watcher.events.listen((event) => EasyDebounce.debounce(
+              "hot-reload",
+              const Duration(milliseconds: 250),
+              () => hotRestart(
+                event,
+                swiftBuildArgs,
+                artifactsDir,
+                device,
+                nextSoFile,
+                pidFile,
+                mode,
+              ),
+            ));
+
+        logger.log("🔥  Watching for changes in 'lib' to"
+            " ${previewing ? "reload the preview" : "hot restart"}  🔥");
+      }
     }
 
     // Flutter run
