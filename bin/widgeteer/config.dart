@@ -36,6 +36,7 @@ import 'building/devices/android.dart';
 import 'building/devices/ios.dart';
 import 'building/devices/linux.dart';
 import 'bindings_generator/native_libraries/lib_widgeteer.dart';
+import 'building/devices/macos.dart';
 
 final builtinBindings = [
   StringBinding(),
@@ -99,6 +100,16 @@ Device createDevice(String id, String name, String platform, String version) {
   // iOS
   if (platform.startsWith("ios")) {
     return iOSDevice(
+      id: id,
+      name: name,
+      platform: platform,
+      version: version,
+    );
+  }
+
+  // macOS
+  if (platform.startsWith("darwin")) {
+    return macOSDevice(
       id: id,
       name: name,
       platform: platform,
