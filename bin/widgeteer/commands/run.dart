@@ -63,11 +63,18 @@ class RunCommand extends Command {
       abbr: "v",
       defaultsTo: false,
     );
+
+    argParser.addFlag(
+      'start-paused',
+      defaultsTo: false,
+      help: 'Start in a paused mode and wait for a debugger to connect.',
+    );
   }
 
   bool get watch => argResults!["watch"] || previewing;
   bool get previewing => argResults!["preview"] != null;
   bool get verbose => argResults!["verbose"];
+  bool get startPaused => argResults!["start-paused"];
 
   @override
   String get description => "Run your Widgeteer app on a connected device.";
@@ -175,6 +182,8 @@ class RunCommand extends Command {
       }
     }
 
+    final cwd = Directory.current.path;
+
     // Flutter run
     await runBuildTask(
       "flutter",
@@ -184,7 +193,10 @@ class RunCommand extends Command {
             "-d",
             device.id, // trust Flutter to find the device from its id
             "--dart-define=$libraryPathEnv=$appLibrary",
+            "--dart-define=$projectWorkingDirectoryEnv=$cwd",
             if (watch) "--no-hot",
+            if (startPaused) "--start-paused",
+            if (verbose) "-v"
           ] +
           additionalFlutterArgs,
       workingDirectory,

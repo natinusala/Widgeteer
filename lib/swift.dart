@@ -51,12 +51,17 @@ void _bootstrap(List<String> args) {
   libWidgeteer = LibWidgeteer(lib);
   libApp = LibApp(lib);
 
+  const projectWorkingDirectory =
+      String.fromEnvironment(projectWorkingDirectoryEnv);
+
   // This is necessary for Swift widgets to appear in DevTools
   // See: https://github.com/flutter/devtools/issues/4152
-  // TODO: somehow find a way to autodetect the directory
-  final cur = Directory.current.path;
+  // TODO: somehow find a way to autodetect the Widgeteer directory location relative to project location
   // ignore: invalid_use_of_protected_member
-  WidgetInspectorService.instance.addPubRootDirectories(["$cur/../Widgeteer"]);
+  WidgetInspectorService.instance.addPubRootDirectories(
+    ["$projectWorkingDirectory/../Widgeteer"],
+  );
+  print("XXXXX $projectWorkingDirectory");
 
   libWidgeteer.init(NativeApi.initializeApiDLData);
   setNullHandle(lib);

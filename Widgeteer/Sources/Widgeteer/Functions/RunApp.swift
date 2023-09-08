@@ -32,6 +32,8 @@ public func runApp<Root: Widget>(_ root: Root) {
     let now = Date()
     let parentKey = String(describing: now.timeIntervalSince1970).joined(String(describing: Root.self))
 
+    trace("Using '\(parentKey)' as key for top level widget")
+
     let localApp = root.reduce(parentKey: parentKey).handle
     Flutter_RunApp(localApp)
 }

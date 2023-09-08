@@ -26,3 +26,6 @@ const pidEnv = "WIDGETEER_PID";
 
 /// Path to the "next library" text file to use when hot reloading.
 const nextSoEnv = "WIDGETEER_NEXT_SO";
+
+/// Working directory of the project files on the host computer.
+const projectWorkingDirectoryEnv = "WIDGETEER_WORKING_DIRECTORY";
